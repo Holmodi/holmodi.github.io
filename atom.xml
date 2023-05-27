@@ -6,7 +6,7 @@
   <link href="http://holmodi.fun/atom.xml" rel="self"/>
   
   <link href="http://holmodi.fun/"/>
-  <updated>2023-05-27T14:00:45.394Z</updated>
+  <updated>2023-05-27T14:53:04.349Z</updated>
   <id>http://holmodi.fun/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>文章发布模式测试</title>
+    <link href="http://holmodi.fun/2023/05/27/test-article/"/>
+    <id>http://holmodi.fun/2023/05/27/test-article/</id>
+    <published>2023-05-27T14:50:26.000Z</published>
+    <updated>2023-05-27T14:53:04.349Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="这是一篇新文章"><a href="#这是一篇新文章" class="headerlink" title="这是一篇新文章"></a>这是一篇新文章</h1>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;这是一篇新文章&quot;&gt;&lt;a href=&quot;#这是一篇新文章&quot; class=&quot;headerlink&quot; title=&quot;这是一篇新文章&quot;&gt;&lt;/a&gt;这是一篇新文章&lt;/h1&gt;</summary>
+      
+    
+    
+    
+    <category term="游戏设计" scheme="http://holmodi.fun/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+    
+    <category term="GDC" scheme="http://holmodi.fun/tags/GDC/"/>
+    
+  </entry>
   
   <entry>
     <title></title>
