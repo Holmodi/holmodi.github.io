@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Holmodi</title>
-  
+  <icon>https://www.gravatar.com/avatar/a350d78dc5b9445196dda6ba3daaa7f5</icon>
   
   <link href="http://example.com/atom.xml" rel="self"/>
   
@@ -10,8 +10,8 @@
   <id>http://example.com/</id>
   
   <author>
-    <name>holmodi</name>
-    
+    <name>xiaodi xu</name>
+    <email>294242549@qq.com</email>
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
