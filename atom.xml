@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Holmodi</title>
+  <title>Game &amp; Code &amp; Art</title>
   <icon>https://www.gravatar.com/avatar/a350d78dc5b9445196dda6ba3daaa7f5</icon>
-  
+  <subtitle>Holmodi的博客</subtitle>
   <link href="http://holmodi.fun/atom.xml" rel="self"/>
   
   <link href="http://holmodi.fun/"/>
