@@ -1,7 +1,7 @@
+http://holmodi.fun/2023/05/27/test-article/
+http://holmodi.fun/gallery/index.html
 http://holmodi.fun/projects/index.html
 http://holmodi.fun/about/index.html
-http://holmodi.fun/2023/05/27/test-article/
-http://holmodi.fun/2023/05/27/hello-world/
 http://holmodi.fun/
-http://holmodi.fun/tags/GDC/
-http://holmodi.fun/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/
+http://holmodi.fun/tags/%E7%94%B5%E5%BD%B1/
+http://holmodi.fun/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/

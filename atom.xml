@@ -6,7 +6,7 @@
   <link href="http://holmodi.fun/atom.xml" rel="self"/>
   
   <link href="http://holmodi.fun/"/>
-  <updated>2023-05-27T14:53:04.349Z</updated>
+  <updated>2023-05-28T07:35:48.079Z</updated>
   <id>http://holmodi.fun/</id>
   
   <author>
@@ -17,46 +17,26 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>文章发布模式测试</title>
+    <title>电影文本创作课程笔记</title>
     <link href="http://holmodi.fun/2023/05/27/test-article/"/>
     <id>http://holmodi.fun/2023/05/27/test-article/</id>
     <published>2023-05-27T14:50:26.000Z</published>
-    <updated>2023-05-27T14:53:04.349Z</updated>
+    <updated>2023-05-28T07:35:48.079Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="这是一篇新文章"><a href="#这是一篇新文章" class="headerlink" title="这是一篇新文章"></a>这是一篇新文章</h1>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;这是一篇新文章&quot;&gt;&lt;a href=&quot;#这是一篇新文章&quot; class=&quot;headerlink&quot; title=&quot;这是一篇新文章&quot;&gt;&lt;/a&gt;这是一篇新文章&lt;/h1&gt;</summary>
-      
-    
-    
-    
-    <category term="游戏设计" scheme="http://holmodi.fun/categories/%E6%B8%B8%E6%88%8F%E8%AE%BE%E8%AE%A1/"/>
-    
-    
-    <category term="GDC" scheme="http://holmodi.fun/tags/GDC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://holmodi.fun/2023/05/27/hello-world/"/>
-    <id>http://holmodi.fun/2023/05/27/hello-world/</id>
-    <published>2023-05-27T12:19:28.175Z</published>
-    <updated>2023-05-27T14:00:45.394Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="个人博客搭建-测试"><a href="#个人博客搭建-测试" class="headerlink" title="个人博客搭建 测试"></a>个人博客搭建 测试</h1><h1 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h1><p>代码</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="string">&quot;hello&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>1</li><li>2</li><li>4</li><li>插入图片<img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/20230523215506.png"></li><li></li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="共情"><a href="#共情" class="headerlink" title="共情"></a>共情</h1><p>目录<br>确立影像化思维<br>重点概念：场景<br>电影文本长什么样<br>故事的道德前提<br>用结构来讲故事<br>拿事儿说话<br>人物怎么写<br>  人设 人物小传 人物塑造<br>   对白的八大风格八项注意</p><hr><p>艺术创作都有基础格律<br>电影分类：三分法 </p><p>· 类型片（标准化工业化的产品）<br>  致力于寻找大众的体验审美情感的公约数<br>  困境是人设计出来的，最后会被解决<br>· 文艺片  中间状态的<br>· 艺术电影  和类型片完全相对的，反模式反格式化反规律的。呈现讨论困境，不会解决困境</p><p>影像化叙事，视听语言，视听语言有六个变量<br>分场戏</p><hr><h1 id="影像化思维"><a href="#影像化思维" class="headerlink" title="影像化思维"></a>影像化思维</h1><p> 电影的单位叫场<br> 剧本是导向制作的“蓝图”，好的电影局本天生是带着影像的</p><p>  用影像的和视听的思维写作，不能脱离电影本体，才能写出有镜头感的文字</p><p>  视听语言的要素：景别（远全中近特）交替使用景别会让画面更生动富有节奏感、角度、焦距、光线、色彩、运动、声音+时间和空间。</p><p>  ·由画面讲述出来的故事<br>  ·通过画面、对话、动作来讲述故事，并把这个故事放置在一个戏剧性情境中</p><p> <strong>核心：蒙太奇</strong>：剪辑构成组接，电影创作的基本方式，包括前期的构思，体现在镜头和镜头之间，线索和线索之间。可以分切和重组时空，将不同时刻拍的素材统一成一个被电影再造出的时空。<br>  平行蒙太奇：不同时空发生的两条或两条以上的 情节线索分头展开，并列表现。<br>  交叉蒙太奇：<strong>同一时间不同地点</strong>发生的两条或数条情节迅速而频繁地交替剪接在一起，其中一条线索的发展往往影响另一条线索，各条线索相互依存最后汇合在一起。<br>  对比蒙太奇：在内容或形式方面形成对比。<br>  心理蒙太奇：人物心理的造型表现。<br>  隐喻蒙太奇：f</p><hr><h1 id="项目提案"><a href="#项目提案" class="headerlink" title="项目提案"></a>项目提案</h1><h2 id="格式"><a href="#格式" class="headerlink" title="格式"></a>格式</h2><p>   标题<br>   一句话故事<br>   标签墙<br>   人物小传<br>   梗概<br>    让人想看 让人想买，内容扎实，文字高度简练<br>   八要素<br>     1 人物：身份 欲望 动作<br>        身份 正向人物含有负价值的定语<br>        欲望 朴素原始<br>        动作 及物<br>     2 事件：问题 阻力 结果 ：故事主线 基本情节 主要矛盾冲突<br>     3 主题：正价值 负价值<br>     其他：创意点 与当下话题的关联度 运行可行性<br>   样场</p><h1 id="电影文学剧本"><a href="#电影文学剧本" class="headerlink" title="电影文学剧本"></a>电影文学剧本</h1><p> 场 序列 转场 过场戏<br>  具备文学要素，符合文学特性，追求文学深度，遵循写作文法<br>  电影化的文学。文体特征由电影的特性所决定。荧幕意识视听思维镜头感三维空间意识</p><h2 id="剧本格式"><a href="#剧本格式" class="headerlink" title="剧本格式"></a>剧本格式</h2><p>   场景条<br>     场景号 内景&#x2F;外景 地点 夜景&#x2F;日景<br>     1. 外 街道 日<br>  台词冒号后不加引号</p><p> <strong>上课用格式要点</strong><br>   环境描述和行动描述前面加三角，人物对白不加<br>   空间变了要分场，要有先场景时的空间意识</p><h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>时间和空间</p><p>  场景即命运，场景要和人物有机的关联在一起，场景是空间概念同时也是时间概念，同一个空间不连续的时间也要分场 。</p><h2 id="场景的作用"><a href="#场景的作用" class="headerlink" title="场景的作用"></a>场景的作用</h2><p>   传达信息（环境动作对白）<br>    推动情节（转折、变化）<br>    传递影片氛围、质感<br>    揭示人物（性格 趣味习惯内心状态的外延外化）<br>    表达主题</p><p>1.从场景入手来构思剧情，利用场景中的要素来表现人物（年代感社会生活地域），让寻常的场景变得不寻常（一个人从银行跑出来）。打破场景直线，让场景带上节奏。场景不能过于单一和集中，需要多变一些</p><p>2.分场戏的容量要有大有小，主戏或者过场戏要有分别，通过时空的交错和不同线索的交织并进来打破场景的呆滞感，有节奏和错落感。让一个序列内的场景呈现阶梯序列的结构。时空的交错穿插。</p><p>3.动进动出。从动作中进戏，从动作中出戏。保持戏的势能，把握节奏，不要赘述太多冗余的细节，不要太多状态。把名词形容词改成动词。eg:老大捡鸡蛋</p><p>4.潜文本与文本：<br>    文本只表达出潜文本的一部分<br>    文本和潜文本看似无关<br>    文本和潜文本相反<br>    潜台词和台词<br>     eg.四太太和丫鬟<br>     打麻将 色戒  罗曼蒂克消亡史</p><hr><h1 id="电影文本的基本特征"><a href="#电影文本的基本特征" class="headerlink" title="电影文本的基本特征"></a>电影文本的基本特征</h1><p> 跳跃性 （非线性） eg 暗杀 找人</p><p> 可视性 （形象直观性）<br>   用文字去给出一连串的视听形象，不要去堆砌美丽的文字语言，只写摄影机能拍下来的和演员能表演的情节。用外在的事件动作来展示人物内心的变化。</p><p> 动作戏<br>  有效的体现人物内心活动的动作。在作品规定的情境中，能推动。<br> 简约性<br>  尽可能写短句，删除连词，保留能够清晰表达视听形象的名词动词，意思雷同的句子合并处理，去掉可有可无的套话。</p><hr><h1 id="规定情境"><a href="#规定情境" class="headerlink" title="规定情境"></a>规定情境</h1><p> 人物面临的各种情境的总称。包括：<br>  特定的时空环境（自然，时代和社会）<br>  对人物发生影响的事件及情势<br>  人物关系<br>分镜头本</p><hr><p>正能量战胜负能量<br>价值观是最低也是最高</p><h1 id="用结构来讲故事"><a href="#用结构来讲故事" class="headerlink" title="用结构来讲故事"></a>用结构来讲故事</h1><ul><li>结构：一部影片的布局，讲故事的顺序，情节线索的排列组合，各部分轻重比列及相互之间的关系</li></ul><h2 id="救猫咪：金羊毛-伙伴之情-超级英雄-鬼屋-侦探推理-麻烦家伙-变迁仪式-如愿以偿-愚者成功-被制度化"><a href="#救猫咪：金羊毛-伙伴之情-超级英雄-鬼屋-侦探推理-麻烦家伙-变迁仪式-如愿以偿-愚者成功-被制度化" class="headerlink" title=" 救猫咪：金羊毛 伙伴之情 超级英雄 鬼屋 侦探推理 麻烦家伙 变迁仪式 如愿以偿  愚者成功 被制度化  "></a> 救猫咪：金羊毛 伙伴之情 超级英雄 鬼屋 侦探推理 麻烦家伙 变迁仪式 如愿以偿  愚者成功 被制度化  </h2><p>故事是按时间序列发生的事件，情节是根据特定的叙事目的和特定的逻辑组织起来的事件</p><p>情节点<br> 大情节点 小情节点<br> 主要 次要 过渡性 表现性</p><p>钩子：激励事件&#x2F;干扰事件<br> 钩子有没有对主人公的命运起到足够的 干扰，让他有必要行动起来<br> 反常突发、两难选择、小人物摊上大事，大人物摊上小事</p><p>情节点1（第一幕&#x2F;二 转折点）<br>故事真正开始的地方，主线情节的激发点，人物改变</p><p>情节点2（第二&#x2F;三幕转折点）<br>发现与急转的关键时刻，故事项新的方向发展，形成整部电影最紧张的时刻，走向高潮阶段</p><hr><p>  ·线性结构<br> · 非线性结构<br>     倒叙 插叙 折叠式叙事 时空交错<br> ·戏剧式结构<br> ·小说式结构<br> ·散文结构<br> ·戏中戏结构 《法国中尉的女人》<br> ·板块式结构源代码<br> ·多线交错式<br> ·时空交错<br> ·三幕式结构</p><ul><li><p>第一幕 建置部分</p><ul><li>主要人物出场</li><li>给出人物关系</li><li>创建规定情境</li><li>出现干扰事件、情境激化</li></ul></li><li><p>第二幕  发展部分</p><ul><li>发展冲突</li><li>深化冲突</li><li>抑制、拖延、突转</li></ul></li><li><h2 id="第三幕-结局部分-冲突化解-凸显主题-开场：布局建置整个故事。-尽快抓住观众的注意力-使整个故事得以引发运转-铺垫现状（我不是药神，鱿鱼游戏），构建世界（寄生虫，肖申克），树立人物（末日狂花）-创作方法之一：晚入早出-故事尽可能晚的时刻开始讲起-创作方法之二：迅速将观众带入规定情境-特定的时空环境（自然，社会）-对人物发生影响的事件及情势-人物关系-南方车站的聚会-豆瓣-douban-com-，本能-豆瓣-douban-com-创作方法四：人物-穿普拉达的女王-豆瓣-douban-com-美国丽人-豆瓣-douban-com-困境-内外交困，限制时空，升级麻烦，逼入绝境-A故事是人物外在的故事，B故事是人物内在的需求，往往是故事人物弧光所在-A明B暗-阳光小美女-豆瓣-douban-com-游戏时间，欢乐时光：气口，节奏是在变化中产生的-编剧养成记：经典剧本“节拍表”创作流程解析-故事-sohu-com"><a href="#第三幕-结局部分-冲突化解-凸显主题-开场：布局建置整个故事。-尽快抓住观众的注意力-使整个故事得以引发运转-铺垫现状（我不是药神，鱿鱼游戏），构建世界（寄生虫，肖申克），树立人物（末日狂花）-创作方法之一：晚入早出-故事尽可能晚的时刻开始讲起-创作方法之二：迅速将观众带入规定情境-特定的时空环境（自然，社会）-对人物发生影响的事件及情势-人物关系-南方车站的聚会-豆瓣-douban-com-，本能-豆瓣-douban-com-创作方法四：人物-穿普拉达的女王-豆瓣-douban-com-美国丽人-豆瓣-douban-com-困境-内外交困，限制时空，升级麻烦，逼入绝境-A故事是人物外在的故事，B故事是人物内在的需求，往往是故事人物弧光所在-A明B暗-阳光小美女-豆瓣-douban-com-游戏时间，欢乐时光：气口，节奏是在变化中产生的-编剧养成记：经典剧本“节拍表”创作流程解析-故事-sohu-com" class="headerlink" title="第三幕 结局部分  - 冲突化解  - 凸显主题- 开场：布局建置整个故事。    -  尽快抓住观众的注意力    - 使整个故事得以引发运转    铺垫现状（我不是药神，鱿鱼游戏），构建世界（寄生虫，肖申克），树立人物（末日狂花）    - 创作方法之一：晚入早出 故事尽可能晚的时刻开始讲起    - 创作方法之二：迅速将观众带入规定情境        - 特定的时空环境（自然，社会）        - 对人物发生影响的事件及情势        - 人物关系        - 南方车站的聚会 (豆瓣) (douban.com)，本能 (豆瓣) (douban.com)    - 创作方法四：人物        - 穿普拉达的女王 (豆瓣) (douban.com)        - 美国丽人 (豆瓣) (douban.com)        - 困境 内外交困，限制时空，升级麻烦，逼入绝境-  A故事是人物外在的故事，B故事是人物内在的需求，往往是故事人物弧光所在 A明B暗 阳光小美女 (豆瓣) (douban.com)- 游戏时间，欢乐时光：气口，节奏是在变化中产生的- 编剧养成记：经典剧本“节拍表”创作流程解析_故事 (sohu.com)"></a>第三幕 结局部分<br>  - 冲突化解<br>  - 凸显主题<br><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/20230517181659.png" alt="image.png"><br>- 开场：布局建置整个故事。<br>    -  尽快抓住观众的注意力<br>    - 使整个故事得以引发运转<br>    铺垫现状（我不是药神，鱿鱼游戏），构建世界（寄生虫，肖申克），树立人物（末日狂花）<br>    - 创作方法之一：晚入早出 故事尽可能晚的时刻开始讲起<br>    - 创作方法之二：迅速将观众带入规定情境<br>        - 特定的时空环境（自然，社会）<br>        - 对人物发生影响的事件及情势<br>        - 人物关系<br>        - <a href="https://movie.douban.com/subject/27668250/">南方车站的聚会 (豆瓣) (douban.com)</a>，<a href="https://movie.douban.com/subject/1291869/">本能 (豆瓣) (douban.com)</a><br>    - 创作方法四：人物<br>        - <a href="https://movie.douban.com/subject/1482072/">穿普拉达的女王 (豆瓣) (douban.com)</a><br>        - <a href="https://movie.douban.com/subject/1292062/">美国丽人 (豆瓣) (douban.com)</a><br>        - 困境 内外交困，限制时空，升级麻烦，逼入绝境<br>-  A故事是人物外在的故事，B故事是人物内在的需求，往往是故事人物弧光所在 A明B暗 <a href="https://movie.douban.com/subject/1777612/">阳光小美女 (豆瓣) (douban.com)</a><br>- 游戏时间，欢乐时光：气口，节奏是在变化中产生的<br>- <a href="https://www.sohu.com/a/404209563_120067926">编剧养成记：经典剧本“节拍表”创作流程解析_故事 (sohu.com)</a></h2></li></ul><p>冲突：困境 需求</p><ul><li>设置冲突的方法：设置多重阻力，设置九九八十一难，建置扎实的人物关系（人物关系自带麻烦）。</li><li>冲突可以换但不可以断。基础冲突是二元冲突，高级冲突是价值观的冲突。</li><li>冲突源于不等，越不等的人物越容易发生冲突。冲突源于反差。</li></ul><p>人物：<br>塑造人物：人设 人物关系 人物塑造</p><ul><li><p>人物小传</p><ul><li>外在</li><li>内在</li><li>状态</li><li>行动</li><li>变化</li><li>不写最后的结局，选择命运</li></ul></li><li><p>人物类型</p></li><li><p>牙刷大肠理论</p></li><li><p>身份</p><ul><li>三可：可怜 可爱 可信</li></ul></li><li><p>欲望</p><ul><li>原始的，本真的</li></ul></li><li><p>动作</p><ul><li>合理化</li></ul></li><li><p>人物关系</p><ul><li>人物与人物</li><li>人物与自己</li></ul></li><li><p>人物塑造：</p></li><li><p>方法一</p><ul><li>从规定情境触发，设计规定情境并准确地塑造规定情境中的人</li><li>情境时人物行动的依据，情境自身也在发展变化<ul><li>新龙门客栈、花样年华、黄土地、南方车站的聚会</li><li>情书</li></ul></li><li>通过情境的变化，多样来呈现人物性格的复杂多面，创造不同情境，并且写出人物在不同情境中的变化</li><li>情境：常态、非常态、极端。职业生活、私生活、个人生活。</li></ul></li><li><p>方法三:给出明确的人物需求</p></li><li><p>方法四：创造出人物弧–人物成长或改变的轨迹</p><ul><li>我不是药神 去欲望化</li></ul></li><li><p>方法五：为人物贴上个性化的标签</p><ul><li>反复强调，不断的去贴同一个标签</li></ul></li><li><p>方法六：通过行为&#x2F;动作刻画性格 </p><ul><li>确立人物和目标的关系</li><li>设计人物的个性化&#x2F;习惯性动作</li><li>通过别人</li></ul></li><li><p>方法七：利用反差&#x2F;分裂刻画人物</p><ul><li>说与做的分裂</li><li>内心动作与外部动作的分裂</li><li>习惯与此时此刻的分裂</li><li>常态与反常态形成反差</li></ul></li><li><p>方法八：利用对比手法，使用衬角</p></li><li><p>方法九：利用对白台词 </p></li><li><p>人物对白</p><ul><li>1、符合人物身份</li><li>2、展示而不是告诉，台词要用来塑造性格而不是交代性格，人物是被呈现出来的</li><li>3、语感，避免说教，呆板 文学化书面化</li><li>4、动作性 潜台词</li><li>5、能不用台词的地方就不用台词，高度影像化的电影<ul><li>对白带上某种情绪，通过动作  为人物开一扇窗</li><li>让对白蕴含丰富的内心动作</li><li>给观众留白</li></ul></li><li>6、不能脱离情境</li><li>7、语言简洁<ul><li>删除重复的语言</li><li>人物说话有层次</li><li>穿插对方情绪反应</li></ul></li><li>8、已经在画面中显示的信息不要重复<br>写好对白的两大原则：<br>1、贴着人物写，对白来自于这个人物<br>2、贴着情境写，对白来自于规定情境</li></ul></li></ul>]]></content>
     
     
       
       
-    <summary type="html">&lt;h1 id=&quot;个人博客搭建-测试&quot;&gt;&lt;a href=&quot;#个人博客搭建-测试&quot; class=&quot;headerlink&quot; title=&quot;个人博客搭建 测试&quot;&gt;&lt;/a&gt;个人博客搭建 测试&lt;/h1&gt;&lt;h1 id=&quot;标题&quot;&gt;&lt;a href=&quot;#标题&quot; class=&quot;headerlink&quot; </summary>
+    <summary type="html">&lt;h1 id=&quot;共情&quot;&gt;&lt;a href=&quot;#共情&quot; class=&quot;headerlink&quot; title=&quot;共情&quot;&gt;&lt;/a&gt;共情&lt;/h1&gt;&lt;p&gt;目录&lt;br&gt;确立影像化思维&lt;br&gt;重点概念：场景&lt;br&gt;电影文本长什么样&lt;br&gt;故事的道德前提&lt;br&gt;用结构来讲故事&lt;br&gt;拿事儿说话&lt;br</summary>
       
     
     
     
+    <category term="课程笔记" scheme="http://holmodi.fun/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/"/>
+    
+    
+    <category term="电影" scheme="http://holmodi.fun/tags/%E7%94%B5%E5%BD%B1/"/>
     
   </entry>
   
