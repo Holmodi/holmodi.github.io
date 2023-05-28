@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Game &amp; Code &amp; Art</title>
-  <icon>https://www.gravatar.com/avatar/a350d78dc5b9445196dda6ba3daaa7f5</icon>
+  <icon>https://www.gravatar.com/avatar/330f5084aa812faddf7523831352b490</icon>
   <subtitle>Holmodi的博客</subtitle>
   <link href="http://holmodi.fun/atom.xml" rel="self"/>
   
@@ -11,7 +11,7 @@
   
   <author>
     <name>xiaodi xu</name>
-    <email>294242549@qq.com</email>
+    <email>294242549@qq.comh</email>
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
