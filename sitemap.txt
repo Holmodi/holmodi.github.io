@@ -1,5 +1,5 @@
 http://holmodi.fun/gallery/index.html
-http://holmodi.fun/2023/05/20/test-article/
+http://holmodi.fun/posts/1.html
 http://holmodi.fun/projects/index.html
 http://holmodi.fun/about/index.html
 http://holmodi.fun/
