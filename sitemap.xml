@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>http://holmodi.fun/about/index.html</loc>
+    
+    <lastmod>2023-05-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://holmodi.fun/projects/index.html</loc>
     
     <lastmod>2023-05-29</lastmod>
@@ -59,15 +68,6 @@
     <loc>http://holmodi.fun/posts/f0a8c7f0.html</loc>
     
     <lastmod>2023-05-29</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://holmodi.fun/about/index.html</loc>
-    
-    <lastmod>2023-05-28</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
