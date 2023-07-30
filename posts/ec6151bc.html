@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="论文阅读Lu, Cong, Raluca Georgescu和Johan Verwey. 《Go-Explore Complex 3D Game Environments for Automated Reachability Testing》. arXiv, 2022年9月1日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2209.00570.Absract现代AAA级视频游戏拥有庞大的游戏关卡和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习游戏论文阅读">
+<meta property="og:url" content="http://holmodi.fun/posts/ec6151bc.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="论文阅读Lu, Cong, Raluca Georgescu和Johan Verwey. 《Go-Explore Complex 3D Game Environments for Automated Reachability Testing》. arXiv, 2022年9月1日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2209.00570.Absract现代AAA级视频游戏拥有庞大的游戏关卡和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25201.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%202.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%203.png">
+<meta property="article:published_time" content="2023-07-30T07:48:35.000Z">
+<meta property="article:modified_time" content="2023-07-30T07:50:56.857Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="游戏设计，虚幻引擎，强化学习，个人随笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>强化学习游戏论文阅读</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/18650ffe.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/ec6151bc.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/ec6151bc.html&text=强化学习游戏论文阅读"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/ec6151bc.html&is_video=false&description=强化学习游戏论文阅读"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习游戏论文阅读&body=Check out this article: http://holmodi.fun/posts/ec6151bc.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/ec6151bc.html&name=强化学习游戏论文阅读&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/ec6151bc.html&t=强化学习游戏论文阅读"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">论文阅读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lu-Cong-Raluca-Georgescu%E5%92%8CJohan-Verwey-%E3%80%8AGo-Explore-Complex-3D-Game-Environments-for-Automated-Reachability-Testing%E3%80%8B-arXiv-2022%E5%B9%B49%E6%9C%881%E6%97%A5-http-arxiv-org-abs-2209-00570"><span class="toc-number">2.</span> <span class="toc-text">Lu, Cong, Raluca Georgescu和Johan Verwey. 《Go-Explore Complex 3D Game Environments for Automated Reachability Testing》. arXiv, 2022年9月1日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2209.00570.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Absract"><span class="toc-number">2.1.</span> <span class="toc-text">Absract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%B4%A1%E7%8C%AE"><span class="toc-number">2.2.</span> <span class="toc-text">核心贡献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%8E%A2%E7%B4%A2"><span class="toc-number">2.3.</span> <span class="toc-text">强化学习中的探索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.1.</span> <span class="toc-text">基于奖励函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Network-Distillation"><span class="toc-number">2.3.2.</span> <span class="toc-text">Random Network Distillation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GoExplore%E7%AE%97%E6%B3%95"><span class="toc-number">2.3.3.</span> <span class="toc-text">GoExplore算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95"><span class="toc-number">2.4.</span> <span class="toc-text">实验方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%94%E8%AE%B0"><span class="toc-number">2.6.</span> <span class="toc-text">笔记</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sestini-Alessandro-Linus-Gisslen-Joakim-Bergdahl-Konrad-Tollmar%E5%92%8CAndrew-D-Bagdanov-%E3%80%8ACCPT-Automatic-Gameplay-Testing-and-Validation-with-Curiosity-Conditioned-Proximal-Trajectories%E3%80%8B-arXiv-2022%E5%B9%B42%E6%9C%8821%E6%97%A5-http-arxiv-org-abs-2202-10057"><span class="toc-number">3.</span> <span class="toc-text">Sestini, Alessandro, Linus Gisslén, Joakim Bergdahl, Konrad Tollmar和Andrew D. Bagdanov. 《CCPT: Automatic Gameplay Testing and Validation with Curiosity-Conditioned Proximal Trajectories》. arXiv, 2022年2月21日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2202.10057.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">3.1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">导航模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text">模仿学习模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%A5%87%E5%BF%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.4.</span> <span class="toc-text">好奇心模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%A5%87%E5%BF%83%E9%A9%B1%E5%8A%A8%E6%8E%A2%E7%B4%A2"><span class="toc-number">3.5.</span> <span class="toc-text">好奇心驱动探索</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        强化学习游戏论文阅读
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-30T07:48:35.000Z" class="dt-published" itemprop="datePublished">2023-07-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="论文阅读"><a href="#论文阅读" class="headerlink" title="论文阅读"></a>论文阅读</h1><h1 id="Lu-Cong-Raluca-Georgescu和Johan-Verwey-《Go-Explore-Complex-3D-Game-Environments-for-Automated-Reachability-Testing》-arXiv-2022年9月1日-http-arxiv-org-abs-2209-00570"><a href="#Lu-Cong-Raluca-Georgescu和Johan-Verwey-《Go-Explore-Complex-3D-Game-Environments-for-Automated-Reachability-Testing》-arXiv-2022年9月1日-http-arxiv-org-abs-2209-00570" class="headerlink" title="Lu, Cong, Raluca Georgescu和Johan Verwey. 《Go-Explore Complex 3D Game Environments for Automated Reachability Testing》. arXiv, 2022年9月1日. http://arxiv.org/abs/2209.00570."></a>Lu, Cong, Raluca Georgescu和Johan Verwey. 《Go-Explore Complex 3D Game Environments for Automated Reachability Testing》. arXiv, 2022年9月1日. <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2209.00570">http://arxiv.org/abs/2209.00570</a>.</h1><h2 id="Absract"><a href="#Absract" class="headerlink" title="Absract"></a>Absract</h2><p>现代AAA级视频游戏拥有庞大的游戏关卡和地图，对于关卡测试人员来说，这些地图日益难以进行彻底的覆盖。因此，游戏通常会出现严重的错误，比如玩家会从地板上掉下去，或者被卡在墙壁里。我们提出了一种针对模拟3D环境中可达性错误的方法，该方法基于强大的探索算法Go-Explore，该算法保存地图上的唯一检查点，然后从中选择有潜力的检查点进行探索。我们证明，当结合游戏导航网格的简单启发式方法时，Go-Explore能够发现复杂环境中具有挑战性的错误，并且无需人工示范或对游戏动态的了解。在覆盖导航网格和发现地图上的唯一位置方面，Go-Explore明显优于更复杂的基准算法，包括基于内在好奇心的强化学习。最后，由于我们使用了并行代理，我们的算法可以在单台计算机上在10小时内完全覆盖一个广阔的1.5km x 1.5km游戏世界，因此非常适用于持续测试套件。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled.png" alt="Untitled"></p>
+<h2 id="核心贡献"><a href="#核心贡献" class="headerlink" title="核心贡献"></a>核心贡献</h2><ol>
+<li>应用了一种简单高效的算法，Go-Explore，用于在具有挑战性的探索地图中发现可达位置，而无需人工示范或对游戏动态的了解。</li>
+<li>提出了一种将发现的位置与游戏NavMesh进行比较，从而将其分类为预期和意外的标准。未探索的导航网格区域也可能被标记出来。</li>
+<li>展示了通过在单个游戏实例中并行化代理，能够在单台计算机上在10小时内彻底覆盖广阔的1.5km x 1.5km游戏地图，使得我们的算法非常适用于持续测试套件。</li>
+</ol>
+<h2 id="强化学习中的探索"><a href="#强化学习中的探索" class="headerlink" title="强化学习中的探索"></a>强化学习中的探索</h2><h3 id="基于奖励函数"><a href="#基于奖励函数" class="headerlink" title="基于奖励函数"></a>基于奖励函数</h3><p>对于每一个空间状态赋予s，赋予值n(s)，在探索时每次到达此状态给予奖励r</p>
+<p>$$<br>r_t &#x3D; \frac{1}{n(s)}<br>$$</p>
+<p>但此方法难以处理状态空间较大的情况，并且利于并行计算加快训练速度。</p>
+<h3 id="Random-Network-Distillation"><a href="#Random-Network-Distillation" class="headerlink" title="Random Network Distillation"></a>Random Network Distillation</h3><p>一种用于高维状态空间的探索奖励计算的灵活方法，通过估计一个固定随机初始化神经网络给出的游戏观察特征的预测误差来计算探索奖励。RND算法的基本思想是，使用一个随机初始化的神经网络来预测游戏观察的特征，然后使用另一个神经网络来预测这些特征的误差。探索奖励是由这个误差的大小来计算的。这种方法的优点是可以适用于高维状态空间，而且不需要对环境进行任何先验知识的假设。RND算法的一个缺点是需要训练两个神经网络，这可能会增加算法的计算成本。</p>
+<h3 id="GoExplore算法"><a href="#GoExplore算法" class="headerlink" title="GoExplore算法"></a>GoExplore算法</h3><p>Go-Explore是解决难以探索问题的另一种方法，它维护先前探索过的状态的缓存，然后使用启发式方法周期性地选择有潜力的状态，并从这些状态进行探索。一旦找到了具有足够高回报的轨迹，就会使用模仿学习来使发现的行为更加稳健。该算法旨在避免“偏离轨道”的现象，在没有显式记忆的算法中，如RND，预测器网络可能会因为灾难性遗忘而丢失关于先前达到的状态的信息。在大型地图中，这种现象可能更容易发生。</p>
+<ol>
+<li>初始化：算法开始时，初始化一个已访问状态的地图和一个未探索状态的优先队列。优先队列按照每个状态被访问的次数排序，访问次数最少的状态具有最高的优先级。</li>
+<li>探索：算法进入一个循环，重复选择优先级最高的未探索状态，并对其进行探索。为了探索一个状态，算法从该状态开始进行随机游走，直到到达一个之前未访问过的新状态。然后，算法将新状态添加到已访问地图和优先队列中。</li>
+<li>缓存：为了避免重新访问已经探索过的状态，算法维护了一个已发现位置的缓存。如果算法遇到一个已经在缓存中的状态，它会跳过该状态的探索，并在当前状态和缓存状态之间添加一个链接。</li>
+<li>回溯：如果算法到达了一个死路或已经探索过的状态，它会回溯到优先队列中最后一个未探索的状态，并从那里继续探索。</li>
+<li>可达性测试：当算法探索游戏环境时，它会标记远离导航网格的已发现点。这有助于识别可达性问题并在地图上突出显示有问题的点。</li>
+<li>连续测试：Go-Explore可以集成到连续测试框架中，以在每个级别更新时发现错误，并在质量保证方面节省大量资源。</li>
+</ol>
+<h2 id="实验方法"><a href="#实验方法" class="headerlink" title="实验方法"></a>实验方法</h2><p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25201.png"></p>
+<p>使用Unreal Engine 5设计的专有测试游戏关卡上评估了方法。考虑了三个难度逐渐增加的地图：</p>
+<ul>
+<li>小地图：一个小的测试区域，包含障碍物和两个有意放置的错误（约100米 x 100米）。</li>
+<li>大地图：一个广阔的城市景观，用于测试每种算法的可扩展性（约1.5公里 x 1.5公里）。这个地图是现代自动化方法所考虑的最大地图之一。</li>
+<li>遍历地图：一个具有挑战性几何结构的大型多层地图，用作难度较高的探索挑战。</li>
+</ul>
+<p>游戏使用丰富的3D观测数据，包括可选的<strong>射线投射、位置和旋转特征</strong>。代理使用与标准游戏手柄相匹配的多离散动作空间进行移动。这些地图在图2中有所说明。</p>
+<p>对于Go-Explore，我们评估了前一节中描述的所有重置启发式方法——基于访问的、基于目标的和混合的。我们使用默认的距离阈值K &#x3D; 1来添加新的点，并且在评估代理在训练过程中访问了多少个唯一位置时使用相同的阈值。代理每隔t_reset &#x3D; 128步重置一次。首先，我们在三个测试地图上评估了Go-Explore与基准算法RND（使用Proximal Policy Optimization进行优化，Schulman等人，2017年）和随机探索的性能。接下来，我们消融了各种组件，首先表明Go-Explore对超参数选择稳定，其次，随机探索对大规模地图的强大性能至关重要。</p>
+<p>对于每个实验，通过在每个地图内运行16个独立代理来加速训练，这些代理不能相互交互或看到对方。每个代理与中央的发现位置缓存进行同步。我们在小地图上进行了200,000个时间步的训练，在两个大地图上进行了10,000,000个时间步的训练，并使用4个随机种子重复每个实验。由于我们使用了并行化，小地图的墙钟时间约为30分钟，而大地图只需要在一台F8 Azure虚拟机上进行10小时的训练即可完成。对于RND基准算法，我们仅使用了GeForce RTX 2080 GPU。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在本论文中，我们展示了Go-Explore算法能够在现代AAA级视频游戏中可扩展、高效且无需学习的情况下进行广阔的3D游戏地图可达性测试，而无需任何人工示范或对游戏动态的了解。与之前基于好奇心的强化学习方法相比，Go-Explore通过维护一个发现位置的缓存来避免灾难性遗忘的问题。Ecoffet等人（2019年）提倡的随机探索方法在实现上明显更简单，而且避免了使用神经网络。通过标记远离导航网格的发现位置，我们能够廉价地识别可达性问题，并突显地图上的问题点。由于算法运行快速且易于实现，我们预期Go-Explore可以轻松地整合到连续测试框架中。通过这样做，每个关卡在更新时都可能发现错误，并且在质量保证方面可能节省大量资源。</p>
+<h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><p>采用了一种不使用神经网络的方式解决地图遍历的问题，思路和深搜差不多，在地图上按一定间隔生成坐标点，探索到一个点就把附近一定距离内的点删了，再将仍然存在的点加入队列中。</p>
+<h1 id="Sestini-Alessandro-Linus-Gisslen-Joakim-Bergdahl-Konrad-Tollmar和Andrew-D-Bagdanov-《CCPT-Automatic-Gameplay-Testing-and-Validation-with-Curiosity-Conditioned-Proximal-Trajectories》-arXiv-2022年2月21日-http-arxiv-org-abs-2202-10057"><a href="#Sestini-Alessandro-Linus-Gisslen-Joakim-Bergdahl-Konrad-Tollmar和Andrew-D-Bagdanov-《CCPT-Automatic-Gameplay-Testing-and-Validation-with-Curiosity-Conditioned-Proximal-Trajectories》-arXiv-2022年2月21日-http-arxiv-org-abs-2202-10057" class="headerlink" title="Sestini, Alessandro, Linus Gisslén, Joakim Bergdahl, Konrad Tollmar和Andrew D. Bagdanov. 《CCPT: Automatic Gameplay Testing and Validation with Curiosity-Conditioned Proximal Trajectories》. arXiv, 2022年2月21日. http://arxiv.org/abs/2202.10057."></a>Sestini, Alessandro, Linus Gisslén, Joakim Bergdahl, Konrad Tollmar和Andrew D. Bagdanov. 《CCPT: Automatic Gameplay Testing and Validation with Curiosity-Conditioned Proximal Trajectories》. arXiv, 2022年2月21日. <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2202.10057">http://arxiv.org/abs/2202.10057</a>.</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>该论文提出了一种新颖的深度强化学习算法，用于在复杂的3D导航环境中进行自动分析和检测游戏问题。该算法名为Curiosity-Conditioned Proximal Trajectories（CCPT），它结合了好奇心学习和模仿学习，训练代理在从专家示范中得到的已知轨迹附近进行系统性探索。我们展示了CCPT如何在复杂环境中进行探索，发现游戏问题和设计缺陷，并直接向游戏设计师识别和强调这些问题。我们进一步在一个反映现代AAA级视频游戏复杂性的新颖3D导航环境中展示了该算法的有效性。我们的结果显示，CCPT相比基准方法具有更高的覆盖率和更多的错误发现，因此可以为游戏设计师提供一个有价值的自动识别游戏设计问题的工具。</p>
+<h2 id="导航模型"><a href="#导航模型" class="headerlink" title="导航模型"></a>导航模型</h2><p>agent观察到的状态由以下内容组成：以3D语义占用地图的形式的局部感知(conv3d)，以及agent物理属性的标量信息（全局位置，是否在地面上，是否附着在可攀爬表面上，是否可以执行二段跳，速度和方向）。</p>
+<p>全局位置使用positional embeddings编码生成:</p>
+<p>$$<br>PE_{(pos, 2i)} &#x3D; \sin\left(\frac{pos}{10000^{(2i&#x2F;d)}}\right)<br>$$</p>
+<p>$$<br>PE_{(pos, 2i+1)} &#x3D; \cos\left(\frac{pos}{10000^{(2i&#x2F;d)}}\right)<br>$$</p>
+<p>文章认为在3D场景中仅仅使用归一化的坐标或learned embeddings时网络不足以理解不同状态之间的区别</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%202.png" alt="Untitled"></p>
+<p>最后将这些信息concatenanted送入网络</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%203.png" alt="Untitled"></p>
+<p>在图中，展示了作为网络输入的示例3D语义地图。这些地图是对空间和代理周围元素的分类离散化表示，每个体素由该位置上对象的语义整数值来定义。给予的唯一外部奖励是当代理到达一个活动目标时，每个step都会获得+10的奖励。由于在如此庞大的环境中奖励非常稀疏，代理很难获得一个非零的奖励，因此训练非常困难。此外，仅有外部奖励的话，即使代理学会到达目标位置，它们也会始终遵循相同的轨迹而不去探索新路径。相反，我们需要代理能够在继续寻找未探索路径的同时，高效地到达目标区域，因此将探索和模仿的奖励结合起来。</p>
+<h2 id="模仿学习模型"><a href="#模仿学习模型" class="headerlink" title="模仿学习模型"></a>模仿学习模型</h2><h2 id="好奇心模型"><a href="#好奇心模型" class="headerlink" title="好奇心模型"></a>好奇心模型</h2><h2 id="好奇心驱动探索"><a href="#好奇心驱动探索" class="headerlink" title="好奇心驱动探索"></a>好奇心驱动探索</h2><p>好奇心驱动探索的流程如下：</p>
+<ol>
+<li>首先，CCPT使用专家演示来指导智能体的探索，以便智能体能够更快地学习到期望的行为。</li>
+<li>然后，有意识地探索期望轨迹的附近。CCPT使用一个称为“探索条件内在奖励函数”的函数来驱动探索。这个函数会根据智能体的行为和环境的状态来计算一个奖励值，以鼓励智能体探索未知的区域。</li>
+<li>接下来，CCPT使用深度强化学习来训练智能体，以便智能体能够自主地探索和学习。在训练过程中，智能体会不断地尝试新的行为，并根据探索条件内在奖励函数的奖励值来调整自己的行为。</li>
+<li>最后，CCPT使用并行训练来提高训练效率，以便智能体能够更快地学习到期望的行为。在并行训练中，多个智能体会同时进行训练，以便更快地收敛到最优解。</li>
+</ol>
+<p>通过这个流程，CCPT能够有意识地探索期望轨迹的附近，并帮助游戏设计师自动检测复杂3D游戏场景中的错误和问题。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">论文阅读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lu-Cong-Raluca-Georgescu%E5%92%8CJohan-Verwey-%E3%80%8AGo-Explore-Complex-3D-Game-Environments-for-Automated-Reachability-Testing%E3%80%8B-arXiv-2022%E5%B9%B49%E6%9C%881%E6%97%A5-http-arxiv-org-abs-2209-00570"><span class="toc-number">2.</span> <span class="toc-text">Lu, Cong, Raluca Georgescu和Johan Verwey. 《Go-Explore Complex 3D Game Environments for Automated Reachability Testing》. arXiv, 2022年9月1日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2209.00570.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Absract"><span class="toc-number">2.1.</span> <span class="toc-text">Absract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E8%B4%A1%E7%8C%AE"><span class="toc-number">2.2.</span> <span class="toc-text">核心贡献</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%8E%A2%E7%B4%A2"><span class="toc-number">2.3.</span> <span class="toc-text">强化学习中的探索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0"><span class="toc-number">2.3.1.</span> <span class="toc-text">基于奖励函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Random-Network-Distillation"><span class="toc-number">2.3.2.</span> <span class="toc-text">Random Network Distillation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GoExplore%E7%AE%97%E6%B3%95"><span class="toc-number">2.3.3.</span> <span class="toc-text">GoExplore算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%96%B9%E6%B3%95"><span class="toc-number">2.4.</span> <span class="toc-text">实验方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.5.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%94%E8%AE%B0"><span class="toc-number">2.6.</span> <span class="toc-text">笔记</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sestini-Alessandro-Linus-Gisslen-Joakim-Bergdahl-Konrad-Tollmar%E5%92%8CAndrew-D-Bagdanov-%E3%80%8ACCPT-Automatic-Gameplay-Testing-and-Validation-with-Curiosity-Conditioned-Proximal-Trajectories%E3%80%8B-arXiv-2022%E5%B9%B42%E6%9C%8821%E6%97%A5-http-arxiv-org-abs-2202-10057"><span class="toc-number">3.</span> <span class="toc-text">Sestini, Alessandro, Linus Gisslén, Joakim Bergdahl, Konrad Tollmar和Andrew D. Bagdanov. 《CCPT: Automatic Gameplay Testing and Validation with Curiosity-Conditioned Proximal Trajectories》. arXiv, 2022年2月21日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2202.10057.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">3.1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.2.</span> <span class="toc-text">导航模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E4%BB%BF%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.3.</span> <span class="toc-text">模仿学习模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%A5%87%E5%BF%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.4.</span> <span class="toc-text">好奇心模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%BD%E5%A5%87%E5%BF%83%E9%A9%B1%E5%8A%A8%E6%8E%A2%E7%B4%A2"><span class="toc-number">3.5.</span> <span class="toc-text">好奇心驱动探索</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/ec6151bc.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/ec6151bc.html&text=强化学习游戏论文阅读"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/ec6151bc.html&is_video=false&description=强化学习游戏论文阅读"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习游戏论文阅读&body=Check out this article: http://holmodi.fun/posts/ec6151bc.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/ec6151bc.html&title=强化学习游戏论文阅读"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/ec6151bc.html&name=强化学习游戏论文阅读&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/ec6151bc.html&t=强化学习游戏论文阅读"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

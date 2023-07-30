@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="训练记录训练环境搭建 Version information:ml-agents: 0.30.0,ml-agents-envs: 0.30.0,Communicator API: 1.5.0,PyTorch: 2.0.1+cu117  训练命令行输入： 1mlagents-learn .&#x2F;DodgeBall.yaml --run-id&#x3D;fifthrun --initialize-from&#x3D;fout">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习多人FPS训练记录">
+<meta property="og:url" content="http://holmodi.fun/posts/18650ffe.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="训练记录训练环境搭建 Version information:ml-agents: 0.30.0,ml-agents-envs: 0.30.0,Communicator API: 1.5.0,PyTorch: 2.0.1+cu117  训练命令行输入： 1mlagents-learn .&#x2F;DodgeBall.yaml --run-id&#x3D;fifthrun --initialize-from&#x3D;fout">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25201.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25202.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25203.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25204.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25205.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25206.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25207.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25208.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25209.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%252010.png">
+<meta property="article:published_time" content="2023-06-30T07:46:04.000Z">
+<meta property="article:modified_time" content="2023-07-30T07:47:15.902Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>强化学习多人FPS训练记录</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/posts/ec6151bc.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/b61e059f.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/18650ffe.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/18650ffe.html&text=强化学习多人FPS训练记录"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/18650ffe.html&is_video=false&description=强化学习多人FPS训练记录"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习多人FPS训练记录&body=Check out this article: http://holmodi.fun/posts/18650ffe.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/18650ffe.html&name=强化学习多人FPS训练记录&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/18650ffe.html&t=强化学习多人FPS训练记录"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">训练记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">训练环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">训练场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">智能体设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93sensor%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">智能体sensor设置</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        强化学习多人FPS训练记录
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-06-30T07:46:04.000Z" class="dt-published" itemprop="datePublished">2023-06-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">学习笔记</a>, <a class="p-category" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag">强化学习</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="训练记录"><a href="#训练记录" class="headerlink" title="训练记录"></a>训练记录</h1><h2 id="训练环境搭建"><a href="#训练环境搭建" class="headerlink" title="训练环境搭建"></a>训练环境搭建</h2><blockquote>
+<p>Version information:<br>ml-agents: 0.30.0,<br>ml-agents-envs: 0.30.0,<br>Communicator API: 1.5.0,<br>PyTorch: 2.0.1+cu117</p>
+</blockquote>
+<p>训练命令行输入：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mlagents-learn ./DodgeBall.yaml --run-id=fifthrun --initialize-<span class="keyword">from</span>=fouthRun --resume</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trainer_type</td>
+<td>poca</td>
+</tr>
+<tr>
+<td>batch_size</td>
+<td>2048</td>
+</tr>
+<tr>
+<td>buffer_size</td>
+<td>20480</td>
+</tr>
+<tr>
+<td>learning_rate</td>
+<td>0.0003</td>
+</tr>
+<tr>
+<td>beta</td>
+<td>0.005</td>
+</tr>
+<tr>
+<td>epsilon</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>lambd</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>num_epoch</td>
+<td>3</td>
+</tr>
+<tr>
+<td>learning_rate_schedule</td>
+<td>constant</td>
+</tr>
+<tr>
+<td>beta_schedule</td>
+<td>constant</td>
+</tr>
+<tr>
+<td>epsilon_schedule</td>
+<td>constant</td>
+</tr>
+<tr>
+<td>normalize</td>
+<td>False</td>
+</tr>
+<tr>
+<td>hidden_units</td>
+<td>512</td>
+</tr>
+<tr>
+<td>num_layers</td>
+<td>3</td>
+</tr>
+<tr>
+<td>vis_encode_type</td>
+<td>simple</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>None</td>
+</tr>
+<tr>
+<td>goal_conditioning_type</td>
+<td>none</td>
+</tr>
+<tr>
+<td>deterministic</td>
+<td>False</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td>0.999</td>
+</tr>
+<tr>
+<td>strength</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>normalize</td>
+<td>False</td>
+</tr>
+<tr>
+<td>hidden_units</td>
+<td>128</td>
+</tr>
+<tr>
+<td>num_layers</td>
+<td>2</td>
+</tr>
+<tr>
+<td>vis_encode_type</td>
+<td>simple</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>None</td>
+</tr>
+<tr>
+<td>goal_conditioning_type</td>
+<td>hyper</td>
+</tr>
+<tr>
+<td>deterministic</td>
+<td>False</td>
+</tr>
+<tr>
+<td>init_path</td>
+<td>None</td>
+</tr>
+<tr>
+<td>keep_checkpoints</td>
+<td>40</td>
+</tr>
+<tr>
+<td>checkpoint_interval</td>
+<td>2000000</td>
+</tr>
+<tr>
+<td>max_steps</td>
+<td>500000000</td>
+</tr>
+<tr>
+<td>time_horizon</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>summary_freq</td>
+<td>50000</td>
+</tr>
+<tr>
+<td>threaded</td>
+<td>False</td>
+</tr>
+<tr>
+<td>save_steps</td>
+<td>500000</td>
+</tr>
+<tr>
+<td>team_change</td>
+<td>1000000</td>
+</tr>
+<tr>
+<td>swap_steps</td>
+<td>200000</td>
+</tr>
+<tr>
+<td>window</td>
+<td>100</td>
+</tr>
+<tr>
+<td>play_against_latest_model_ratio</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>initial_elo</td>
+<td>1200.0</td>
+</tr>
+<tr>
+<td>behavioral_cloning</td>
+<td>None</td>
+</tr>
+</tbody></table>
+<h3 id="训练场景"><a href="#训练场景" class="headerlink" title="训练场景"></a>训练场景</h3><p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled.png" alt="Untitled"></p>
+<p><strong>场景定义：</strong></p>
+<p>外围墙体+障碍物墙体+空投补给。</p>
+<p>蓝色空投补给10s刷新，补充所有子弹，黄色补充所有子弹同时武器伤害+1。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25201.png" alt="Untitled"></p>
+<p>输入数据与y轴无关，将九个场景垂直放置加快训练速度</p>
+<h2 id="智能体设置"><a href="#智能体设置" class="headerlink" title="智能体设置"></a>智能体设置</h2><p>血量：2</p>
+<p>基础攻击：1</p>
+<p>冲刺CD：1</p>
+<p>移动速度：20</p>
+<p>冲刺移速：30</p>
+<h3 id="智能体sensor设置"><a href="#智能体sensor设置" class="headerlink" title="智能体sensor设置"></a>智能体sensor设置</h3><ul>
+<li><p>弹药传感器：检测射击的弹道和空投弹药箱</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25202.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25203.png" alt="Untitled"></p>
+</li>
+<li><p>人物传感器：检测队友、对手以及他们的朝向</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25204.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25205.png" alt="Untitled"></p>
+</li>
+<li><p>墙体传感器：检测障碍物</p>
+</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25206.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25207.png" alt="Untitled"></p>
+<ul>
+<li>背后信息传感器</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25208.png" alt="Untitled"></p>
+<p>最终结果：</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%25209.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/Untitled%252010.png" alt="Untitled"></p>
+<ul>
+<li><p>BufferSensor</p>
+<ul>
+<li><p>存储其余队友的PlayerInfo，最大8×3</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">PlayerInfo</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">public</span> DodgeBallAgent Agent;</span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">int</span> HitPointsRemaining;</span><br><span class="line">            [<span class="meta">HideInInspector</span>]</span><br><span class="line">            <span class="keyword">public</span> Vector3 StartingPos;</span><br><span class="line">            [<span class="meta">HideInInspector</span>]</span><br><span class="line">            <span class="keyword">public</span> Quaternion StartingRot;</span><br><span class="line">            [<span class="meta">HideInInspector</span>]</span><br><span class="line">            <span class="keyword">public</span> Rigidbody Rb;</span><br><span class="line">            [<span class="meta">HideInInspector</span>]</span><br><span class="line">            <span class="keyword">public</span> Collider Col;</span><br><span class="line">            [<span class="meta">HideInInspector</span>]</span><br><span class="line">            <span class="keyword">public</span> <span class="built_in">int</span> TeamID;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="built_in">float</span>[] <span class="title">GetOtherAgentData</span>(<span class="params">DodgeBallGameController.PlayerInfo info</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> otherAgentdata = <span class="keyword">new</span> <span class="built_in">float</span>[<span class="number">8</span>];</span><br><span class="line">            otherAgentdata[<span class="number">0</span>] = (<span class="built_in">float</span>)info.Agent.HitPointsRemaining / (<span class="built_in">float</span>)NumberOfTimesPlayerCanBeHit;</span><br><span class="line">            <span class="keyword">var</span> relativePosition = transform.InverseTransformPoint(info.Agent.transform.position);</span><br><span class="line">            otherAgentdata[<span class="number">1</span>] = relativePosition.x / m_LocationNormalizationFactor;</span><br><span class="line">            otherAgentdata[<span class="number">2</span>] = relativePosition.z / m_LocationNormalizationFactor;</span><br><span class="line">            otherAgentdata[<span class="number">3</span>] = info.TeamID == teamID ? <span class="number">0.0f</span> : <span class="number">1.0f</span>;</span><br><span class="line">            otherAgentdata[<span class="number">4</span>] = info.Agent.HasEnemyFlag ? <span class="number">1.0f</span> : <span class="number">0.0f</span>;</span><br><span class="line">            otherAgentdata[<span class="number">5</span>] = info.Agent.Stunned ? <span class="number">1.0f</span> : <span class="number">0.0f</span>;</span><br><span class="line">            <span class="keyword">var</span> relativeVelocity = transform.InverseTransformDirection(info.Agent.AgentRb.velocity);</span><br><span class="line">            otherAgentdata[<span class="number">6</span>] = relativeVelocity.x / <span class="number">30.0f</span>;</span><br><span class="line">            otherAgentdata[<span class="number">7</span>] = relativeVelocity.z / <span class="number">30.0f</span>;</span><br><span class="line">            <span class="keyword">return</span> otherAgentdata;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>观察空间输入</p>
+<table>
+<thead>
+<tr>
+<th>观察空间编号</th>
+<th>类型</th>
+<th>描述</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>bool</td>
+<td>当前是否可以射击</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>bool</td>
+<td>是否眩晕</td>
+<td></td>
+</tr>
+<tr>
+<td>2-6</td>
+<td>float</td>
+<td>当前持有弹匣数，OneHot编码</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>float</td>
+<td>当前血量&#x2F;总血量</td>
+<td></td>
+</tr>
+<tr>
+<td>8</td>
+<td>float</td>
+<td>前向向速度分量</td>
+<td></td>
+</tr>
+<tr>
+<td>9</td>
+<td>float</td>
+<td>横向速度分量</td>
+<td></td>
+</tr>
+<tr>
+<td>10-12</td>
+<td>vector3</td>
+<td>相对初始位置offset</td>
+<td>将y轴数据移除</td>
+</tr>
+<tr>
+<td>13</td>
+<td>bool</td>
+<td>冲刺CD，1为可以使用</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>bool</td>
+<td>冗余位，当前输入始终为0</td>
+<td>删除</td>
+</tr>
+<tr>
+<td>17</td>
+<td>float</td>
+<td>剩余敌人数量比例</td>
+<td></td>
+</tr>
+<tr>
+<td>18~19</td>
+<td>vector2</td>
+<td>冗余位，输入0，0</td>
+<td>删除</td>
+</tr>
+</tbody></table>
+<p>后面优化后将观察空间缩小至16位</p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">训练记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.1.</span> <span class="toc-text">训练环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.1.</span> <span class="toc-text">训练场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">智能体设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%BA%E8%83%BD%E4%BD%93sensor%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.2.1.</span> <span class="toc-text">智能体sensor设置</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/18650ffe.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/18650ffe.html&text=强化学习多人FPS训练记录"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/18650ffe.html&is_video=false&description=强化学习多人FPS训练记录"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习多人FPS训练记录&body=Check out this article: http://holmodi.fun/posts/18650ffe.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/18650ffe.html&title=强化学习多人FPS训练记录"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/18650ffe.html&name=强化学习多人FPS训练记录&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/18650ffe.html&t=强化学习多人FPS训练记录"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
