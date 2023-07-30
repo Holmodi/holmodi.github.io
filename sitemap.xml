@@ -76,7 +76,7 @@
 
   <url>
     <loc>http://holmodi.fun/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -84,28 +84,28 @@
   
   <url>
     <loc>http://holmodi.fun/tags/%E7%94%B5%E5%BD%B1/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://holmodi.fun/tags/%E6%B8%B8%E6%88%8F/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://holmodi.fun/tags/%E6%97%A7%E6%96%87/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://holmodi.fun/tags/%E4%BA%92%E5%8A%A8%E5%8F%99%E4%BA%8B/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -114,14 +114,14 @@
   
   <url>
     <loc>http://holmodi.fun/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://holmodi.fun/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2023-05-29</lastmod>
+    <lastmod>2023-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
