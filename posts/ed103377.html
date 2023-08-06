@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Sestini, Alessandro, Joakim Bergdahl, Konrad Tollmar, Andrew D Bagdanov和Linus Gisslén. 《Towards Informed Design and Validation Assistance in Computer Games Using Imitation Learning》,摘要在游戏开发和许多其他领域中，由于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习关卡测试论文阅读2">
+<meta property="og:url" content="http://holmodi.fun/posts/ed103377.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="Sestini, Alessandro, Joakim Bergdahl, Konrad Tollmar, Andrew D Bagdanov和Linus Gisslén. 《Towards Informed Design and Validation Assistance in Computer Games Using Imitation Learning》,摘要在游戏开发和许多其他领域中，由于">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110810.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110049.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110827.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110073.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110320.png">
+<meta property="article:published_time" content="2023-08-06T13:12:46.000Z">
+<meta property="article:modified_time" content="2023-08-06T13:15:58.518Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="游戏">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110810.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>强化学习关卡测试论文阅读2</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/f54245b3.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/ed103377.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/ed103377.html&text=强化学习关卡测试论文阅读2"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/ed103377.html&is_video=false&description=强化学习关卡测试论文阅读2"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习关卡测试论文阅读2&body=Check out this article: http://holmodi.fun/posts/ed103377.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/ed103377.html&name=强化学习关卡测试论文阅读2&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/ed103377.html&t=强化学习关卡测试论文阅读2"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sestini-Alessandro-Joakim-Bergdahl-Konrad-Tollmar-Andrew-D-Bagdanov%E5%92%8CLinus-Gisslen-%E3%80%8ATowards-Informed-Design-and-Validation-Assistance-in-Computer-Games-Using-Imitation-Learning%E3%80%8B"><span class="toc-number">1.</span> <span class="toc-text">Sestini, Alessandro, Joakim Bergdahl, Konrad Tollmar, Andrew D Bagdanov和Linus Gisslén. 《Towards Informed Design and Validation Assistance in Computer Games Using Imitation Learning》,</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">实验流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#User-Study"><span class="toc-number">1.4.</span> <span class="toc-text">User Study</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">未来方向：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.6.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Alonso-Eloi-Maxim-Peter-David-Goumard%E5%92%8CJoshua-Romoff-%E3%80%8ADeep-Reinforcement-Learning-for-Navigation-in-AAA-Video-Games%E3%80%8B-arXiv-2020%E5%B9%B411%E6%9C%8817%E6%97%A5-http-arxiv-org-abs-2011-04764"><span class="toc-number">2.</span> <span class="toc-text">Alonso, Eloi, Maxim Peter, David Goumard和Joshua Romoff. 《Deep Reinforcement Learning for Navigation in AAA Video Games》. arXiv, 2020年11月17日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2011.04764.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E8%A6%81"><span class="toc-number">2.1.</span> <span class="toc-text">论文简要 :</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">背景信息:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">方法:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-1"><span class="toc-number">2.4.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.5.</span> <span class="toc-text">结果:</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        强化学习关卡测试论文阅读2
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-06T13:12:46.000Z" class="dt-published" itemprop="datePublished">2023-08-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag">强化学习</a>, <a class="p-category" href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag">游戏</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Sestini-Alessandro-Joakim-Bergdahl-Konrad-Tollmar-Andrew-D-Bagdanov和Linus-Gisslen-《Towards-Informed-Design-and-Validation-Assistance-in-Computer-Games-Using-Imitation-Learning》"><a href="#Sestini-Alessandro-Joakim-Bergdahl-Konrad-Tollmar-Andrew-D-Bagdanov和Linus-Gisslen-《Towards-Informed-Design-and-Validation-Assistance-in-Computer-Games-Using-Imitation-Learning》" class="headerlink" title="Sestini, Alessandro, Joakim Bergdahl, Konrad Tollmar, Andrew D Bagdanov和Linus Gisslén. 《Towards Informed Design and Validation Assistance in Computer Games Using Imitation Learning》,"></a>Sestini, Alessandro, Joakim Bergdahl, Konrad Tollmar, Andrew D Bagdanov和Linus Gisslén. 《Towards Informed Design and Validation Assistance in Computer Games Using Imitation Learning》,</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>在游戏开发和许多其他领域中，由于系统规模的不断增长和手动测试变得不可行，设计验证和测试成为一个重大挑战。本文提出了一种新的自动游戏验证方法。我们的方法利用数据驱动的模仿学习技术，这种方法需要很少的努力和时间，无需机器学习或编程知识，设计师可以使用这种方法高效地训练游戏测试代理程序。我们通过与行业专家进行用户研究来验证我们的方法的有效性。调查结果显示，我们的方法确实是一种有效的游戏验证方法，并且数据驱动的编程将有助于减少工作量并提高现代游戏测试的质量。调查还强调了一些尚未解决的挑战。借助最新的文献资料，我们分析了这些挑战，并提出了未来研究方向，以最大化我们方法的效用。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110810.png" alt="Untitled"></p>
+<p>文章主要验证了一种HILL（Human-In-the-Loop Learning）的自动关卡测试流程，可以大致概括为设计师在沙盒里搭建一个关卡，自己试玩几遍保存数据，通过IL算法，基于数据训练一个agent模仿已有轨迹，之后可以调整关卡摆放，让agent来验证关卡设计的合理性。</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p><strong>算法</strong>：DAgger</p>
+<p><strong>状态空间</strong>：基础的Gamerplay数据，如是否在地面、是否在攀爬，文章里没有给全，以及标准化的当前到目标点的向量，还有一个没描述清楚但比较关键的是composed of the R2 projections of the agent-to-goal vector onto the XY and XZ planes，这个也没具体解释是什么意思，根据文章里面这张图推测应该是agent面前有两个平面，目标点到agent的射线穿过这个平面是的接触点被编码为1，其他点是0。</p>
+<p><strong>模型：</strong>图上c所示模型</p>
+<h2 id="实验流程"><a href="#实验流程" class="headerlink" title="实验流程"></a>实验流程</h2><p><strong><strong><strong><strong><strong><strong>环境搭建：</strong></strong></strong></strong></strong></strong>搭建一个带有程序化生成元素的3d沙盒地图，设计师可以自行调整目标点位置，关卡布局，中间目标点以及动态元素。Agent使用离散动作空间，有向前移动，向后移动，右转，左转，跳跃，射击，什么都不做 7个基础动作，在交互物体旁有与场景交互动作。</p>
+<p><strong>培训目标：衡量算法的泛化成功率，轨迹相似度量，目标达成率</strong></p>
+<ul>
+<li><strong>泛化成功率：</strong>验证IL代理能否实时验证变动的关卡布局。先通过IL训练模型，然后调整关卡摆放，观察agent如何适应这些更改，以验证设计的有效性。</li>
+<li><strong>验证复杂轨迹:</strong> 构建一条复杂轨迹，文中示例包括使用电梯，与按钮交互，射击破坏墙体，到达目标位置，验证算法是否能快速学习专家示例。</li>
+<li><strong>目标达成率：</strong>在一个地图中记录演示到达目标位置的导航数据并训练模型，然后每隔几秒将agent随机放在地图上的一个位置，测试能否自主到达目标。</li>
+</ul>
+<h2 id="User-Study"><a href="#User-Study" class="headerlink" title="User Study"></a>User Study</h2><p>通过在线问卷的方式获取调查结果，问题由Likert question和开放问题组成，调查分为四个部分:</p>
+<p>第一部分要求参与者提供一些背景信息;</p>
+<p>第二个问题是询问他们当前的游戏验证工作流程，特别是他们是否使用手动或自动测试;</p>
+<p>第三，作为调查的主要部分，询问参与者对我们的解决方案的看法，他们是否会在自己的游戏中使用它，代理人&#x2F;方法应该具备什么特征来帮助他们在游戏和关卡设计工作中发挥作用，他们是否认为IL能够帮助他们创造出更好的游戏;</p>
+<p>第四个可选问题包括还有哪些可能的use case以及对未来方向的建议。</p>
+<h2 id="未来方向："><a href="#未来方向：" class="headerlink" title="未来方向："></a>未来方向：</h2><p><strong>泛化</strong>:代理不仅能学会专家的演示行为，还能进一步去代表大部分用户可能会采取的自然行为，代理的训练更一般化，同时具有更高的探索水平。</p>
+<p>**代理个性Personas:**能够训练具有不同性格的agent，创造类似不同种类玩家的多性格代理。</p>
+<p><strong>探索：</strong>Agent能够在模仿的同时具备探索被忽视问题的能力。</p>
+<p><strong>Usability</strong>：文中认为的重要改进方向，让整个工具的使用流程和实用度提升，让不懂机器学习的设计师也能获取到关于他们训练模型的可用信息，同时改善整个工具的易用性。</p>
+<p><strong>多代理：</strong>目前大部分游戏都需要multi-agent验证，目前研究还停留在单智能体对单一示例学习上。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在这篇论文中，我们声称通过模仿学习的数据驱动编程是适用于实时验证游戏和关卡设计的一种合适方法。我们提出了一种模仿学习方法，并研究了其性能，重点关注三种不同的设计验证用例。我们的实验展示了与利用强化学习或基于模型的脚本化行为的方法相比，这种方法在满足有效的游戏设计工具需求方面的优势。我们还与来自不同游戏工作室和游戏类型的专业游戏和关卡设计师进行了用户研究。我们询问参与者评估在日常工作流程中使用这种方法的可取性和改进机会。此外，我们还询问设计师希望从数据驱动的工具中获得哪些特性，以用于创建验证其设计的自主代理。</p>
+<p>用户研究突显了设计师希望有一种自动化的方式来测试和验证他们的游戏。除了我们的初步结果外，我们还展示了我们提出的数据驱动方法是实现这些目标的潜在候选方法。研究还强调了存在于文献技术和实际在游戏行业中应用之间的挑战和差距。因此，我们提出了一系列研究方向，以帮助这些方法从一个不切实际的工具发展成为一个有效的游戏设计工具。我们希望我们的建议能够鼓励游戏研究社区为这项研究做出贡献或扩展。</p>
+<p>论文所用问卷：</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110049.png" alt="Untitled"></p>
+<h1 id="Alonso-Eloi-Maxim-Peter-David-Goumard和Joshua-Romoff-《Deep-Reinforcement-Learning-for-Navigation-in-AAA-Video-Games》-arXiv-2020年11月17日-http-arxiv-org-abs-2011-04764"><a href="#Alonso-Eloi-Maxim-Peter-David-Goumard和Joshua-Romoff-《Deep-Reinforcement-Learning-for-Navigation-in-AAA-Video-Games》-arXiv-2020年11月17日-http-arxiv-org-abs-2011-04764" class="headerlink" title="Alonso, Eloi, Maxim Peter, David Goumard和Joshua Romoff. 《Deep Reinforcement Learning for Navigation in AAA Video Games》. arXiv, 2020年11月17日. http://arxiv.org/abs/2011.04764."></a>Alonso, Eloi, Maxim Peter, David Goumard和Joshua Romoff. 《Deep Reinforcement Learning for Navigation in AAA Video Games》. arXiv, 2020年11月17日. <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2011.04764">http://arxiv.org/abs/2011.04764</a>.</h1><h2 id="论文简要"><a href="#论文简要" class="headerlink" title="论文简要 :"></a>论文简要 :</h2><ul>
+<li>本文提出了一种使用深度强化学习来实现视频游戏中非玩家角色导航的方法，通过学习如何在3D地图上使用各种导航能力，取代了传统的基于图形的导航方法，实现了在复杂环境中高效导航的目标。</li>
+</ul>
+<h2 id="背景信息"><a href="#背景信息" class="headerlink" title="背景信息:"></a>背景信息:</h2><ul>
+<li>论文背景: 在视频游戏中，非玩家角色（NPC）的导航是提升玩家体验的重要组成部分，传统的导航方法使用导航网格（NavMesh）来表示地图，但对于具有复杂导航能力的NPC，NavMesh的复杂性使其难以应用于实际场景。</li>
+<li>过去方案: 过去的解决方案包括使用路径规划算法和扩展NavMesh来处理角色的导航能力，但这些方法限制了NPC可以使用的导航能力，降低了NPC的真实感。</li>
+<li>论文的Motivation: 为了解决传统导航方法的局限性，本文提出使用深度强化学习来学习如何使用各种导航能力在地图上导航，以取代传统的基于图形的导航方法。通过使用现代AAA视频游戏中的复杂3D环境进行测试，证明了该方法的有效性和高性能。</li>
+</ul>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法:"></a>方法:</h2><ul>
+<li>a. 理论背景:<ul>
+<li>本文研究了视频游戏中非玩家角色（NPCs）的导航问题。传统方法使用导航网格（NavMesh）来表示地图并找到位置之间的最短路径。然而，当处理像抓钩或传送等复杂导航能力时，NavMesh变得复杂且难以处理。作者提出使用深度强化学习（Deep RL）来学习如何使用任何导航能力导航3D地图。他们在Unity游戏引擎中的大型复杂3D环境中测试了他们的方法，并取得了很高的成功率。</li>
+</ul>
+</li>
+<li>b. 技术路线:<ul>
+<li>本文的方法旨在使用代理的可用导航能力解决固定3D地图上的点对点导航问题。系统架构包括一个共享的嵌入网络，用于处理输入，如3D占用地图、2D深度图和代理及其目标的绝对位置。提取的特征与其他状态变量（如相对目标位置、速度、加速度和先前动作）结合，然后通过线性层和LSTM传递，创建最终的嵌入，由策略和评论模型共享。该方法中的动作是连续的，对应跳跃、前进、横移和旋转。奖励被密集化以鼓励代理尽快接近目标并尽快到达。训练过程使用了一种离策略强化学习算法，称为soft 演员-评论家算法，评论家和策略网络共享从局部感知中提取嵌入的层，使用卷积神经网络和LSTM。训练使用burn-in来初始化隐藏状态，并使用训练课程逐渐增加难度。训练使用Adam优化器进行。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110827.png" alt="Untitled"></p>
+<h2 id="环境搭建-1"><a href="#环境搭建-1" class="headerlink" title="环境搭建"></a>环境搭建</h2><p><strong>观察空间</strong>：3d occumpancymap + 2d深度图+常规int vector类型agent信息（速度、相对位置、之前动作）</p>
+<p><strong>动作空间：</strong>continuous：跳跃、前进、射击、转向。跳跃在输出时是连续动作，处理时按离散动作处理。</p>
+<p><strong>奖励：</strong>除到达目标点之外，为防止奖励过于稀疏，每一步都会获得基于当前timestep的当前距目标点欧式距离奖励，在一定时间后没到点目标点给与惩罚。概括来说就是一个鼓励agent尽快靠近目标的值。</p>
+<p>$$<br>R_t &#x3D; \max\left(\min_{\forall i \in [|0, t-1|]} D_i(\text{agent}, \text{goal}) - D_t(\text{agent}, \text{goal}), 0\right)^{D_t(\text{agent}, \text{goal})} + \alpha + 1\quad D_t(\text{agent}, \text{goal}) \leq \varepsilon<br>$$</p>
+<p><strong>训练流程：</strong>初始阶段在地图选定一个点，在一个较小半径内随机生成agent和目标点，训练一定步数后扩大半径范围直到整个地图区域都被覆盖。</p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果:"></a>结果:</h2><ul>
+<li><p>a. 详细的实验设置:</p>
+<ul>
+<li>实验在Unity游戏引擎上构建的Toy Map和Big Map上进行。Toy Map是一个小地图，用于说明现有导航解决方案的局限性，而Big Map是一个更大更复杂的环境，包含建筑物和不同的目标。在这两个地图上进行了两组消融实验：基于状态的消融和基于算法的消融。在基于状态的消融中，评估了没有BoxCasts、没有RayCasts、没有BoxCasts和RayCasts以及没有绝对位置的代理。在基于算法的消融中，将基准代理与没有LSTM、没有课程和使用分层经验回放（HER）进行训练的代理进行了比较。</li>
+</ul>
+<p>  <img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110073.png" alt="Untitled">
+  </p>
+</li>
+<li><p>b. 详细的实验结果:</p>
+<ul>
+<li>消融研究的结果显示，在最终课程级别上，基准代理在达到目标的成功率方面明显优于没有BoxCasts、没有RayCasts和没有BoxCasts和RayCasts的代理。从代理的状态中删除绝对位置不会对性能产生负面影响，并且实际上在Big Map上平均略有改善。然而，在Toy Map上，这种改善在统计上并不显著。通过RayCasts和BoxCasts实现的局部感知显著提高了深度强化学习系统的样本效率。LSTM组件在训练大型地图时对于样本效率的优化是至关重要的。算法消融实验表明，去除LSTM会显著降低Big Map上的样本效率。此外，去除训练课程会显著提高Big Map上的性能，但对Toy Map没有显著影响。与NavMesh的比较表明，深度强化学习系统可以处理导航动作，而无需手动指定单个链接。深度强化学习方法在所有测试场景中至少达到90%的成功率。</li>
+</ul>
+<p>  <img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062110320.png" alt="Untitled"></p>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sestini-Alessandro-Joakim-Bergdahl-Konrad-Tollmar-Andrew-D-Bagdanov%E5%92%8CLinus-Gisslen-%E3%80%8ATowards-Informed-Design-and-Validation-Assistance-in-Computer-Games-Using-Imitation-Learning%E3%80%8B"><span class="toc-number">1.</span> <span class="toc-text">Sestini, Alessandro, Joakim Bergdahl, Konrad Tollmar, Andrew D Bagdanov和Linus Gisslén. 《Towards Informed Design and Validation Assistance in Computer Games Using Imitation Learning》,</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">1.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">实验流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#User-Study"><span class="toc-number">1.4.</span> <span class="toc-text">User Study</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">未来方向：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">1.6.</span> <span class="toc-text">结论</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Alonso-Eloi-Maxim-Peter-David-Goumard%E5%92%8CJoshua-Romoff-%E3%80%8ADeep-Reinforcement-Learning-for-Navigation-in-AAA-Video-Games%E3%80%8B-arXiv-2020%E5%B9%B411%E6%9C%8817%E6%97%A5-http-arxiv-org-abs-2011-04764"><span class="toc-number">2.</span> <span class="toc-text">Alonso, Eloi, Maxim Peter, David Goumard和Joshua Romoff. 《Deep Reinforcement Learning for Navigation in AAA Video Games》. arXiv, 2020年11月17日. http:&#x2F;&#x2F;arxiv.org&#x2F;abs&#x2F;2011.04764.</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E8%A6%81"><span class="toc-number">2.1.</span> <span class="toc-text">论文简要 :</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">2.2.</span> <span class="toc-text">背景信息:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">方法:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-1"><span class="toc-number">2.4.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">2.5.</span> <span class="toc-text">结果:</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/ed103377.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/ed103377.html&text=强化学习关卡测试论文阅读2"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/ed103377.html&is_video=false&description=强化学习关卡测试论文阅读2"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习关卡测试论文阅读2&body=Check out this article: http://holmodi.fun/posts/ed103377.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/ed103377.html&title=强化学习关卡测试论文阅读2"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/ed103377.html&name=强化学习关卡测试论文阅读2&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/ed103377.html&t=强化学习关卡测试论文阅读2"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

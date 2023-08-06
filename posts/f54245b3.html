@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="强化学习构建关卡设计辅助流程 草稿Ai生成概要：  在游戏开发中，关卡设计是至关重要的一部分。一个好的关卡设计可以让游戏更加有趣、具有挑战性，甚至可以吸引更多的玩家。然而，设计一个好的关卡并不是一件容易的事情，需要设计师有丰富的经验和技能。 为了解决这个问题，我们设计并验证了一套基于强化学习的辅助关卡迭代流程。这个流程可以帮助设计师快速设计出更好的关卡，并提供实时的反馈，以便设计师可以及时调整关卡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强化学习构建关卡设计辅助流程 草稿">
+<meta property="og:url" content="http://holmodi.fun/posts/f54245b3.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="强化学习构建关卡设计辅助流程 草稿Ai生成概要：  在游戏开发中，关卡设计是至关重要的一部分。一个好的关卡设计可以让游戏更加有趣、具有挑战性，甚至可以吸引更多的玩家。然而，设计一个好的关卡并不是一件容易的事情，需要设计师有丰富的经验和技能。 为了解决这个问题，我们设计并验证了一套基于强化学习的辅助关卡迭代流程。这个流程可以帮助设计师快速设计出更好的关卡，并提供实时的反馈，以便设计师可以及时调整关卡">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062113497.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062113670.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114416.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114940.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114401.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114919.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114545.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114356.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114303.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114051.png">
+<meta property="article:published_time" content="2023-08-06T12:52:25.000Z">
+<meta property="article:modified_time" content="2023-08-06T13:14:41.371Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="游戏">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062113497.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>强化学习构建关卡设计辅助流程 草稿</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/posts/ed103377.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/ec6151bc.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/f54245b3.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/f54245b3.html&text=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/f54245b3.html&is_video=false&description=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习构建关卡设计辅助流程 草稿&body=Check out this article: http://holmodi.fun/posts/f54245b3.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/f54245b3.html&name=强化学习构建关卡设计辅助流程 草稿&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/f54245b3.html&t=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%9E%84%E5%BB%BA%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1%E8%BE%85%E5%8A%A9%E6%B5%81%E7%A8%8B-%E8%8D%89%E7%A8%BF"><span class="toc-number">1.</span> <span class="toc-text">强化学习构建关卡设计辅助流程 草稿</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HIIL%E7%90%86%E8%AE%BA"><span class="toc-number">1.1.</span> <span class="toc-text">HIIL理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RL%E8%BE%85%E5%8A%A9%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%8F%AF%E8%A1%8C%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">RL辅助关卡设计的可行性分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RL%E8%BE%85%E5%8A%A9%E5%85%B3%E5%8D%A1%E8%BF%AD%E4%BB%A3%E7%9A%84%E5%88%9D%E7%89%88%E6%B5%81%E7%A8%8B%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">RL辅助关卡迭代的初版流程示例</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        强化学习构建关卡设计辅助流程 草稿
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-06T12:52:25.000Z" class="dt-published" itemprop="datePublished">2023-08-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag">强化学习</a>, <a class="p-category" href="/tags/%E6%B8%B8%E6%88%8F/" rel="tag">游戏</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="强化学习构建关卡设计辅助流程-草稿"><a href="#强化学习构建关卡设计辅助流程-草稿" class="headerlink" title="强化学习构建关卡设计辅助流程 草稿"></a>强化学习构建关卡设计辅助流程 草稿</h1><p>Ai生成概要：</p>
+<blockquote>
+<p>在游戏开发中，关卡设计是至关重要的一部分。一个好的关卡设计可以让游戏更加有趣、具有挑战性，甚至可以吸引更多的玩家。然而，设计一个好的关卡并不是一件容易的事情，需要设计师有丰富的经验和技能。</p>
+<p>为了解决这个问题，我们设计并验证了一套基于强化学习的辅助关卡迭代流程。这个流程可以帮助设计师快速设计出更好的关卡，并提供实时的反馈，以便设计师可以及时调整关卡设计。</p>
+<p>流程提供了一个合理的设计—验证—反馈循环。设计师可以与工具进行自然交互，将自己的需求和关卡必要知识传递给智能体，无需过多的工具学习成本和机器学习前置知识积累。通过智能体行为部分感知真实玩家在当前场景下的实际体验，设计师可以实时获取关于关卡的反馈。</p>
+<p>训练的过程也是可交互的，设计师能自然的在关卡设计-关卡验证-反馈获取循环中切换。这个流程有较高的泛化能力，能在各种不同类型的游戏中辅助验证。</p>
+</blockquote>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062113497.png" alt="Untitled"></p>
+<p><strong>设计理念：</strong></p>
+<ul>
+<li>为关卡设计提供一个合理的 设计—验证—反馈 循环。</li>
+<li>设计师能与工具自然交互，将自己的需求和关卡必要知识传递给智能体，无需过多的工具学习成本和机器学习前置知识积累。</li>
+<li>设计师能实时获取关于关卡的反馈，通过智能体行为感知真实玩家在当前关卡下的实际体验。</li>
+<li>训练过程是可交互的，设计师能自然的在 关卡设计-关卡验证-反馈获取 循环中切换。</li>
+<li>有较高泛化能力，能在各种不同类型的游戏中辅助验证。</li>
+</ul>
+<h2 id="HIIL理论"><a href="#HIIL理论" class="headerlink" title="HIIL理论"></a>HIIL理论</h2><p>Human-In-the-Loop Learning(HILL)人在循环中的机器学习专注于将人类的知识和经验整合到机器学习过程中。它旨在通过融入人类专业知识来训练准确的预测模型，并以最小的成本实现。在机器学习的背景下，人在循环中涉及人类在各个阶段的积极参与，如数据处理、模型训练和推断，以及系统设计和应用。融合人类知识可以提高机器学习模型的性能，并解决机器学习所面临的挑战。人在循环中的机器学习是一个跨学科领域，涉及计算机科学、认知科学和心理学的交叉。近年来，它越来越受到重视，并在过去十年中得到广泛研究。人在循环中的研究目标是设计有效的解决方案，利用人类专业知识，以增强机器学习的自动化能力。</p>
+<p>从人类反馈中进行强化学习（Reinforcement Learning from Human Feedback，简称RLHF）是一种将人类数据标签整合到基于强化学习的优化过程中的方法。它的动机是为了解决建模人类偏好的挑战。</p>
+<p>本文的思路与RLHF正好相反，基于RL算法在关卡中的实际反馈，设计师可以动态的调整关卡设置，使其向更符合自己预定的游戏体验目标逼近。</p>
+<blockquote>
+<p>Human-in-the-loop refers to a research area that focuses on integrating human knowledge and experience into the machine learning process. It aims to train accurate prediction models with minimum cost by incorporating human expertise. In the context of machine learning, human-in-the-loop involves the active participation of humans in various stages, such as data processing, model training and inference, and system design and application. The integration of human knowledge can improve the performance of machine learning models and address the challenges posed by machine learning. Human-in-the-loop is an interdisciplinary field that intersects computer science, cognitive science, and psychology. It has gained increasing importance in recent years and has been extensively studied in the past decade. The goal of human-in-the-loop research is to design effective solutions that leverage human expertise to enhance the automation of machine learning.</p>
+</blockquote>
+<h2 id="RL辅助关卡设计的可行性分析"><a href="#RL辅助关卡设计的可行性分析" class="headerlink" title="RL辅助关卡设计的可行性分析"></a>RL辅助关卡设计的可行性分析</h2><p>强化学习智能体在游戏关卡中展现了出色的策略涌现能力<a target="_blank" rel="noopener" href="https://openai.com/research/emergent-tool-use">[Emergent tool use from multi-agent interaction]</a>，经过一定的迭代轮次后，它能够发现许多设计师尚未预料到的游戏策略，从而在设计过程中辅助设计师进行优化和调整关卡策略设计。以OpenAI的Hide and Seek案例为例，智能体发现了一种影响游戏平衡的踩箱滑行策略，这是在常规的设计和测试阶段难以发现的问题。若在上线后被玩家发现，将对游戏平衡产生不利影响。</p>
+<p>（后面再补充）</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062113670.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114416.png" alt="Untitled"></p>
+<h2 id="RL辅助关卡迭代的初版流程示例"><a href="#RL辅助关卡迭代的初版流程示例" class="headerlink" title="RL辅助关卡迭代的初版流程示例"></a>RL辅助关卡迭代的初版流程示例</h2><p>基于近期个人开发过程中的实际流程，依据本文理论将其总结如下：</p>
+<p><strong>设计</strong>：下图是模仿吃鸡游戏的城镇决赛圈场景设计的一个多智能体作战环境。游戏的体验目标类似于吃鸡，鼓励玩家多对枪，尽量避免出现避战苟鸡的情况，整个流程控制在10~30秒之间。在初版中，每个玩家拥有四发弹药，地图三个区域范围内在游戏开始时会随机位置刷新一批橙色小球，捡到地上的橙色小球就可以补充一发弹药，玩家被击中两次会被淘汰。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114940.png" alt="%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%9E%84%E5%BB%BA%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1%E8%BE%85%E5%8A%A9%E6%B5%81%E7%A8%8B%20%E8%8D%89%E7%A8%BF%2084749dc154274b949176bfe3769e3d29/Untitled%203.png"></p>
+<p><strong>验证</strong>：在使用强化学习算法训练一定步骤后，Agent采取了以下策略：2~3个队友不断拾取自己附近的弹药并射击以快速清空地上的弹药资源，随后在墙角苟住等对面过来，其余的队友尝试绕后前往靠近对方的弹药刷新点清空弹药资源，双方都在尽力清空环境中的资源使得对手在用完自己能存储的四枚弹药之后就丧失战斗力。前期的缩在墙角清空弹药的行为使得整个流程超过一分钟，常常出现双方都没有弹药只能互相对视的情况。</p>
+<p><strong>反馈：</strong> 当前的资源刷新设计和玩家弹药容量不符合游戏体验目标，玩家在当前情况下射击过于谨慎，此外垃圾时间太多。</p>
+<p><strong>设计：</strong> 基于以上反馈，重新设置弹药刷新规则和玩家弹药数量。弹药：玩家拥有四个弹匣，每个弹匣25发弹药，打完需要时间换弹。空投：游戏开始后每10s随机在三个区域投放一轮，拾取后补充两个弹匣，地图中心区域会刷新特殊空投让拾取玩家伤害加一，鼓励玩家向地图中心聚集，同时调整两侧建筑物位置方便玩家绕后。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114401.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114919.png" alt="Untitled"></p>
+<p><strong>验证：</strong>相同架构的模型在训练一致的步长后，Agent采取的策略明显激进许多。涌现出几种不同的对战策略：1：同时前往中路对枪，占领中心区域后配合架住四个方向。2：两人架住中路，一人绕后一人防绕后。3：四人分两队从两侧交叉火力进攻中路。部分情况下还会有藏角落建筑物后蹲守对方绕后玩家的情况出现。相比第一版地图这些改动较大影响了策略和玩法。不过当前地图在出现4v1的残局时最后一个玩家会躲藏在墙角架枪，导致敌方四个玩家花费10秒以上才能将其找出击败。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114545.png" alt="Untitled"></p>
+<p><strong>反馈：</strong>当前地图在占据中路后很难拿到卡四在角落的对手信息，而主动前往搜寻又容易被提前架好的对手击败，因此常常出现残局一人躲角落四人站中路等待的情况。</p>
+<p><strong>设计：</strong>调整掩体区域的联通情况，降低躲在拐角的安全度。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114356.png" alt="Untitled"></p>
+<p><strong>验证：</strong>修改后游戏步长有了较为明显的下降，在同算法参数的情况下也能稳定在一个更短的时间范围内。</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114303.png" alt="Untitled"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308062114051.png" alt="Untitled"></p>
+<p><strong>反馈：</strong>修改后的地图能较大增加对战的激烈程度，同时仍保留各类策略战术的涌现。</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E6%9E%84%E5%BB%BA%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1%E8%BE%85%E5%8A%A9%E6%B5%81%E7%A8%8B-%E8%8D%89%E7%A8%BF"><span class="toc-number">1.</span> <span class="toc-text">强化学习构建关卡设计辅助流程 草稿</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HIIL%E7%90%86%E8%AE%BA"><span class="toc-number">1.1.</span> <span class="toc-text">HIIL理论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RL%E8%BE%85%E5%8A%A9%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%8F%AF%E8%A1%8C%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">1.2.</span> <span class="toc-text">RL辅助关卡设计的可行性分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RL%E8%BE%85%E5%8A%A9%E5%85%B3%E5%8D%A1%E8%BF%AD%E4%BB%A3%E7%9A%84%E5%88%9D%E7%89%88%E6%B5%81%E7%A8%8B%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">RL辅助关卡迭代的初版流程示例</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/f54245b3.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/f54245b3.html&text=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/f54245b3.html&is_video=false&description=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=强化学习构建关卡设计辅助流程 草稿&body=Check out this article: http://holmodi.fun/posts/f54245b3.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/f54245b3.html&title=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/f54245b3.html&name=强化学习构建关卡设计辅助流程 草稿&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/f54245b3.html&t=强化学习构建关卡设计辅助流程 草稿"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
