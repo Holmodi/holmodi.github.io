@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="GPT多轮对话CMAEL框架阅读+复现 Title: CAMEL: Communicative Agents for \Mind\ Exploration of Large Scale Language Model Society (CAMEL: 大规模语言模型社会的“心智”探索中的交流代理) URLs: Paper, GitHub  概述 : 本文提出了一种名为CAMEL的多代理交流框架，旨在探">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPT多轮对话CMAEL框架阅读+复现">
+<meta property="og:url" content="http://holmodi.fun/posts/26e8bcc3.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="GPT多轮对话CMAEL框架阅读+复现 Title: CAMEL: Communicative Agents for \Mind\ Exploration of Large Scale Language Model Society (CAMEL: 大规模语言模型社会的“心智”探索中的交流代理) URLs: Paper, GitHub  概述 : 本文提出了一种名为CAMEL的多代理交流框架，旨在探">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212242352.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212243826.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212243761.png">
+<meta property="article:published_time" content="2023-08-21T14:46:59.000Z">
+<meta property="article:modified_time" content="2023-08-21T14:51:01.522Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="LLM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212242352.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>GPT多轮对话CMAEL框架阅读+复现</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/ed103377.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/26e8bcc3.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/26e8bcc3.html&text=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/26e8bcc3.html&is_video=false&description=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GPT多轮对话CMAEL框架阅读+复现&body=Check out this article: http://holmodi.fun/posts/26e8bcc3.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/26e8bcc3.html&name=GPT多轮对话CMAEL框架阅读+复现&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/26e8bcc3.html&t=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GPT%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9DCMAEL%E6%A1%86%E6%9E%B6%E9%98%85%E8%AF%BB-%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">GPT多轮对话CMAEL框架阅读+复现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">概述 :</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">背景信息:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">方法:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-number">6.</span> <span class="toc-text">复现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%8B%E5%89%8DLangChain%E7%9A%84%E8%BF%99%E4%B8%80%E6%AE%B5%E5%AE%9E%E7%8E%B0%E6%9C%89Bug%EF%BC%8C%E5%A4%8D%E7%8E%B0%E7%9A%84%E6%97%B6%E5%80%99%E6%8A%8Abug%E4%BF%AE%E5%A5%BD%E4%B8%8A%E4%BC%A0%E5%8F%91%E8%B5%B7pull-request%E4%BA%8C%E5%8D%81%E5%88%86%E9%92%9F%E4%B8%8D%E5%88%B0%E5%B0%B1%E8%A2%ABmerge%E4%BA%86%F0%9F%A4%A3"><span class="toc-number">6.0.0.1.</span> <span class="toc-text">之前LangChain的这一段实现有Bug，复现的时候把bug修好上传发起pull request二十分钟不到就被merge了🤣</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        GPT多轮对话CMAEL框架阅读+复现
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-21T14:46:59.000Z" class="dt-published" itemprop="datePublished">2023-08-21</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/LLM/" rel="tag">LLM</a>, <a class="p-category" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag">论文阅读</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="GPT多轮对话CMAEL框架阅读-复现"><a href="#GPT多轮对话CMAEL框架阅读-复现" class="headerlink" title="GPT多轮对话CMAEL框架阅读+复现"></a>GPT多轮对话CMAEL框架阅读+复现</h1><ul>
+<li>Title: CAMEL: Communicative Agents for \Mind\ Exploration of Large Scale Language Model Society (CAMEL: 大规模语言模型社会的“心智”探索中的交流代理)</li>
+<li>URLs: <a target="_blank" rel="noopener" href="https://www.camel-ai.org/">Paper</a>, <a target="_blank" rel="noopener" href="https://github.com/lightaime/camel">GitHub</a></li>
+</ul>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述 :"></a>概述 :</h1><ul>
+<li>本文提出了一种名为CAMEL的多代理交流框架，旨在探索大规模语言模型多Agent的自主合作。通过使用角色扮演和内部提示来自主引导通信代理完成任务，同时保持与人类意图的一致性。研究结果表明，CAMEL可以生成对话数据，用于研究交流代理的行为和能力。</li>
+<li>论文尝试解决GPT Agents在合作过程中面临的以下几个问题：<ul>
+<li>多轮对话中的角色翻转角色翻转：多轮对话的过程中Gpt会忘记自己的身份，指令的执行者有时会反过来发出指令</li>
+<li>助手重复指令：执行指令的助手角色对话过程中不执行却重复或转述已发出的指令</li>
+<li>控制消息的有限循环：在多GPT多轮对话中给出中断信号，控制有限步长内解决任务。</li>
+<li>flake replies不准确的回答：有时助理角色依据指令给出的解答方案不够准确，需要鉴别并重新生成。</li>
+</ul>
+</li>
+</ul>
+<h1 id="背景信息"><a href="#背景信息" class="headerlink" title="背景信息:"></a>背景信息:</h1><ul>
+<li>论文背景: 随着对话和基于聊天的语言模型的快速发展，复杂任务解决取得了显著进展。然而，这些模型的成功很大程度上依赖于人类输入来引导对话，这可能具有挑战性且耗时。本文旨在探索构建可扩展技术以促进交流代理之间的自主合作，并洞察其“认知”过程的潜力。</li>
+<li>过去方案: 过去的方法中，人类输入是引导对话的关键，但这需要用户提供相关和准确的提示，这对于缺乏领域专业知识的个体来说可能是困难的。因此，本文提出了一个关键问题：能否用一个能够在没有人类监督的情况下引导对话并完成任务的自主交流代理来取代人类干预？</li>
+<li>为了解决这个问题，有必要进行更多的研究，探索完全自主完成任务的交流代理的潜力、能力和局限性。同时，还需要考虑多个代理之间的相互作用，因为这对于预测人工智能的未来至关重要。</li>
+</ul>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法:"></a>方法:</h1><ul>
+<li>本文提出了一种名为角色扮演的交流代理框架。框架包括两个GPT Agent，一个<strong>AI助手</strong>和一个<strong>AI用户</strong>。开始时真实用户为此次给出大致的idea，Agent会先进行一次头脑风暴将此idea扩充并具体化成一个可执行的想法，AI用户根据此具体化的想法一步步生成可行的解决方案指令，而AI助手则在每一步指令下回应给出解决方案，AI用户会判断当前的解决方案是否合理，在确保合理后再进入下一轮循环。对话持续进行，直到AI用户判断当前任务已经完成，给出终止符号<CAMEL_TASK_DONE>或达到对话上限。</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212242352.png" alt="Untitled"></p>
+<ul>
+<li>与对话语言模型的其他技术不同，论文里的提示工程仅在角色扮演开始时进行，用于任务指定和角色分配，随后的多轮对话都发生在两个Agent之间。文中给出的提示词示例，文中将这种模式称为Inception Prompting，大致就是有一个总结出通用的模板提示，后面实际用的时候做一些字符串处理将部分关键词替换成用户实际使用的。下图在初始化阶段给各个角色赋予的提示词示例。</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212243826.png" alt="Untitled"></p>
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果:"></a>结果:</h1><ul>
+<li><p>实验设置:</p>
+<ul>
+<li>使用LLM模型生成AI Society和Code两个数据集，以减少人类参与生成过程。</li>
+<li>对于每个角色组合，生成50个助手角色、50个用户角色和10个任务，共生成了25000个对话。</li>
+<li>对于每个语言和领域的组合，生成了20种编程语言、50个领域和50个任务，共生成了50000个对话。</li>
+<li>在分析生成的数据集过程中，发现了角色翻转、助手重复指令、无效回复和无限对话循环等挑战。</li>
+<li>对话终止的条件包括用户连续3轮不给助手指令、助手给用户指令、用户表示任务完成、达到令牌限制和达到最大消息数。</li>
+</ul>
+</li>
+<li><p>实验结果:</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308212243761.png" alt="Untitled"></p>
+</li>
+<li><ul>
+<li>对AI Society和Code数据集的对话终止原因进行了分析。AI Society数据集的主要终止原因是助手指令，而Code数据集的主要终止原因是令牌限制。观察到包含代码的回复往往较长，导致由于令牌限制而终止的次数更多。两个数据集中由于最大消息数而终止的次数较少，表明40条最大消息限制是合理的。</li>
+<li>研究了启动提示设计对对话终止分布的影响。进行了两个启动提示修改：Prompt V2去除了助手回应格式，Prompt V1 + Task Planner在原始提示的基础上添加了任务规划器。这两个修改都显著增加了以任务令牌结束的对话数量，并减少了助手指令的消息数量。然而，与原始Prompt V1相比，Prompt V2和Prompt V1 + Task Planner的无效消息数量显著增加。</li>
+<li>可视化了AI Society和Code数据集的指令和任务的信息地图。AI Society数据集涵盖了广泛的主题，包括生活方式、社交媒体、内容创作和软件开发。任务包括提供支持、分析、培训和头脑风暴。Code数据集涵盖了与广泛人群相关的主题，包括情感分析、语言和数据处理、数据收集和机器学习。</li>
+</ul>
+<hr>
+<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>使用LangChain框架，先实现一个CAMELAgent</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CAMELAgent</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        system_message: SystemMessage,</span></span><br><span class="line"><span class="params">        model: AzureChatOpenAI,</span></span><br><span class="line"><span class="params">    </span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.system_message = system_message</span><br><span class="line">        self.model = model</span><br><span class="line">        self.init_messages()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reset</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.init_messages()</span><br><span class="line">        <span class="keyword">return</span> self.stored_messages</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">init_messages</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.stored_messages = [self.system_message]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">update_messages</span>(<span class="params">self, message: BaseMessage</span>) -&gt; <span class="type">List</span>[BaseMessage]:</span><br><span class="line">        self.stored_messages.append(message)</span><br><span class="line">        <span class="keyword">return</span> self.stored_messages</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">step</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        input_message: HumanMessage,</span></span><br><span class="line"><span class="params">    </span>) -&gt; AIMessage:</span><br><span class="line">        messages = self.update_messages(input_message)</span><br><span class="line"></span><br><span class="line">        output_message = self.model(messages)</span><br><span class="line">        self.update_messages(output_message)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> output_message</span><br></pre></td></tr></table></figure>
+
+<p>然后依据论文里的提示词模板调整实现inception prompt基础模板。</p>
+<p>将模板和自定义的几个关键词组合形成初始化时用于引导两个Agent对话的基础代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_sys_msgs</span>(<span class="params">assistant_role_name: <span class="built_in">str</span>, user_role_name: <span class="built_in">str</span>, task: <span class="built_in">str</span></span>):</span><br><span class="line">    assistant_sys_template = SystemMessagePromptTemplate.from_template(</span><br><span class="line">        template=assistant_inception_prompt</span><br><span class="line">    )</span><br><span class="line">    assistant_sys_msg = assistant_sys_template.format_messages(</span><br><span class="line">        assistant_role_name=assistant_role_name,</span><br><span class="line">        user_role_name=user_role_name,</span><br><span class="line">        task=task,</span><br><span class="line">    )[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    user_sys_template = SystemMessagePromptTemplate.from_template(</span><br><span class="line">        template=user_inception_prompt</span><br><span class="line">    )</span><br><span class="line">    user_sys_msg = user_sys_template.format_messages(</span><br><span class="line">        assistant_role_name=assistant_role_name,</span><br><span class="line">        user_role_name=user_role_name,</span><br><span class="line">        task=task,</span><br><span class="line">    )[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> assistant_sys_msg, user_sys_msg</span><br></pre></td></tr></table></figure>
+
+<p>最后基于user_sys_msg assistant_sys_msg创建两个示例，在循环中互相对话即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">user_msg = HumanMessage(</span><br><span class="line">    content=(</span><br><span class="line">        <span class="string">f&quot;<span class="subst">&#123;user_sys_msg.content&#125;</span>. &quot;</span></span><br><span class="line">        <span class="string">&quot;Now start to give me introductions one by one. &quot;</span></span><br><span class="line">        <span class="string">&quot;Only reply with Instruction and Input.&quot;</span></span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">assistant_msg = HumanMessage(content=<span class="string">f&quot;<span class="subst">&#123;assistant_sys_msg.content&#125;</span>&quot;</span>)</span><br><span class="line">assistant_msg = assistant_agent.step(user_msg)</span><br><span class="line">chat_turn_limit, n = <span class="number">30</span>, <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> n &lt; chat_turn_limit:</span><br><span class="line">    n += <span class="number">1</span></span><br><span class="line">    user_ai_msg = user_agent.step(assistant_msg)</span><br><span class="line">    user_msg = HumanMessage(content=user_ai_msg.content)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;AI User (<span class="subst">&#123;user_role_name&#125;</span>):\n\n<span class="subst">&#123;user_msg.content&#125;</span>\n\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">    assistant_ai_msg = assistant_agent.step(user_msg)</span><br><span class="line">    assistant_msg = HumanMessage(content=assistant_ai_msg.content)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;AI Assistant (<span class="subst">&#123;assistant_role_name&#125;</span>):\n\n<span class="subst">&#123;assistant_msg.content&#125;</span>\n\n&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;&lt;CAMEL_TASK_DONE&gt;&quot;</span> <span class="keyword">in</span> user_msg.content:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="之前LangChain的这一段实现有Bug，复现的时候把bug修好上传发起pull-request二十分钟不到就被merge了🤣"><a href="#之前LangChain的这一段实现有Bug，复现的时候把bug修好上传发起pull-request二十分钟不到就被merge了🤣" class="headerlink" title="之前LangChain的这一段实现有Bug，复现的时候把bug修好上传发起pull request二十分钟不到就被merge了🤣"></a>之前LangChain的这一段实现有Bug，复现的时候把bug修好上传发起pull request二十分钟不到就被merge了🤣</h4><p><a target="_blank" rel="noopener" href="https://github.com/langchain-ai/langchain/commit/89a8121eaa1796f6cfdc1853678a8517acfdee19">https://github.com/langchain-ai/langchain/commit/89a8121eaa1796f6cfdc1853678a8517acfdee19</a></p>
+<hr>
+<p>本地运作输出结果，这里试的是写一个flappy bird</p>
+<p>D:\Env\anaconda\python.exe C:\Users\Administrator\PycharmProjects\GPTProj\camel.py<br>Specified task: Develop a flappy bird game in Python using Pygame. The game should feature a bird avatar that player can fly by tapping; pipes as obstacles to dodge; and a scoring system to count the number of pipes successfully passed.<br>Original task prompt:<br>Develop a flappy bird with pygame</p>
+<p>Specified task prompt:<br>Develop a flappy bird game in Python using Pygame. The game should feature a bird avatar that player can fly by tapping; pipes as obstacles to dodge; and a scoring system to count the number of pipes successfully passed.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Start by installing the Pygame library.<br>Input: None</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To install the Pygame library, you can use pip, which is a package manager for Python. Here is the command you need to run in your terminal or command prompt:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install pygame</span><br></pre></td></tr></table></figure>
+
+<p>If you are using a version of Python 3, you might need to use pip3 instead:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pygame</span><br></pre></td></tr></table></figure>
+
+<p>This command will download and install the Pygame library on your system. Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Create a window for the game.<br>Input: The window size should be 288x512 pixels.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To create a window for the game using Pygame, we first need to initialize Pygame and then set the window size. Here is how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we first import the Pygame library and initialize it with <code>pygame.init()</code>. Then we set the dimensions of the game window to 288x512 pixels. The <code>pygame.display.set_mode()</code> function is used to create the game window.</p>
+<p>The game loop is used to keep the game window open until the user closes it. It checks for a QUIT event, which occurs when the user closes the window, and sets <code>running</code> to False to exit the loop when that happens. Finally, <code>pygame.quit()</code> is called to close the Pygame window.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Create a bird avatar for the game.<br>Input: The bird avatar should be placed in the middle of the window.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To create a bird avatar, we first need an image file for the bird. Once we have that, we can load it into our game using Pygame’s <code>pygame.image.load()</code> function. Here’s how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Load the bird image</span><br><span class="line">bird = pygame.image.load(&#x27;bird.png&#x27;)  # Replace &#x27;bird.png&#x27; with the path to your bird image file</span><br><span class="line"></span><br><span class="line"># Get the dimensions of the bird image</span><br><span class="line">bird_width = bird.get_width()</span><br><span class="line">bird_height = bird.get_height()</span><br><span class="line"></span><br><span class="line"># Calculate the position of the bird to place it in the middle of the window</span><br><span class="line">bird_x = (window_width - bird_width) / 2</span><br><span class="line">bird_y = (window_height - bird_height) / 2</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line"></span><br><span class="line">    # Draw the bird on the window</span><br><span class="line">    game_window.blit(bird, (bird_x, bird_y))</span><br><span class="line"></span><br><span class="line">    # Update the display</span><br><span class="line">    pygame.display.update()</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we first load the bird image using <code>pygame.image.load()</code>. Then we get the dimensions of the bird image using the <code>get_width()</code> and <code>get_height()</code> methods. We calculate the position of the bird to place it in the middle of the window. In the game loop, we draw the bird on the window using the <code>blit()</code> method of the game window, and then we update the display with <code>pygame.display.update()</code>.</p>
+<p>Please replace ‘bird.png’ with the path to your bird image file.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Implement the functionality for the bird to move up when the player taps.<br>Input: The bird should move up by 10 pixels each tap.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To make the bird move up when the player taps, we can listen for a KEYDOWN event in our game loop. When a KEYDOWN event occurs, we can check if the key that was pressed is the space bar, and if it is, we move the bird up by 10 pixels. Here’s how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Load the bird image</span><br><span class="line">bird = pygame.image.load(&#x27;bird.png&#x27;)  # Replace &#x27;bird.png&#x27; with the path to your bird image file</span><br><span class="line"></span><br><span class="line"># Get the dimensions of the bird image</span><br><span class="line">bird_width = bird.get_width()</span><br><span class="line">bird_height = bird.get_height()</span><br><span class="line"></span><br><span class="line"># Calculate the position of the bird to place it in the middle of the window</span><br><span class="line">bird_x = (window_width - bird_width) / 2</span><br><span class="line">bird_y = (window_height - bird_height) / 2</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line">        elif event.type == pygame.KEYDOWN:</span><br><span class="line">            if event.key == pygame.K_SPACE:</span><br><span class="line">                bird_y -= 10  # Move the bird up by 10 pixels</span><br><span class="line"></span><br><span class="line">    # Draw the bird on the window</span><br><span class="line">    game_window.fill((0, 0, 0))  # Fill the window with black to clear the old frame</span><br><span class="line">    game_window.blit(bird, (bird_x, bird_y))</span><br><span class="line"></span><br><span class="line">    # Update the display</span><br><span class="line">    pygame.display.update()</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we added an additional check in our event loop to listen for KEYDOWN events. When a KEYDOWN event occurs, we check if the key that was pressed is the space bar (pygame.K_SPACE), and if it is, we subtract 10 from bird_y to move the bird up by 10 pixels. We also added a call to <code>game_window.fill((0, 0, 0))</code> before drawing the bird, to clear the old frame before drawing the new one.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Implement the functionality for the bird to fall down due to gravity.<br>Input: The bird should fall down by 5 pixels every frame.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To simulate gravity, we can add a constant value to the bird’s y-coordinate every frame. This will make the bird fall down over time. Here’s how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Load the bird image</span><br><span class="line">bird = pygame.image.load(&#x27;bird.png&#x27;)  # Replace &#x27;bird.png&#x27; with the path to your bird image file</span><br><span class="line"></span><br><span class="line"># Get the dimensions of the bird image</span><br><span class="line">bird_width = bird.get_width()</span><br><span class="line">bird_height = bird.get_height()</span><br><span class="line"></span><br><span class="line"># Calculate the position of the bird to place it in the middle of the window</span><br><span class="line">bird_x = (window_width - bird_width) / 2</span><br><span class="line">bird_y = (window_height - bird_height) / 2</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line">        elif event.type == pygame.KEYDOWN:</span><br><span class="line">            if event.key == pygame.K_SPACE:</span><br><span class="line">                bird_y -= 10  # Move the bird up by 10 pixels</span><br><span class="line"></span><br><span class="line">    bird_y += 5  # Simulate gravity by moving the bird down by 5 pixels every frame</span><br><span class="line"></span><br><span class="line">    # Draw the bird on the window</span><br><span class="line">    game_window.fill((0, 0, 0))  # Fill the window with black to clear the old frame</span><br><span class="line">    game_window.blit(bird, (bird_x, bird_y))</span><br><span class="line"></span><br><span class="line">    # Update the display</span><br><span class="line">    pygame.display.update()</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we added <code>bird_y += 5</code> after the event loop. This line of code is executed every frame, regardless of whether any events occurred, so it will make the bird fall down by 5 pixels every frame.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Create pipes as obstacles for the bird to dodge.<br>Input: The pipes should be placed randomly along the y-axis and move from right to left.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To create pipes as obstacles, we need an image for the pipes. We can then create a list of pipes, where each pipe is a dictionary with ‘x’, ‘y’, and ‘passed’ keys. ‘x’ and ‘y’ are the coordinates of the pipe, and ‘passed’ is a boolean that indicates whether the bird has passed the pipe. We can then move the pipes from right to left by subtracting from their ‘x’ coordinate every frame. Here’s how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Load the bird and pipe images</span><br><span class="line">bird = pygame.image.load(&#x27;bird.png&#x27;)  # Replace &#x27;bird.png&#x27; with the path to your bird image file</span><br><span class="line">pipe = pygame.image.load(&#x27;pipe.png&#x27;)  # Replace &#x27;pipe.png&#x27; with the path to your pipe image file</span><br><span class="line"></span><br><span class="line"># Get the dimensions of the bird image</span><br><span class="line">bird_width = bird.get_width()</span><br><span class="line">bird_height = bird.get_height()</span><br><span class="line"></span><br><span class="line"># Calculate the position of the bird to place it in the middle of the window</span><br><span class="line">bird_x = (window_width - bird_width) / 2</span><br><span class="line">bird_y = (window_height - bird_height) / 2</span><br><span class="line"></span><br><span class="line"># Create a list of pipes</span><br><span class="line">pipes = [&#123;&#x27;x&#x27;: window_width, &#x27;y&#x27;: random.randint(0, window_height - pipe.get_height()), &#x27;passed&#x27;: False&#125; for _ in range(5)]</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line">        elif event.type == pygame.KEYDOWN:</span><br><span class="line">            if event.key == pygame.K_SPACE:</span><br><span class="line">                bird_y -= 10  # Move the bird up by 10 pixels</span><br><span class="line"></span><br><span class="line">    bird_y += 5  # Simulate gravity by moving the bird down by 5 pixels every frame</span><br><span class="line"></span><br><span class="line">    # Move the pipes</span><br><span class="line">    for p in pipes:</span><br><span class="line">        p[&#x27;x&#x27;] -= 5</span><br><span class="line">        if p[&#x27;x&#x27;] + pipe.get_width() &lt; 0:  # If the pipe is no longer visible</span><br><span class="line">            p[&#x27;x&#x27;] = window_width  # Move it back to the right side of the window</span><br><span class="line">            p[&#x27;y&#x27;] = random.randint(0, window_height - pipe.get_height())  # Give it a new random height</span><br><span class="line">            p[&#x27;passed&#x27;] = False  # Reset the &#x27;passed&#x27; status</span><br><span class="line"></span><br><span class="line">    # Draw the bird and the pipes on the window</span><br><span class="line">    game_window.fill((0, 0, 0))  # Fill the window with black to clear the old frame</span><br><span class="line">    game_window.blit(bird, (bird_x, bird_y))</span><br><span class="line">    for p in pipes:</span><br><span class="line">        game_window.blit(pipe, (p[&#x27;x&#x27;], p[&#x27;y&#x27;]))</span><br><span class="line"></span><br><span class="line">    # Update the display</span><br><span class="line">    pygame.display.update()</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we first load the pipe image. Then we create a list of pipes, where each pipe is a dictionary with ‘x’, ‘y’, and ‘passed’ keys. In the game loop, we move the pipes by subtracting from their ‘x’ coordinate, and if a pipe is no longer visible, we move it back to the right side of the window and give it a new random height. We also draw the pipes on the window in the same way we draw the bird.</p>
+<p>Please replace ‘pipe.png’ with the path to your pipe image file.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Implement a scoring system to count the number of pipes successfully passed.<br>Input: The score should increase by 1 for each pipe passed.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To implement a scoring system, we can add a ‘score’ variable that starts at 0. Then, in our game loop, we can check for each pipe if the bird has passed it, and if it has, we increase the score by 1 and set the ‘passed’ key of the pipe to True to prevent the score from increasing again for the same pipe. Here’s how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Load the bird and pipe images</span><br><span class="line">bird = pygame.image.load(&#x27;bird.png&#x27;)  # Replace &#x27;bird.png&#x27; with the path to your bird image file</span><br><span class="line">pipe = pygame.image.load(&#x27;pipe.png&#x27;)  # Replace &#x27;pipe.png&#x27; with the path to your pipe image file</span><br><span class="line"></span><br><span class="line"># Get the dimensions of the bird image</span><br><span class="line">bird_width = bird.get_width()</span><br><span class="line">bird_height = bird.get_height()</span><br><span class="line"></span><br><span class="line"># Calculate the position of the bird to place it in the middle of the window</span><br><span class="line">bird_x = (window_width - bird_width) / 2</span><br><span class="line">bird_y = (window_height - bird_height) / 2</span><br><span class="line"></span><br><span class="line"># Create a list of pipes</span><br><span class="line">pipes = [&#123;&#x27;x&#x27;: window_width, &#x27;y&#x27;: random.randint(0, window_height - pipe.get_height()), &#x27;passed&#x27;: False&#125; for _ in range(5)]</span><br><span class="line"></span><br><span class="line"># Initialize the score</span><br><span class="line">score = 0</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line">        elif event.type == pygame.KEYDOWN:</span><br><span class="line">            if event.key == pygame.K_SPACE:</span><br><span class="line">                bird_y -= 10  # Move the bird up by 10 pixels</span><br><span class="line"></span><br><span class="line">    bird_y += 5  # Simulate gravity by moving the bird down by 5 pixels every frame</span><br><span class="line"></span><br><span class="line">    # Move the pipes and check if the bird passed any pipes</span><br><span class="line">    for p in pipes:</span><br><span class="line">        p[&#x27;x&#x27;] -= 5</span><br><span class="line">        if p[&#x27;x&#x27;] + pipe.get_width() &lt; bird_x and not p[&#x27;passed&#x27;]:</span><br><span class="line">            p[&#x27;passed&#x27;] = True</span><br><span class="line">            score += 1</span><br><span class="line">        if p[&#x27;x&#x27;] + pipe.get_width() &lt; 0:  # If the pipe is no longer visible</span><br><span class="line">            p[&#x27;x&#x27;] = window_width  # Move it back to the right side of the window</span><br><span class="line">            p[&#x27;y&#x27;] = random.randint(0, window_height - pipe.get_height())  # Give it a new random height</span><br><span class="line">            p[&#x27;passed&#x27;] = False  # Reset the &#x27;passed&#x27; status</span><br><span class="line"></span><br><span class="line">    # Draw the bird and the pipes on the window</span><br><span class="line">    game_window.fill((0, 0, 0))  # Fill the window with black to clear the old frame</span><br><span class="line">    game_window.blit(bird, (bird_x, bird_y))</span><br><span class="line">    for p in pipes:</span><br><span class="line">        game_window.blit(pipe, (p[&#x27;x&#x27;], p[&#x27;y&#x27;]))</span><br><span class="line"></span><br><span class="line">    # Update the display</span><br><span class="line">    pygame.display.update()</span><br><span class="line"></span><br><span class="line">    print(f&#x27;Score: &#123;score&#125;&#x27;)  # Print the score</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we added a ‘score’ variable that starts at 0. In the game loop, we added a check for each pipe to see if the bird has passed it, and if it has, we increase the score by 1 and set the ‘passed’ key of the pipe to True. We also print the score after updating the display.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<p>Instruction: Implement a game over condition when the bird hits a pipe or the ground.<br>Input: The game should stop and display a “Game Over” message when the game over condition is met.</p>
+<p>AI User (Game Designer):</p>
+<p>Solution: To implement a game over condition, we can add a collision check in our game loop. If the bird’s rectangle intersects with a pipe’s rectangle or the bird’s y-coordinate is greater than the window height, we set <code>running</code> to False to end the game. We can then display a “Game Over” message using Pygame’s font module. Here’s how you can do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">import pygame</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"># Initialize Pygame</span><br><span class="line">pygame.init()</span><br><span class="line"></span><br><span class="line"># Set the dimensions of the game window</span><br><span class="line">window_width = 288</span><br><span class="line">window_height = 512</span><br><span class="line">game_window = pygame.display.set_mode((window_width, window_height))</span><br><span class="line"></span><br><span class="line"># Load the bird and pipe images</span><br><span class="line">bird = pygame.image.load(&#x27;bird.png&#x27;)  # Replace &#x27;bird.png&#x27; with the path to your bird image file</span><br><span class="line">pipe = pygame.image.load(&#x27;pipe.png&#x27;)  # Replace &#x27;pipe.png&#x27; with the path to your pipe image file</span><br><span class="line"></span><br><span class="line"># Get the dimensions of the bird and pipe images</span><br><span class="line">bird_width = bird.get_width()</span><br><span class="line">bird_height = bird.get_height()</span><br><span class="line">pipe_width = pipe.get_width()</span><br><span class="line">pipe_height = pipe.get_height()</span><br><span class="line"></span><br><span class="line"># Calculate the position of the bird to place it in the middle of the window</span><br><span class="line">bird_x = (window_width - bird_width) / 2</span><br><span class="line">bird_y = (window_height - bird_height) / 2</span><br><span class="line"></span><br><span class="line"># Create a list of pipes</span><br><span class="line">pipes = [&#123;&#x27;x&#x27;: window_width, &#x27;y&#x27;: random.randint(0, window_height - pipe_height), &#x27;passed&#x27;: False&#125; for _ in range(5)]</span><br><span class="line"></span><br><span class="line"># Initialize the score</span><br><span class="line">score = 0</span><br><span class="line"></span><br><span class="line"># Create a font object for the game over message</span><br><span class="line">font = pygame.font.Font(None, 36)</span><br><span class="line"></span><br><span class="line"># Game loop to keep the window open</span><br><span class="line">running = True</span><br><span class="line">while running:</span><br><span class="line">    for event in pygame.event.get():</span><br><span class="line">        if event.type == pygame.QUIT:</span><br><span class="line">            running = False</span><br><span class="line">        elif event.type == pygame.KEYDOWN:</span><br><span class="line">            if event.key == pygame.K_SPACE:</span><br><span class="line">                bird_y -= 10  # Move the bird up by 10 pixels</span><br><span class="line"></span><br><span class="line">    bird_y += 5  # Simulate gravity by moving the bird down by 5 pixels every frame</span><br><span class="line"></span><br><span class="line">    # Move the pipes and check if the bird passed any pipes or collided with a pipe</span><br><span class="line">    for p in pipes:</span><br><span class="line">        p[&#x27;x&#x27;] -= 5</span><br><span class="line">        if p[&#x27;x&#x27;] + pipe_width &lt; bird_x and not p[&#x27;passed&#x27;]:</span><br><span class="line">            p[&#x27;passed&#x27;] = True</span><br><span class="line">            score += 1</span><br><span class="line">        if p[&#x27;x&#x27;] &lt; bird_x + bird_width and p[&#x27;x&#x27;] + pipe_width &gt; bird_x and p[&#x27;y&#x27;] &lt; bird_y + bird_height and p[&#x27;y&#x27;] + pipe_height &gt; bird_y:</span><br><span class="line">            running = False  # End the game if the bird collided with a pipe</span><br><span class="line">        if p[&#x27;x&#x27;] + pipe_width &lt; 0:  # If the pipe is no longer visible</span><br><span class="line">            p[&#x27;x&#x27;] = window_width  # Move it back to the right side of the window</span><br><span class="line">            p[&#x27;y&#x27;] = random.randint(0, window_height - pipe_height)  # Give it a new random height</span><br><span class="line">            p[&#x27;passed&#x27;] = False  # Reset the &#x27;passed&#x27; status</span><br><span class="line"></span><br><span class="line">    if bird_y + bird_height &gt; window_height:</span><br><span class="line">        running = False  # End the game if the bird hit the ground</span><br><span class="line"></span><br><span class="line">    # Draw the bird and the pipes on the window</span><br><span class="line">    game_window.fill((0, 0, 0))  # Fill the window with black to clear the old frame</span><br><span class="line">    game_window.blit(bird, (bird_x, bird_y))</span><br><span class="line">    for p in pipes:</span><br><span class="line">        game_window.blit(pipe, (p[&#x27;x&#x27;], p[&#x27;y&#x27;]))</span><br><span class="line"></span><br><span class="line">    # Update the display</span><br><span class="line">    pygame.display.update()</span><br><span class="line"></span><br><span class="line">    print(f&#x27;Score: &#123;score&#125;&#x27;)  # Print the score</span><br><span class="line"></span><br><span class="line"># Display the game over message</span><br><span class="line">text = font.render(&#x27;Game Over&#x27;, True, (255, 255, 255))</span><br><span class="line">game_window.blit(text, ((window_width - text.get_width()) / 2, (window_height - text.get_height()) / 2))</span><br><span class="line">pygame.display.update()</span><br><span class="line"></span><br><span class="line">pygame.quit()</span><br></pre></td></tr></table></figure>
+
+<p>In this code, we added a collision check for each pipe in the game loop. If the bird’s rectangle intersects with a pipe’s rectangle, we set <code>running</code> to False to end the game. We also added a check to see if the bird hit the ground, and if it did, we also end the game. After the game loop, we display a “Game Over” message in the middle of the window.</p>
+<p>Next request.</p>
+<p>AI Assistant (Python Programmer):</p>
+<CAMEL_TASK_DONE></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GPT%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9DCMAEL%E6%A1%86%E6%9E%B6%E9%98%85%E8%AF%BB-%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">GPT多轮对话CMAEL框架阅读+复现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">概述 :</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">背景信息:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">方法:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%8D%E7%8E%B0"><span class="toc-number">6.</span> <span class="toc-text">复现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%8B%E5%89%8DLangChain%E7%9A%84%E8%BF%99%E4%B8%80%E6%AE%B5%E5%AE%9E%E7%8E%B0%E6%9C%89Bug%EF%BC%8C%E5%A4%8D%E7%8E%B0%E7%9A%84%E6%97%B6%E5%80%99%E6%8A%8Abug%E4%BF%AE%E5%A5%BD%E4%B8%8A%E4%BC%A0%E5%8F%91%E8%B5%B7pull-request%E4%BA%8C%E5%8D%81%E5%88%86%E9%92%9F%E4%B8%8D%E5%88%B0%E5%B0%B1%E8%A2%ABmerge%E4%BA%86%F0%9F%A4%A3"><span class="toc-number">6.0.0.1.</span> <span class="toc-text">之前LangChain的这一段实现有Bug，复现的时候把bug修好上传发起pull request二十分钟不到就被merge了🤣</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/26e8bcc3.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/26e8bcc3.html&text=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/26e8bcc3.html&is_video=false&description=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=GPT多轮对话CMAEL框架阅读+复现&body=Check out this article: http://holmodi.fun/posts/26e8bcc3.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/26e8bcc3.html&title=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/26e8bcc3.html&name=GPT多轮对话CMAEL框架阅读+复现&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/26e8bcc3.html&t=GPT多轮对话CMAEL框架阅读+复现"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,3 +1,4 @@
+http://holmodi.fun/posts/26e8bcc3.html
 http://holmodi.fun/projects/index.html
 http://holmodi.fun/posts/ed103377.html
 http://holmodi.fun/posts/5ffa11e3.html
@@ -18,6 +19,7 @@ http://holmodi.fun/tags/%E5%85%B3%E5%8D%A1%E8%AE%BE%E8%AE%A1/
 http://holmodi.fun/tags/%E4%BA%92%E5%8A%A8%E5%8F%99%E4%BA%8B/
 http://holmodi.fun/tags/%E6%B8%B8%E6%88%8F/
 http://holmodi.fun/tags/%E7%94%B5%E5%BD%B1/
+http://holmodi.fun/tags/LLM/
 http://holmodi.fun/categories/Code/
 http://holmodi.fun/categories/Games/
 http://holmodi.fun/categories/%E8%AF%BE%E7%A8%8B%E7%AC%94%E8%AE%B0/
