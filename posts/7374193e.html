@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="shop简介轮次结束时出现，每次刷新提供四个随机物品，物品的品质基于角色当前的幸运值。每个物品被购买后当前格变为空白。玩家可以花费材料刷新商店，此时物品和空白格会被新物品替代，除非当前物品被玩家锁定。物品的价格、商店刷新价格都受到各种参数的影响（后续详细拆解）。 详细机制刷新玩家可以花费材料刷新商店，此时物品和空白格会被新物品替代，除非当前物品被玩家锁定。 刷新价格增量 刷新次数会让价格上升，在轮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="土豆兄弟拆解01--商店系统">
+<meta property="og:url" content="http://holmodi.fun/posts/7374193e.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="shop简介轮次结束时出现，每次刷新提供四个随机物品，物品的品质基于角色当前的幸运值。每个物品被购买后当前格变为空白。玩家可以花费材料刷新商店，此时物品和空白格会被新物品替代，除非当前物品被玩家锁定。物品的价格、商店刷新价格都受到各种参数的影响（后续详细拆解）。 详细机制刷新玩家可以花费材料刷新商店，此时物品和空白格会被新物品替代，除非当前物品被玩家锁定。 刷新价格增量 刷新次数会让价格上升，在轮">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-21T15:07:09.000Z">
+<meta property="article:modified_time" content="2023-08-21T15:08:22.093Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="游戏拆解">
+<meta property="article:tag" content="土豆兄弟">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>土豆兄弟拆解01--商店系统</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/26e8bcc3.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/7374193e.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/7374193e.html&text=土豆兄弟拆解01--商店系统"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/7374193e.html&is_video=false&description=土豆兄弟拆解01--商店系统"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=土豆兄弟拆解01--商店系统&body=Check out this article: http://holmodi.fun/posts/7374193e.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/7374193e.html&name=土豆兄弟拆解01--商店系统&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/7374193e.html&t=土豆兄弟拆解01--商店系统"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shop"><span class="toc-number">1.</span> <span class="toc-text">shop</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">详细机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B7%E6%96%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AE%E4%BB%B7"><span class="toc-number">1.2.3.</span> <span class="toc-text">售价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%80%E6%9C%89%E9%81%93%E5%85%B7%E5%88%B7%E6%96%B0%E6%A6%82%E7%8E%87"><span class="toc-number">1.2.4.</span> <span class="toc-text">稀有道具刷新概率</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        土豆兄弟拆解01--商店系统
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-21T15:07:09.000Z" class="dt-published" itemprop="datePublished">2023-08-21</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Games/">Games</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%9C%9F%E8%B1%86%E5%85%84%E5%BC%9F/" rel="tag">土豆兄弟</a>, <a class="p-category" href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/" rel="tag">游戏拆解</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="shop"><a href="#shop" class="headerlink" title="shop"></a>shop</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>轮次结束时出现，每次刷新提供四个随机物品，物品的品质基于角色当前的幸运值。每个物品被购买后当前格变为空白。玩家可以花费材料刷新商店，此时物品和空白格会被新物品替代，除非当前物品被玩家锁定。物品的价格、商店刷新价格都受到各种参数的影响（后续详细拆解）。</p>
+<h2 id="详细机制"><a href="#详细机制" class="headerlink" title="详细机制"></a>详细机制</h2><h3 id="刷新"><a href="#刷新" class="headerlink" title="刷新"></a>刷新</h3><p>玩家可以花费材料刷新商店，此时物品和空白格会被新物品替代，除非当前物品被玩家锁定。</p>
+<p>刷新<strong>价格增量</strong></p>
+<p>刷新次数会让价格上升，在轮次结束商店重新开启时这个次数会重置。</p>
+<aside>
+💡 刷新价格增量`: times*Rounddown(max(0.5 * wave))`
+
+
+</aside>
+
+<p>刷新<strong>价格基数</strong></p>
+<aside>
+💡 刷新价格基数`:` `Wave + Reroll Increase`
+
+
+</aside>
+
+<p>基于以上公式可以获取到前20波的详细刷新价格</p>
+<table>
+<thead>
+<tr>
+<th>波次</th>
+<th>价格基数</th>
+<th>价格增量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>6</td>
+<td>2</td>
+</tr>
+<tr>
+<td>5</td>
+<td>7</td>
+<td>2</td>
+</tr>
+<tr>
+<td>6</td>
+<td>9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>7</td>
+<td>10</td>
+<td>3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>12</td>
+<td>4</td>
+</tr>
+<tr>
+<td>9</td>
+<td>13</td>
+<td>4</td>
+</tr>
+<tr>
+<td>10</td>
+<td>15</td>
+<td>5</td>
+</tr>
+<tr>
+<td>11</td>
+<td>16</td>
+<td>5</td>
+</tr>
+<tr>
+<td>12</td>
+<td>18</td>
+<td>6</td>
+</tr>
+<tr>
+<td>13</td>
+<td>19</td>
+<td>6</td>
+</tr>
+<tr>
+<td>14</td>
+<td>21</td>
+<td>7</td>
+</tr>
+<tr>
+<td>15</td>
+<td>22</td>
+<td>7</td>
+</tr>
+<tr>
+<td>16</td>
+<td>24</td>
+<td>8</td>
+</tr>
+<tr>
+<td>17</td>
+<td>25</td>
+<td>8</td>
+</tr>
+<tr>
+<td>18</td>
+<td>27</td>
+<td>9</td>
+</tr>
+<tr>
+<td>19</td>
+<td>28</td>
+<td>9</td>
+</tr>
+<tr>
+<td>20</td>
+<td>N&#x2F;A</td>
+<td>N&#x2F;A</td>
+</tr>
+</tbody></table>
+<h3 id="回收"><a href="#回收" class="headerlink" title="回收"></a>回收</h3><h3 id="售价"><a href="#售价" class="headerlink" title="售价"></a>售价</h3><aside>
+💡 `Final Price =  (Base_Price + Wave + (Base_Price * 0.1 * Wave)) * Shop_Price`
+
+
+</aside>
+
+<p>折扣道具会在最终售价基础上折扣</p>
+<h3 id="稀有道具刷新概率"><a href="#稀有道具刷新概率" class="headerlink" title="稀有道具刷新概率"></a>稀有道具刷新概率</h3><table>
+<thead>
+<tr>
+<th>Available From Wave</th>
+<th>Min Wave</th>
+<th>Base Chance</th>
+<th>+Chance per Wave</th>
+<th>Max Chance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tier 1</td>
+<td>1</td>
+<td>1</td>
+<td>100%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Tier 2</td>
+<td>2</td>
+<td>1</td>
+<td>0%</td>
+<td>6%</td>
+</tr>
+<tr>
+<td>Tier 3</td>
+<td>4</td>
+<td>3</td>
+<td>0%</td>
+<td>2%</td>
+</tr>
+<tr>
+<td>Tier 4</td>
+<td>8</td>
+<td>7</td>
+<td>0%</td>
+<td>0.23%</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shop"><span class="toc-number">1.</span> <span class="toc-text">shop</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">详细机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B7%E6%96%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%94%AE%E4%BB%B7"><span class="toc-number">1.2.3.</span> <span class="toc-text">售价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%80%E6%9C%89%E9%81%93%E5%85%B7%E5%88%B7%E6%96%B0%E6%A6%82%E7%8E%87"><span class="toc-number">1.2.4.</span> <span class="toc-text">稀有道具刷新概率</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/7374193e.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/7374193e.html&text=土豆兄弟拆解01--商店系统"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/7374193e.html&is_video=false&description=土豆兄弟拆解01--商店系统"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=土豆兄弟拆解01--商店系统&body=Check out this article: http://holmodi.fun/posts/7374193e.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/7374193e.html&title=土豆兄弟拆解01--商店系统"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/7374193e.html&name=土豆兄弟拆解01--商店系统&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/7374193e.html&t=土豆兄弟拆解01--商店系统"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
