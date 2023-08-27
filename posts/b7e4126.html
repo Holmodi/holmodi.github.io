@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="基数词条**波数:**游戏一共有20波，第一波20s，随后每波时间+5s，20波90s 敌人：    Name     行为 行为组合，例如追逐玩家、随机移动、成群出现、靠近玩家时自动远离，远程攻击等等。精英怪会的行为存在几个阶段的变异，当血量小于一定值时切换行为模式。   血量 hp 基础血量   +hp&#x2F;wave 每波血量加值   移动速度 部分怪物会在范围内随机，其余全局固定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="土豆兄弟拆解02-基础词条">
+<meta property="og:url" content="http://holmodi.fun/posts/b7e4126.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="基数词条**波数:**游戏一共有20波，第一波20s，随后每波时间+5s，20波90s 敌人：    Name     行为 行为组合，例如追逐玩家、随机移动、成群出现、靠近玩家时自动远离，远程攻击等等。精英怪会的行为存在几个阶段的变异，当血量小于一定值时切换行为模式。   血量 hp 基础血量   +hp&#x2F;wave 每波血量加值   移动速度 部分怪物会在范围内随机，其余全局固定">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308272206582.png">
+<meta property="article:published_time" content="2023-08-27T14:04:09.000Z">
+<meta property="article:modified_time" content="2023-08-27T14:08:20.737Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="游戏拆解">
+<meta property="article:tag" content="土豆兄弟">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308272206582.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>土豆兄弟拆解02-基础词条</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/7374193e.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/b7e4126.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/b7e4126.html&text=土豆兄弟拆解02-基础词条"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/b7e4126.html&is_video=false&description=土豆兄弟拆解02-基础词条"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=土豆兄弟拆解02-基础词条&body=Check out this article: http://holmodi.fun/posts/b7e4126.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/b7e4126.html&name=土豆兄弟拆解02-基础词条&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/b7e4126.html&t=土豆兄弟拆解02-基础词条"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%95%B0%E8%AF%8D%E6%9D%A1"><span class="toc-number">1.</span> <span class="toc-text">基数词条</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        土豆兄弟拆解02-基础词条
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-27T14:04:09.000Z" class="dt-published" itemprop="datePublished">2023-08-27</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Games/">Games</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%9C%9F%E8%B1%86%E5%85%84%E5%BC%9F/" rel="tag">土豆兄弟</a>, <a class="p-category" href="/tags/%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3/" rel="tag">游戏拆解</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="基数词条"><a href="#基数词条" class="headerlink" title="基数词条"></a>基数词条</h1><p>**波数:**游戏一共有20波，第一波20s，随后每波时间+5s，20波90s</p>
+<p><strong>敌人</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>行为</td>
+<td>行为组合，例如追逐玩家、随机移动、成群出现、靠近玩家时自动远离，远程攻击等等。精英怪会的行为存在几个阶段的变异，当血量小于一定值时切换行为模式。</td>
+</tr>
+<tr>
+<td>血量 hp</td>
+<td>基础血量</td>
+</tr>
+<tr>
+<td>+hp&#x2F;wave</td>
+<td>每波血量加值</td>
+</tr>
+<tr>
+<td>移动速度</td>
+<td>部分怪物会在范围内随机，其余全局固定</td>
+</tr>
+<tr>
+<td>伤害dmg</td>
+<td>基础伤害值</td>
+</tr>
+<tr>
+<td>+dmg&#x2F;wave</td>
+<td>每波伤害加值</td>
+</tr>
+<tr>
+<td>资源掉落数</td>
+<td>（钱）</td>
+</tr>
+<tr>
+<td>箱子掉落率</td>
+<td>道具</td>
+</tr>
+<tr>
+<td>回复道具掉落率</td>
+<td>回血</td>
+</tr>
+<tr>
+<td>最早出现波次</td>
+<td></td>
+</tr>
+<tr>
+<td>ID</td>
+<td>内置ID</td>
+</tr>
+</tbody></table>
+<p>敌人最大值：游戏中有最大100个敌人的上限，当刷新敌人总数超过这个数值时，会随机的让地图上的非精英怪死亡，这种方式死亡的敌人不会掉落材料，但可以触发道具击杀敌人的效果，如游戏里的赛博球(敌人死亡时有概率对另一个敌人造成伤害)</p>
+<p>**升级:**每当玩家升级时会依据稀有度分布刷新四个基础属性增益，具体刷新规则参考商店拆解，详细数据如下：</p>
+<table>
+<thead>
+<tr>
+<th>Stat</th>
+<th>I</th>
+<th>II</th>
+<th>III</th>
+<th>IV</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Max HP</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+<td>12</td>
+</tr>
+<tr>
+<td>HP Regeneration</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Life Steal</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Damage</td>
+<td>5</td>
+<td>8</td>
+<td>12</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Melee Damage</td>
+<td>2</td>
+<td>4</td>
+<td>6</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Ranged Damage</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Elemental Damage</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Attack Speed</td>
+<td>5</td>
+<td>10</td>
+<td>15</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Crit Chance</td>
+<td>3</td>
+<td>5</td>
+<td>7</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Engineering Stat</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Range Stat</td>
+<td>15</td>
+<td>30</td>
+<td>45</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Armor</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Dodge Stat</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Speed Stat</td>
+<td>3</td>
+<td>6</td>
+<td>9</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Luck</td>
+<td>5</td>
+<td>10</td>
+<td>15</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Harvesting</td>
+<td>5</td>
+<td>8</td>
+<td>10</td>
+<td>12</td>
+</tr>
+</tbody></table>
+<p>升级<strong>保底机制：</strong>在固定轮次中会100%刷出指定稀有度的升级项：</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Tier</th>
+<th>Percentage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Tier 1</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Tier 2</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Tier 3</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Tier 3</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Tier 3</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Tier 4</td>
+<td>100%</td>
+</tr>
+</tbody></table>
+<p>再看一眼基础幸运下的刷新率</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308272206582.png" alt="Untitled"></p>
+<p>在没有保底情况下概率都低了一半，所以每五波的升级是需要多刷拿需求属性的</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%95%B0%E8%AF%8D%E6%9D%A1"><span class="toc-number">1.</span> <span class="toc-text">基数词条</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/b7e4126.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/b7e4126.html&text=土豆兄弟拆解02-基础词条"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/b7e4126.html&is_video=false&description=土豆兄弟拆解02-基础词条"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=土豆兄弟拆解02-基础词条&body=Check out this article: http://holmodi.fun/posts/b7e4126.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/b7e4126.html&title=土豆兄弟拆解02-基础词条"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/b7e4126.html&name=土豆兄弟拆解02-基础词条&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/b7e4126.html&t=土豆兄弟拆解02-基础词条"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
