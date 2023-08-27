@@ -6,7 +6,7 @@
   <link href="http://holmodi.fun/atom.xml" rel="self"/>
   
   <link href="http://holmodi.fun/"/>
-  <updated>2023-08-27T14:08:20.737Z</updated>
+  <updated>2023-08-27T14:08:31.166Z</updated>
   <id>http://holmodi.fun/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://holmodi.fun/posts/b7e4126.html"/>
     <id>http://holmodi.fun/posts/b7e4126.html</id>
     <published>2023-08-27T14:04:09.000Z</published>
-    <updated>2023-08-27T14:08:20.737Z</updated>
+    <updated>2023-08-27T14:08:31.166Z</updated>
     
     <content type="html"><![CDATA[<h1 id="基数词条"><a href="#基数词条" class="headerlink" title="基数词条"></a>基数词条</h1><p>**波数:**游戏一共有20波，第一波20s，随后每波时间+5s，20波90s</p><p><strong>敌人</strong>：</p><table><thead><tr><th>Name</th><th></th></tr></thead><tbody><tr><td>行为</td><td>行为组合，例如追逐玩家、随机移动、成群出现、靠近玩家时自动远离，远程攻击等等。精英怪会的行为存在几个阶段的变异，当血量小于一定值时切换行为模式。</td></tr><tr><td>血量 hp</td><td>基础血量</td></tr><tr><td>+hp&#x2F;wave</td><td>每波血量加值</td></tr><tr><td>移动速度</td><td>部分怪物会在范围内随机，其余全局固定</td></tr><tr><td>伤害dmg</td><td>基础伤害值</td></tr><tr><td>+dmg&#x2F;wave</td><td>每波伤害加值</td></tr><tr><td>资源掉落数</td><td>（钱）</td></tr><tr><td>箱子掉落率</td><td>道具</td></tr><tr><td>回复道具掉落率</td><td>回血</td></tr><tr><td>最早出现波次</td><td></td></tr><tr><td>ID</td><td>内置ID</td></tr></tbody></table><p>敌人最大值：游戏中有最大100个敌人的上限，当刷新敌人总数超过这个数值时，会随机的让地图上的非精英怪死亡，这种方式死亡的敌人不会掉落材料，但可以触发道具击杀敌人的效果，如游戏里的赛博球(敌人死亡时有概率对另一个敌人造成伤害)</p><p>**升级:**每当玩家升级时会依据稀有度分布刷新四个基础属性增益，具体刷新规则参考商店拆解，详细数据如下：</p><table><thead><tr><th>Stat</th><th>I</th><th>II</th><th>III</th><th>IV</th></tr></thead><tbody><tr><td>Max HP</td><td>3</td><td>6</td><td>9</td><td>12</td></tr><tr><td>HP Regeneration</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><td>Life Steal</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>Damage</td><td>5</td><td>8</td><td>12</td><td>16</td></tr><tr><td>Melee Damage</td><td>2</td><td>4</td><td>6</td><td>8</td></tr><tr><td>Ranged Damage</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>Elemental Damage</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>Attack Speed</td><td>5</td><td>10</td><td>15</td><td>20</td></tr><tr><td>Crit Chance</td><td>3</td><td>5</td><td>7</td><td>9</td></tr><tr><td>Engineering Stat</td><td>2</td><td>3</td><td>4</td><td>5</td></tr><tr><td>Range Stat</td><td>15</td><td>30</td><td>45</td><td>60</td></tr><tr><td>Armor</td><td>1</td><td>2</td><td>3</td><td>4</td></tr><tr><td>Dodge Stat</td><td>3</td><td>6</td><td>9</td><td>12</td></tr><tr><td>Speed Stat</td><td>3</td><td>6</td><td>9</td><td>12</td></tr><tr><td>Luck</td><td>5</td><td>10</td><td>15</td><td>20</td></tr><tr><td>Harvesting</td><td>5</td><td>8</td><td>10</td><td>12</td></tr></tbody></table><p>升级<strong>保底机制：</strong>在固定轮次中会100%刷出指定稀有度的升级项：</p><table><thead><tr><th>Level</th><th>Tier</th><th>Percentage</th></tr></thead><tbody><tr><td>1</td><td>Tier 1</td><td>100%</td></tr><tr><td>5</td><td>Tier 2</td><td>100%</td></tr><tr><td>10</td><td>Tier 3</td><td>100%</td></tr><tr><td>15</td><td>Tier 3</td><td>100%</td></tr><tr><td>20</td><td>Tier 3</td><td>100%</td></tr><tr><td>25</td><td>Tier 4</td><td>100%</td></tr></tbody></table><p>再看一眼基础幸运下的刷新率</p><p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202308272206582.png" alt="Untitled"></p><p>在没有保底情况下概率都低了一半，所以每五波的升级是需要多刷拿需求属性的</p>]]></content>
     
