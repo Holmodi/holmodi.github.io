@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="LLM辅助RL Agent决策在多智能体强化学习中，由于同时涉及时间和结构尺度，适当分配奖励十分困难，尤其是在稀疏奖励的情况下。自动生成子目标的方法近年来在多智能体强化学习中得到了广泛应用，但是从稀疏奖励中学习复杂任务规划的端到端学习需要大量的训练样本，并且现有的方法往往会生成大量与实际任务奖励关联性有限的虚假子目标，降低了算法的样本效率。为了解决这个问题，现有的自动生成子目标的方法通常采用两阶段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM辅助Agent决策论文阅读">
+<meta property="og:url" content="http://holmodi.fun/posts/a7e72cd5.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="LLM辅助RL Agent决策在多智能体强化学习中，由于同时涉及时间和结构尺度，适当分配奖励十分困难，尤其是在稀疏奖励的情况下。自动生成子目标的方法近年来在多智能体强化学习中得到了广泛应用，但是从稀疏奖励中学习复杂任务规划的端到端学习需要大量的训练样本，并且现有的方法往往会生成大量与实际任务奖励关联性有限的虚假子目标，降低了算法的样本效率。为了解决这个问题，现有的自动生成子目标的方法通常采用两阶段">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022143040.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022143076.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022146077.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022147889.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022147862.png">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022147265.png">
+<meta property="article:published_time" content="2023-09-02T13:43:35.000Z">
+<meta property="article:modified_time" content="2023-09-02T13:48:36.608Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="LLM Agent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022143040.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>LLM辅助Agent决策论文阅读</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/7374193e.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/a7e72cd5.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/a7e72cd5.html&text=LLM辅助Agent决策论文阅读"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/a7e72cd5.html&is_video=false&description=LLM辅助Agent决策论文阅读"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=LLM辅助Agent决策论文阅读&body=Check out this article: http://holmodi.fun/posts/a7e72cd5.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/a7e72cd5.html&name=LLM辅助Agent决策论文阅读&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/a7e72cd5.html&t=LLM辅助Agent决策论文阅读"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LLM%E8%BE%85%E5%8A%A9RL-Agent%E5%86%B3%E7%AD%96"><span class="toc-number">1.</span> <span class="toc-text">LLM辅助RL Agent决策</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Semantically-Aligned-Task-Decomposition-in-MARL"><span class="toc-number">2.</span> <span class="toc-text">Semantically Aligned Task Decomposition in MARL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Information"><span class="toc-number">2.1.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E8%A6%81"><span class="toc-number">2.2.</span> <span class="toc-text">论文简要 :</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">方法:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OverCook%E5%A4%9Aagent%E5%90%88%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">OverCook多agent合作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RTS%E6%B8%B8%E6%88%8F%E6%8C%87%E6%8C%A5"><span class="toc-number">3.2.</span> <span class="toc-text">RTS游戏指挥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">3.3.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">3.4.</span> <span class="toc-text">Note:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Information-1"><span class="toc-number">4.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E8%A6%81-1"><span class="toc-number">5.</span> <span class="toc-text">论文简要 :</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">背景信息:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1"><span class="toc-number">7.</span> <span class="toc-text">方法:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C-1"><span class="toc-number">8.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text"></span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        LLM辅助Agent决策论文阅读
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-02T13:43:35.000Z" class="dt-published" itemprop="datePublished">2023-09-02</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/LLM-Agent/" rel="tag">LLM Agent</a>, <a class="p-category" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag">强化学习</a>, <a class="p-category" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag">论文阅读</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="LLM辅助RL-Agent决策"><a href="#LLM辅助RL-Agent决策" class="headerlink" title="LLM辅助RL Agent决策"></a>LLM辅助RL Agent决策</h1><p>在多智能体强化学习中，由于同时涉及时间和结构尺度，适当分配奖励十分困难，尤其是在稀疏奖励的情况下。自动生成子目标的方法近年来在多智能体强化学习中得到了广泛应用，但是从稀疏奖励中学习复杂任务规划的端到端学习需要大量的训练样本，并且现有的方法往往会生成大量与实际任务奖励关联性有限的虚假子目标，降低了算法的样本效率。为了解决这个问题，现有的自动生成子目标的方法通常采用两阶段的端到端学习过程，首先生成每个智能体的子目标，然后学习使智能体实现这些子目标的策略。然而，这些方法往往需要大量的训练样本，并且由于多样性促进的表示学习方法可能会导致子目标的“过度表示”，生成大量与任务奖励关联性有限的冗余子目标，降低了算法的样本效率。 </p>
+<h1 id="Semantically-Aligned-Task-Decomposition-in-MARL"><a href="#Semantically-Aligned-Task-Decomposition-in-MARL" class="headerlink" title="Semantically Aligned Task Decomposition in MARL"></a>Semantically Aligned Task Decomposition in MARL</h1><h2 id="Basic-Information"><a href="#Basic-Information" class="headerlink" title="Basic Information:"></a>Basic Information:</h2><ul>
+<li>Title: Semantically Aligned Task Decomposition in MARL (多智能体强化学习中的语义对齐任务分解)</li>
+<li>Keywords: Multi-Agent Reinforcement Learning, Task Decomposition, Sparse Reward, Automatic Subgoal Generation, Language-Grounded RL</li>
+<li>URLs: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.10865v1">Paper</a>, [GitHub: None]</li>
+</ul>
+<h2 id="论文简要"><a href="#论文简要" class="headerlink" title="论文简要 :"></a>论文简要 :</h2><p>本研究的研究思路是通过在多智能体强化学习中实现语义对齐的任务分解，帮助多智能体强化学习中有效地分配任务和子目标。论文提出了一种语义对齐的任务分解方法，确定需要完成的目标，然后基于各个智能体的能力和状态将目标分解为多个子目标。</p>
+<p>本研究还设计了一种自我反思的决策检查方法，用于判断任务分解和子目标分配过程中是否出现错误。如果发现错误，决策检查者将接管错误的角色，并重新生成和分解目标，或重新分配子目标。</p>
+<p>通过实现语义对齐的任务分解和有效的子目标分配，本研究解决了多智能体强化学习中任务分配和协作效率的问题。这种方法可以提高多智能体系统在协作任务中的性能，并实现更高效的任务完成。鉴于现有方法的局限性，本文受到解缠表示学习的启发，提出了一种新颖的“解缠”决策方法，即在多智能体强化学习中的语义对齐任务分解（SAMA）。SAMA利用预训练语言模型GPT作为先验知识和常识的来源，通过链式思维提示语言模型生成潜在目标，并提供适当的目标分解和子目标分配，以及基于自我反思的重新规划。此外，SAMA还结合了语言引导强化学习，训练每个智能体的子目标条件策略。通过在两个具有稀疏奖励的挑战性任务上的实验证明，SAMA相比于现有的自动生成子目标方法具有显著的样本效率优势。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法:"></a>方法:</h2><ul>
+<li>本文讨论了合作多智能体强化学习（MARL）中稀疏奖励下的信用分配挑战。强调了在时间和结构尺度上分配信用的困难性。值分解框架通常用于解决结构性信用分配问题。在稀疏环境中学习沿轨迹分配信用的主要挑战是每个智能体通过随机探索获得有益轨迹的困难性。基于子目标的方法已经成为一种可行的替代方案，将任务分解为一系列目标和子目标。然而，现有的自动生成子目标（ASG）方法存在子目标过度表示的问题，导致样本效率降低。提出的方法，MARL中的语义对齐任务分解（SAMA），利用预训练的语言模型（PLMs）生成语义对齐和不重叠的子目标，解决了现有ASG方法的局限性。</li>
+<li>提出的算法框架SAMA通过促使PLMs实现解耦、常识驱动的自动生成子目标，以解决MARL中的信用分配问题。它采用了一种语言基础机制，使每个智能体能够学习一个以自然语言子目标为条件的强化学习策略，以实现高效的MARL和PLM协作。SAMA在样本效率方面相比最先进的基于子目标的MARL方法具有明显的优势，这一点在Overcooked和MiniRTS的性能上得到了证明。当出现错误时，使用自反思机制来促使PLM重新规划任务。</li>
+</ul>
+<h1 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h1><h2 id="OverCook多agent合作"><a href="#OverCook多agent合作" class="headerlink" title="OverCook多agent合作"></a>OverCook多agent合作</h2><p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022143040.png"></p>
+<h2 id="RTS游戏指挥"><a href="#RTS游戏指挥" class="headerlink" title="RTS游戏指挥"></a>RTS游戏指挥</h2><p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022143076.png"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022146077.png"></p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果:"></a>结果:</h2><ul>
+<li><p>文章中介绍了一种名为SAMA（Semantically Aligned Task Decomposition in Multi-Agent Reinforcement Learning）的方法，并对其进行了实验评估。下面是每个步骤的研究结果和对实验假设的论证：</p>
+<ol>
+<li><p>实验假设：SAMA方法可以解决多智能体强化学习中的“样本稀缺”和“目标过度表示”挑战。</p>
+</li>
+<li><p>目标生成、分解和分配：通过使用预训练的语言模型（PLM），SAMA方法能够生成与自然语言任务手册语义对齐的目标，并将目标分解为子目标，并将子目标分配给每个智能体。实验结果表明，SAMA方法能够生成合适的目标，并将其分解和分配给智能体。</p>
+</li>
+<li><p>自我反思机制：SAMA方法引入了自我反思机制，用于改进语义对齐目标的生成、分解和分配过程。实验结果表明，自我反思机制能够显著提高SAMA方法的性能。</p>
+</li>
+<li><p>语言引导的强化学习：SAMA方法使用语言引导的强化学习来训练每个智能体的子目标条件策略。实验结果表明，语言引导的强化学习能够使智能体的策略与语义对齐的目标紧密匹配，并促进智能体之间的合作。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>总体而言，实验结果支持了SAMA方法的有效性，并论证了实验假设。该方法能够解决多智能体强化学习中的挑战，并在长期、稀疏奖励和高度协作的任务中取得良好的性能。</p>
+<p>- </p>
+<ol>
+<li><p>研究结论：本文的研究结论是通过语义对齐的任务分解方法在多智能体强化学习中实现了有效的目标分解和分配。该方法能够根据当前情况选择最合适的子目标，并使智能体能够独立地完成这些子目标，从而提高了多智能体系统的性能。</p>
+</li>
+<li><p>研究的创新性：本研究的创新性主要体现在以下几个方面：</p>
+</li>
+</ol>
+<ul>
+<li>引入了语义对齐的任务分解方法，通过对当前情况进行分析和推理，选择最合适的子目标，从而提高了任务分解的准确性和效率。</li>
+<li>提出了一种有效的子目标分配策略，使得智能体能够独立地完成各自的子目标，从而提高了系统的并行性和整体性能。</li>
+<li>在多智能体强化学习领域中，将语义对齐的任务分解方法应用于实际问题，并取得了良好的效果。</li>
+</ul>
+<ol start="3">
+<li>研究的不足之处：本研究还存在一些不足之处：</li>
+</ol>
+<ul>
+<li>在实验中，只针对特定的游戏环境进行了验证，对于其他类型的任务和环境的适应性还需要进一步研究。</li>
+<li>在目标分解和分配过程中，可能存在一定的误差和不确定性，需要进一步改进算法和方法，提高准确性和稳定性。</li>
+<li>对于模型中可能存在的社会偏见和刻板印象的处理还需要更深入的研究和探讨。</li>
+</ul>
+<ol start="4">
+<li>研究展望：基于本研究的结果，可以进一步开展以下研究方向：</li>
+</ol>
+<ul>
+<li>探索更多复杂任务和环境下的语义对齐的任务分解方法，提高系统的适应性和泛化能力。</li>
+<li>进一步研究目标分解和分配的算法和策略，提高准确性和效率，并解决误差和不确定性的问题。</li>
+<li>深入研究和解决模型中可能存在的社会偏见和刻板印象的问题，确保系统的公平性和中立性。</li>
+<li>将语义对齐的任务分解方法应用于更广泛的领域，如自动驾驶、多智能体路径规划、云计算等，探索其在实际应用中的效果和潜在价值。</li>
+</ul>
+<ol start="5">
+<li>研究意义：本研究的理论意义和实践意义包括：</li>
+</ol>
+<ul>
+<li>在理论上，本研究提出了一种新的任务分解方法，为多智能体强化学习领域的研究提供了新的思路和方法。</li>
+<li>在实践上，本研究的方法可以应用于实际问题中，提高多智能体系统的性能和效率，具有一定的应用价值。</li>
+<li>通过研究和解决模型中可能存在的社会偏见和刻板印象的问题，可以促进人工智能技术的公平性和中立性，对社会具有积极的影响。</li>
+</ul>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><ul>
+<li>提示词：</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022147889.png"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022147862.png"></p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309022147265.png"></p>
+<h1 id="Basic-Information-1"><a href="#Basic-Information-1" class="headerlink" title="Basic Information:"></a>Basic Information:</h1><ul>
+<li>Title: Hierarchical Decision Making by Generating and Following Natural Language Instructions (通过生成和遵循自然语言指令进行分层决策)</li>
+<li>Authors: Hengyuan Hu, Denis Yarats, Qucheng Gong, Yuandong Tian, Mike Lewis</li>
+<li>Affiliation: First author’s affiliation: Facebook AI Research (第一作者所属机构：Facebook AI Research)</li>
+<li>Keywords: hierarchical decision making, natural language instructions, real-time strategy game, planning and execution, compositional structure (分层决策，自然语言指令，实时策略游戏，规划和执行，组合结构)</li>
+<li>URLs: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.00744v5">Paper</a>, <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/minirts">GitHub Code</a></li>
+</ul>
+<h1 id="论文简要-1"><a href="#论文简要-1" class="headerlink" title="论文简要 :"></a>论文简要 :</h1><ul>
+<li>通过生成和遵循自然语言指令，本研究探索了一种表达复杂动作的分层决策方法。在一个挑战性的实时策略游戏环境中，通过收集人类玩家的指令和执行数据集，训练了指导者和执行者模型，并证明了使用自然语言作为潜在变量的模型明显优于直接模仿人类动作的模型。语言的组合结构对于动作表示的有效性至关重要。</li>
+</ul>
+<h1 id="背景信息"><a href="#背景信息" class="headerlink" title="背景信息:"></a>背景信息:</h1><ul>
+<li>论文背景: 复杂问题可以自然地分解为高层规划和低层控制的步骤，但规划表示是具有挑战性的。本研究通过使用自然语言指令作为复杂动作的表达方式，解决了规划表示的挑战性问题。</li>
+<li>过去方案: 传统的强化学习环境（如Atari或网格世界）对于规划在不同抽象级别上的作用并不适用。手动设计的宏操作通常无法与强大的人类表现相匹配。因此，需要一种新的方法来表示复杂动作。</li>
+<li>论文的Motivation: 本研究的动机是利用自然语言指令作为复杂动作的表达方式。自然语言可以表达任意目标，并具有组合结构，可以实现对指令的泛化。通过将决策过程分解为规划和执行模块，并在它们之间引入自然语言接口，可以更好地解决复杂决策问题。</li>
+</ul>
+<h1 id="方法-1"><a href="#方法-1" class="headerlink" title="方法:"></a>方法:</h1><ul>
+<li>a. 理论背景:<ul>
+<li>作者提出使用自然语言指令作为层次决策制定复杂动作的表示方法。他们开发了一个实时策略游戏环境，并从人类游戏中收集了一组指令执行对的数据。使用自然语言作为潜变量的模型优于直接模仿人类动作的模型。</li>
+</ul>
+</li>
+<li>b. 技术路线:<ul>
+<li>作者将复杂动作表示为自然语言指令，并引入了一个两级层次结构，其中高级指导模型为低级执行模型生成自然语言子目标。他们从实时策略游戏中收集了一组人类指令和执行的数据。</li>
+</ul>
+</li>
+</ul>
+<h1 id="结果-1"><a href="#结果-1" class="headerlink" title="结果:"></a>结果:</h1><ul>
+<li><p>a. 详细的实验设置:</p>
+<ul>
+<li>作者介绍了基于MiniRTS的实时策略游戏环境。该游戏具有石头剪刀布单位攻击动态，并且具有大的状态-动作空间和部分可观察性的挑战。该游戏旨在对人类直观但对机器具有挑战性。</li>
+</ul>
+</li>
+<li><p>b. 详细的实验结果:</p>
+<ul>
+<li>实验结果显示，当使用组合编码器（如词袋模型或循环神经网络模型）对指令进行编码时，执行模型的性能更好。使用组合指令编码器可以提高人类动作的可能性和与非层次执行模型（EXECUTORONLY）的胜率。指导模型在更结构化的指令模型下也显示出更好的可能性，特别是对于更大的指令集。结果表明，语言在表示复杂计划方面的潜力以及利用语言的组合结构进行泛化的重要性。</li>
+</ul>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LLM%E8%BE%85%E5%8A%A9RL-Agent%E5%86%B3%E7%AD%96"><span class="toc-number">1.</span> <span class="toc-text">LLM辅助RL Agent决策</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Semantically-Aligned-Task-Decomposition-in-MARL"><span class="toc-number">2.</span> <span class="toc-text">Semantically Aligned Task Decomposition in MARL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Basic-Information"><span class="toc-number">2.1.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E8%A6%81"><span class="toc-number">2.2.</span> <span class="toc-text">论文简要 :</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.3.</span> <span class="toc-text">方法:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-number">3.</span> <span class="toc-text">案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OverCook%E5%A4%9Aagent%E5%90%88%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text">OverCook多agent合作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RTS%E6%B8%B8%E6%88%8F%E6%8C%87%E6%8C%A5"><span class="toc-number">3.2.</span> <span class="toc-text">RTS游戏指挥</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">3.3.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">3.4.</span> <span class="toc-text">Note:</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Information-1"><span class="toc-number">4.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%AE%80%E8%A6%81-1"><span class="toc-number">5.</span> <span class="toc-text">论文简要 :</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="toc-number">6.</span> <span class="toc-text">背景信息:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1"><span class="toc-number">7.</span> <span class="toc-text">方法:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C-1"><span class="toc-number">8.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text"></span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/a7e72cd5.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/a7e72cd5.html&text=LLM辅助Agent决策论文阅读"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/a7e72cd5.html&is_video=false&description=LLM辅助Agent决策论文阅读"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=LLM辅助Agent决策论文阅读&body=Check out this article: http://holmodi.fun/posts/a7e72cd5.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/a7e72cd5.html&title=LLM辅助Agent决策论文阅读"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/a7e72cd5.html&name=LLM辅助Agent决策论文阅读&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/a7e72cd5.html&t=LLM辅助Agent决策论文阅读"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
