@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Unreal Python TCP 双向通信python作为服务器,unreal客户端，unreal这边创建继承Actor的类TcpCommunication 将以下代码复制进去，记得将.h文件里的 RTS_API 改成自己的 项目名_API 运行结果：  12345678910111213141516171819202122232425262728293031323334353637383940">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unreal Python TCP 双向通信">
+<meta property="og:url" content="http://holmodi.fun/posts/6448113e.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="Unreal Python TCP 双向通信python作为服务器,unreal客户端，unreal这边创建继承Actor的类TcpCommunication 将以下代码复制进去，记得将.h文件里的 RTS_API 改成自己的 项目名_API 运行结果：  12345678910111213141516171819202122232425262728293031323334353637383940">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309122354970.png">
+<meta property="article:published_time" content="2023-09-12T15:55:43.000Z">
+<meta property="article:modified_time" content="2023-09-12T15:58:50.125Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="LLM Agent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309122354970.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Unreal Python TCP 双向通信</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/posts/49ac9205.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/a7e72cd5.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/6448113e.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/6448113e.html&text=Unreal Python TCP 双向通信"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/6448113e.html&is_video=false&description=Unreal Python TCP 双向通信"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Unreal Python TCP 双向通信&body=Check out this article: http://holmodi.fun/posts/6448113e.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/6448113e.html&name=Unreal Python TCP 双向通信&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/6448113e.html&t=Unreal Python TCP 双向通信"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Unreal-Python-TCP-%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">Unreal Python TCP 双向通信</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Unreal Python TCP 双向通信
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-12T15:55:43.000Z" class="dt-published" itemprop="datePublished">2023-09-12</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/LLM-Agent/" rel="tag">LLM Agent</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Unreal-Python-TCP-双向通信"><a href="#Unreal-Python-TCP-双向通信" class="headerlink" title="Unreal Python TCP 双向通信"></a>Unreal Python TCP 双向通信</h1><p>python作为服务器,unreal客户端，unreal这边创建继承Actor的类<code>TcpCommunication</code> 将以下代码复制进去，记得将.h文件里的 <strong>RTS_API</strong> 改成自己的 <strong>项目名_API</strong></p>
+<p>运行结果：</p>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309122354970.png" alt="Untitled"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TcpCommunication.h</span></span><br><span class="line"><span class="meta">#<span class="keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;CoreMinimal.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Json.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;UObject/Object.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Networking/Public/Networking.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;GameFramework/Actor.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;TcpCommunication.generated.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="built_in">UCLASS</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RTS_API</span> ATcpCommunication : <span class="keyword">public</span> AActor</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">GENERATED_BODY</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Sets default values for this actor’s properties</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">ATcpCommunication</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Called when the game starts or when spawned</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">BeginPlay</span><span class="params">()</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">EndPlay</span><span class="params">(<span class="type">const</span> EEndPlayReason::Type EndPlayReason)</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Called every frame</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">Tick</span><span class="params">(<span class="type">float</span> DeltaTime)</span> <span class="keyword">override</span></span>;</span><br><span class="line"></span><br><span class="line">	FSocket* ListenerSocket;</span><br><span class="line"></span><br><span class="line">	FSocket* ConnectionSocket;</span><br><span class="line"></span><br><span class="line">	FIPv4Endpoint RemoteAddressForConnection;</span><br><span class="line"></span><br><span class="line">	FTimerHandle TCPSocketListenerTimerHandle;</span><br><span class="line"></span><br><span class="line">	FTimerHandle TCPConnectionListenerTimerHandle;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">UFUNCTION</span>(BlueprintCallable, Category = <span class="string">&quot;MySocket&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">SocketCreate</span><span class="params">(FString IPStr, int32 port)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">UFUNCTION</span>(BlueprintCallable, Category = <span class="string">&quot;MySocket&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">SocketSend</span><span class="params">(FString meesage)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">UFUNCTION</span>(BlueprintPure, Category = <span class="string">&quot;MySocket&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">SocketReceive</span><span class="params">(<span class="type">bool</span>&amp; bReceive, FString&amp; recvMessage)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">FString <span class="title">StringFromBinaryArray</span><span class="params">(TArray&lt;uint8&gt; BinaryArray)</span></span>;</span><br><span class="line"></span><br><span class="line">	FSocket *SocketClient;</span><br><span class="line"></span><br><span class="line">	FIPv4Address ip;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//TcpCommunication.cpp</span></span><br><span class="line"><span class="comment">// Fill out your copyright notice in the Description page of Project Settings.</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;TcpCommunication.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;HLSLTypeAliases.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Runtime/Networking/Public/Networking.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Interfaces/IPv4/IPv4Address.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;UObject/Object.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">ATcpCommunication::<span class="built_in">ATcpCommunication</span>(): <span class="built_in">ListenerSocket</span>(<span class="literal">nullptr</span>), <span class="built_in">ConnectionSocket</span>(<span class="literal">nullptr</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// Set this actor to call Tick() every frame. You can turn this off to improve performance if you don’t need it.</span></span><br><span class="line"></span><br><span class="line">	PrimaryActorTick.bCanEverTick = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">	SocketClient = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ATcpCommunication::BeginPlay</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Super::<span class="built_in">BeginPlay</span>();</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> FString IPStr = <span class="string">&quot;127.0.0.1&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> int32 port = <span class="number">1081</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">bool</span> success = <span class="built_in">SocketCreate</span>(IPStr, port);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ATcpCommunication::EndPlay</span><span class="params">(<span class="type">const</span> EEndPlayReason::Type EndPlayReason)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Super::<span class="built_in">EndPlay</span>(EndPlayReason);</span><br><span class="line">	UWorld* World = <span class="built_in">GetWorld</span>();</span><br><span class="line">	<span class="built_in">GetWorld</span>()-&gt;<span class="built_in">GetTimerManager</span>().<span class="built_in">ClearTimer</span>(TCPConnectionListenerTimerHandle);</span><br><span class="line">	<span class="built_in">GetWorld</span>()-&gt;<span class="built_in">GetTimerManager</span>().<span class="built_in">ClearTimer</span>(TCPSocketListenerTimerHandle);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (ConnectionSocket != <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ConnectionSocket-&gt;<span class="built_in">Close</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (ListenerSocket != <span class="literal">nullptr</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ListenerSocket-&gt;<span class="built_in">Close</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (SocketClient)</span><br><span class="line">	&#123;</span><br><span class="line">		SocketClient-&gt;<span class="built_in">Close</span>();</span><br><span class="line">		ISocketSubsystem::<span class="built_in">Get</span>(PLATFORM_SOCKETSUBSYSTEM)-&gt;<span class="built_in">DestroySocket</span>(SocketClient);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ATcpCommunication::Tick</span><span class="params">(<span class="type">float</span> DeltaTime)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Super::<span class="built_in">Tick</span>(DeltaTime);</span><br><span class="line"></span><br><span class="line">	FString Message = <span class="string">&quot;HELLO&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">bool</span> bReceive = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">	FString Receivemessage = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">SocketReceive</span>(bReceive,Receivemessage);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">SocketSend</span>(<span class="string">&quot;HelloFromUnreal&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">ATcpCommunication::SocketCreate</span><span class="params">(FString IPStr, int32 port)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FIPv4Address::<span class="built_in">Parse</span>(IPStr,ip);</span><br><span class="line">	TSharedRef&lt;FInternetAddr&gt; addr = ISocketSubsystem::<span class="built_in">Get</span>(PLATFORM_SOCKETSUBSYSTEM)-&gt;<span class="built_in">CreateInternetAddr</span>();</span><br><span class="line">	addr-&gt;<span class="built_in">SetIp</span>(ip.Value);</span><br><span class="line">	addr-&gt;<span class="built_in">SetPort</span>(port);</span><br><span class="line"></span><br><span class="line">	SocketClient = ISocketSubsystem::<span class="built_in">Get</span>(PLATFORM_SOCKETSUBSYSTEM)-&gt;<span class="built_in">CreateSocket</span>(NAME_Stream,<span class="built_in">TEXT</span>(<span class="string">&quot;default&quot;</span>),<span class="literal">false</span>);</span><br><span class="line">	<span class="keyword">if</span> (SocketClient-&gt;<span class="built_in">Connect</span>(*addr))</span><br><span class="line">	&#123;</span><br><span class="line">		GEngine-&gt;<span class="built_in">AddOnScreenDebugMessage</span>(<span class="number">1</span>,<span class="number">2.0f</span>,FColor::Green,<span class="built_in">TEXT</span>(<span class="string">&quot;Connect Success!&quot;</span>));</span><br><span class="line"></span><br><span class="line">		<span class="built_in">UE_LOG</span>(LogTemp,Warning,<span class="built_in">TEXT</span>(<span class="string">&quot;Connect Success!&quot;</span>));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		<span class="comment">//UE_LOG(LogTemp, Warning, TEXT(&quot;Connect Succ!&quot;));</span></span><br><span class="line">	&#125;</span><br><span class="line">	GEngine-&gt;<span class="built_in">AddOnScreenDebugMessage</span>(<span class="number">1</span>, <span class="number">2.0f</span>, FColor::Green, <span class="built_in">TEXT</span>(<span class="string">&quot;Connect failed!&quot;</span>));</span><br><span class="line"></span><br><span class="line">	<span class="built_in">UE_LOG</span>(LogTemp, Warning, <span class="built_in">TEXT</span>(<span class="string">&quot;Connect failed!&quot;</span>));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ATcpCommunication::SocketSend</span><span class="params">(FString meesage)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	TCHAR *seriallizedChar = meesage.<span class="built_in">GetCharArray</span>().<span class="built_in">GetData</span>();</span><br><span class="line"></span><br><span class="line">	int32 size = FCString::<span class="built_in">Strlen</span>(seriallizedChar) + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	int32 sent = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span> (SocketClient-&gt;<span class="built_in">Send</span>((uint8*)<span class="built_in">TCHAR_TO_UTF8</span>(seriallizedChar), size, sent))</span><br><span class="line">	&#123;</span><br><span class="line">		GEngine-&gt;<span class="built_in">AddOnScreenDebugMessage</span>(<span class="number">1</span>, <span class="number">2.0f</span>, FColor::Green, <span class="built_in">TEXT</span>(<span class="string">&quot;_____Send Succ!&quot;</span>));</span><br><span class="line">		<span class="built_in">UE_LOG</span>(LogTemp, Warning, <span class="built_in">TEXT</span>(<span class="string">&quot;_____Send Succ!&quot;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		GEngine-&gt;<span class="built_in">AddOnScreenDebugMessage</span>(<span class="number">1</span>, <span class="number">2.0f</span>, FColor::Green, <span class="built_in">TEXT</span>(<span class="string">&quot;_____Send failed!&quot;</span>));</span><br><span class="line">		<span class="built_in">UE_LOG</span>(LogTemp, Warning, <span class="built_in">TEXT</span>(<span class="string">&quot;_____Send failed!&quot;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ATcpCommunication::SocketReceive</span><span class="params">(<span class="type">bool</span>&amp; bReceive, FString&amp; recvMessage)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	recvMessage = <span class="string">&quot;&quot;</span>;</span><br><span class="line">	bReceive = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (!SocketClient)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	TArray&lt;uint8&gt;  ReceiveData;</span><br><span class="line">	uint32 size;</span><br><span class="line">	uint8 element = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (SocketClient-&gt;<span class="built_in">HasPendingData</span>(size))</span><br><span class="line">	&#123;</span><br><span class="line">		ReceiveData.<span class="built_in">Init</span>(element,FMath::<span class="built_in">Min</span>(size,<span class="number">65507u</span>));</span><br><span class="line">		int32 read = <span class="number">0</span>;</span><br><span class="line">		SocketClient-&gt;<span class="built_in">Recv</span>(ReceiveData.<span class="built_in">GetData</span>(),ReceiveData.<span class="built_in">Num</span>(),read);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (ReceiveData.<span class="built_in">Num</span>()&lt;=<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	FString log = <span class="string">&quot;Total Data read!num:&quot;</span> + FString::<span class="built_in">FromInt</span>(ReceiveData.<span class="built_in">Num</span>()&lt;=<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">	GEngine-&gt;<span class="built_in">AddOnScreenDebugMessage</span>(<span class="number">1</span>, <span class="number">2.0f</span>, FColor::Green, log);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">UE_LOG</span>(LogTemp, Warning, <span class="built_in">TEXT</span>(<span class="string">&quot;Recv log:  %s&quot;</span>), *log);</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> FString ReceiveUE4String = <span class="built_in">StringFromBinaryArray</span>(ReceiveData);</span><br><span class="line"></span><br><span class="line">	log = <span class="string">&quot;Server:&quot;</span> + ReceiveUE4String;</span><br><span class="line">	bReceive = <span class="literal">true</span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">FString <span class="title">ATcpCommunication::StringFromBinaryArray</span><span class="params">(TArray&lt;uint8&gt; BinaryArray)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">FString</span>(<span class="built_in">ANSI_TO_TCHAR</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">const</span> <span class="type">char</span>*&gt;(BinaryArray.<span class="built_in">GetData</span>())));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Python：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#encoding=utf-8</span></span><br><span class="line"><span class="comment"># 创建一个 TCP 服务器程序，这个程序会把客户发送过来的字</span></span><br><span class="line"><span class="comment"># 符串加上一个时间戳（格式：&#x27;[时间]数据&#x27;）返回给客户。</span></span><br><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> ctime</span><br><span class="line"></span><br><span class="line">host = <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">port = <span class="number">1081</span></span><br><span class="line">bufsiz = <span class="number">2048</span></span><br><span class="line">addr = (host,port)</span><br><span class="line"></span><br><span class="line"><span class="comment">#创建tcp套接字，绑定，监听</span></span><br><span class="line">tcpServerSock = socket(AF_INET,SOCK_STREAM)<span class="comment">#创建TCP Socket</span></span><br><span class="line"><span class="comment">#AF_INET 服务器之间网络通信</span></span><br><span class="line"><span class="comment">#socket.SOCK_STREAM 流式socket , for TCP</span></span><br><span class="line">tcpServerSock.bind(addr)<span class="comment">#将套接字绑定到地址,</span></span><br><span class="line"><span class="comment">#在AF_INET下,以元组（host,port）的形式表示地址.</span></span><br><span class="line">tcpServerSock.listen(<span class="number">5</span>)<span class="comment">#操作系统可以挂起的最大连接数量，至少为1，大部分为5</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;waiting for connection&#x27;</span>)</span><br><span class="line">    <span class="comment"># udp中是recvfrom(buffersize),tcp这里用accept()；</span></span><br><span class="line">    <span class="comment"># tcp这里接收到的是客户端的sock对象，后面接受数据时使用socket.recv()</span></span><br><span class="line">    tcpClientSock, addr2 = tcpServerSock.accept() <span class="comment">#接受客户的连接</span></span><br><span class="line"><span class="comment">#接受TCP连接并返回（conn,address）,其中conn是新的套接字对象，</span></span><br><span class="line"><span class="comment">#可以用来接收和发送数据。</span></span><br><span class="line"><span class="comment">#address是连接客户端的地址。</span></span><br><span class="line">    <span class="built_in">print</span> (<span class="string">&#x27;connected from :&#x27;</span>,addr2)</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        data = tcpClientSock.recv(bufsiz) <span class="comment">#接收客户端发来的数据</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="built_in">print</span>(data.decode())</span><br><span class="line">        msg= <span class="string">&quot;hellooooooo&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> msg:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        tcpClientSock.send(msg.encode()) <span class="comment">#返回给客户端数据</span></span><br><span class="line">    tcpClientSock.close()</span><br><span class="line">tcpServerSock.close()</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Unreal-Python-TCP-%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">Unreal Python TCP 双向通信</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/6448113e.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/6448113e.html&text=Unreal Python TCP 双向通信"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/6448113e.html&is_video=false&description=Unreal Python TCP 双向通信"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Unreal Python TCP 双向通信&body=Check out this article: http://holmodi.fun/posts/6448113e.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/6448113e.html&title=Unreal Python TCP 双向通信"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/6448113e.html&name=Unreal Python TCP 双向通信&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/6448113e.html&t=Unreal Python TCP 双向通信"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

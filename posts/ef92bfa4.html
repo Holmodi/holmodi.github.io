@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Basic Information: Title: VOYAGER: An Open-Ended Embodied Agent with Large Language Models (基于大语言模型的开放式交互体验智能体Voyager) Keywords: lifelong learning, embodied agent, large language model, open-ended exp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VOYAGER Minecraft 论文阅读+源码分析">
+<meta property="og:url" content="http://holmodi.fun/posts/ef92bfa4.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="Basic Information: Title: VOYAGER: An Open-Ended Embodied Agent with Large Language Models (基于大语言模型的开放式交互体验智能体Voyager) Keywords: lifelong learning, embodied agent, large language model, open-ended exp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309130002955.png">
+<meta property="article:published_time" content="2023-09-12T16:02:52.000Z">
+<meta property="article:modified_time" content="2023-09-12T16:03:39.760Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="强化学习">
+<meta property="article:tag" content="LLM Agent">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309130002955.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>VOYAGER Minecraft 论文阅读+源码分析</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/49ac9205.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/ef92bfa4.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/ef92bfa4.html&text=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/ef92bfa4.html&is_video=false&description=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=VOYAGER Minecraft 论文阅读+源码分析&body=Check out this article: http://holmodi.fun/posts/ef92bfa4.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/ef92bfa4.html&name=VOYAGER Minecraft 论文阅读+源码分析&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/ef92bfa4.html&t=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Information"><span class="toc-number">1.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">主要思路</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        VOYAGER Minecraft 论文阅读+源码分析
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-12T16:02:52.000Z" class="dt-published" itemprop="datePublished">2023-09-13</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/LLM-Agent/" rel="tag">LLM Agent</a>, <a class="p-category" href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag">强化学习</a>, <a class="p-category" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag">论文阅读</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Basic-Information"><a href="#Basic-Information" class="headerlink" title="Basic Information:"></a>Basic Information:</h1><ul>
+<li>Title: VOYAGER: An Open-Ended Embodied Agent with Large Language Models (基于大语言模型的开放式交互体验智能体Voyager)</li>
+<li>Keywords: lifelong learning, embodied agent, large language model, open-ended exploration, skill library</li>
+<li>URLs: Paper: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2305.16291v1">https://arxiv.org/abs/2305.16291v1</a></li>
+</ul>
+<h1 id="主要思路"><a href="#主要思路" class="headerlink" title="主要思路"></a>主要思路</h1><ul>
+<li><p>本文介绍了VOYAGER，这是一个具有（in-context lifelong learning）能力的代理系统，旨在在Minecraft中进行探索、获取技能和进行新颖发现，无需人类干预。VOYAGER由大型语言模型（LLMs）驱动，三个关键组件：自动课程、自增长的可执行代码技能库、配合环境反馈信息的迭代可交互提示机制。该代理系统旨在最大化探索，依据当前技能水平和世界状态提出越来越困难的任务。技能库是一个不断增长的可执行代码存储库，用于存储和检索在新情境中可以重复使用的复杂行为，而迭代提示机制通过结合Minecraft模拟和代码解释器的反馈来改进生成的程序。经验上，VOYAGER 展现出强大的情境终生学习能力，并且在玩 Minecraft 时的表现非常专业。相比之前的 SOTA，它能获得的物品数多了 3.3 倍，探索的距离多了 2.3 倍，解锁关键技能树的速度快了 15.3 倍。VOYAGER 能够从零开始在新的 Minecraft 世界中利用学到技能库，这是传统强化学习方法较难做到的部分。</p>
+</li>
+<li><p><strong>自动课程</strong>：基于探索尽可能多的内容为终极目标，GPT4模型基于当前探索进度和智能体的状态不断生成新的任务。</p>
+</li>
+<li><p><strong>技能库：</strong>以js脚本的形式存储所有成功解决任务的技能库，并将他们的描述文本embedding存储，在后续遇到需要与该技能描述类似的任务时直接调用。</p>
+</li>
+<li><p><strong>迭代式提示词机制 iterative prompting mechanism:</strong></p>
+<ul>
+<li>环境反馈：执行程序获取当前游戏的观察空间以及上一轮生成代码的错误信息。</li>
+<li>将反馈信息组合成新prompt返回给gpt4，能发现程序中任何不合理的操作和语法错误，为下一轮代码精炼做准备。</li>
+<li>重复这个循环，直到自我确认机制确认当前任务已经完成，这时再将生成的技能提交并查询下一个自动课程。</li>
+</ul>
+<p><img src="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/202309130002955.png" alt="Untitled"></p>
+</li>
+<li><p>项目代码文件可分为4部分：</p>
+<ul>
+<li>Python:voyager核心逻辑代码</li>
+<li>JS:在 voyager&#x2F;control_primitives 目录下， 定义了一组JS脚本，存储了一组预先实现的基础技能</li>
+<li>Nodejs:在 voyager&#x2F;env&#x2F;mineflayer 目录下， 启动一个 http server, 定义一组 HTTP API</li>
+<li>prompts: voyager&#x2F;prompts，存放所有提示词</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#voyager.py 核心部分 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 四个Agent:CurriculumAgent、CriticAgent、SkillManager、ActionAgent</span></span><br><span class="line"><span class="comment">#reset()、step(),包装成rollout()执行循环。learn()为代码主入口，在初始化后执行rollout()主循环</span></span><br><span class="line"><span class="comment">#rollout()里除以维护context和task</span></span><br><span class="line"><span class="comment">#...........</span></span><br><span class="line"><span class="comment">#课程循环 learn()</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">if</span> self.recorder.iteration &gt; self.max_iterations:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Iteration limit reached&quot;</span>)</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"><span class="comment">#这一步更新上下文</span></span><br><span class="line">            task, context = self.curriculum_agent.propose_next_task(</span><br><span class="line">                events=self.last_events,</span><br><span class="line">                chest_observation=self.action_agent.render_chest_observation(),</span><br><span class="line">                max_retries=<span class="number">5</span>,</span><br><span class="line">            )</span><br><span class="line">            <span class="built_in">print</span>(</span><br><span class="line">                <span class="string">f&quot;\033[35mStarting task <span class="subst">&#123;task&#125;</span> for at most <span class="subst">&#123;self.action_agent_task_max_retries&#125;</span> times\033[0m&quot;</span></span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                messages, reward, done, info = self.rollout(</span><br><span class="line">                    task=task,</span><br><span class="line">                    context=context,</span><br><span class="line">                    reset_env=reset_env,</span><br><span class="line">                )</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                time.sleep(<span class="number">3</span>)  <span class="comment"># wait for mineflayer to exit</span></span><br><span class="line">                info = &#123;</span><br><span class="line">                    <span class="string">&quot;task&quot;</span>: task,</span><br><span class="line">                    <span class="string">&quot;success&quot;</span>: <span class="literal">False</span>,</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment"># reset bot status here</span></span><br><span class="line">                self.last_events = self.env.reset(</span><br><span class="line">                    options=&#123;</span><br><span class="line">                        <span class="string">&quot;mode&quot;</span>: <span class="string">&quot;hard&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;wait_ticks&quot;</span>: self.env_wait_ticks,</span><br><span class="line">                        <span class="string">&quot;inventory&quot;</span>: self.last_events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;inventory&quot;</span>],</span><br><span class="line">                        <span class="string">&quot;equipment&quot;</span>: self.last_events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;status&quot;</span>][<span class="string">&quot;equipment&quot;</span>],</span><br><span class="line">                        <span class="string">&quot;position&quot;</span>: self.last_events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;status&quot;</span>][<span class="string">&quot;position&quot;</span>],</span><br><span class="line">                    &#125;</span><br><span class="line">                )</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">rollout</span>(<span class="params">self, *, task, context, reset_env=<span class="literal">True</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            - 传入具体任务（task）和上下文（context）, 执行核心逻辑</span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">            - 详细功能： GPT 自主分析任务 -&gt; 生成 JS 代码 -&gt; call mineflayer server,</span></span><br><span class="line"><span class="string">						  执行 js 代码 -&gt; 反馈 new_skill</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.reset(task=task, context=context, reset_env=reset_env)  </span><br><span class="line">        <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            <span class="comment"># GPT 分析任务+生成JS代码+自动执行+自动反馈（判断执行效果）</span></span><br><span class="line">            <span class="comment">#   - 1. call GPT 分析任务，并生成 JS 代码</span></span><br><span class="line">            <span class="comment">#   - 2. 对 JS 代码预处理：基于 python + javascript + babel 预处理</span></span><br><span class="line">            <span class="comment">#   - 3. 通过 HTTP 请求本地启动的 mineflayer 服务, 远程执行 js 代码</span></span><br><span class="line">            <span class="comment">#   - 4. GPT 自主判定：对执行结果进行判断，判断任务是否完成</span></span><br><span class="line">            <span class="comment">#   - 5. 并返回新学会的技能 new_skill</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            messages, reward, done, info = self.step()  </span><br><span class="line">			 <span class="keyword">if</span> done:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">return</span> messages, reward, done, info</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">step</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.action_agent_rollout_num_iter &lt; <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">&quot;Agent must be reset before stepping&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># =======================================================================</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        ai_message = self.action_agent.llm(self.messages)  </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\033[34m****Action Agent ai message****\n<span class="subst">&#123;ai_message.content&#125;</span>\033[0m&quot;</span>)</span><br><span class="line">        self.conversations.append(</span><br><span class="line">            (self.messages[<span class="number">0</span>].content, self.messages[<span class="number">1</span>].content, ai_message.content)</span><br><span class="line">        )</span><br><span class="line">        <span class="comment"># =======================================================================</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        <span class="comment"># 导入 JS 模块，调用 JS lib</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line">        parsed_result = self.action_agent.process_ai_message(message=ai_message)</span><br><span class="line">        success = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(parsed_result, <span class="built_in">dict</span>):</span><br><span class="line">            code = parsed_result[<span class="string">&quot;program_code&quot;</span>] + <span class="string">&quot;\n&quot;</span> + parsed_result[<span class="string">&quot;exec_code&quot;</span>]</span><br><span class="line">            <span class="comment"># =======================================================================</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            <span class="comment"># todo x: HTTP 请求本地启动的 mineflayer 服务, 远程执行 js 代码</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            events = self.env.step(</span><br><span class="line">                code,</span><br><span class="line">                programs=self.skill_manager.programs,  <span class="comment"># todo x： js 代码</span></span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">            self.recorder.record(events, self.task)</span><br><span class="line">            self.action_agent.update_chest_memory(events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;nearbyChests&quot;</span>])</span><br><span class="line"></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            <span class="comment"># todo x: call OpenAI(GPT), 根据 AI(GPT) 回答，自动判断 task 是否完成</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            success, critique = self.critic_agent.check_task_success(</span><br><span class="line">                events=events,</span><br><span class="line">                task=self.task,</span><br><span class="line">                context=self.context,</span><br><span class="line">                chest_observation=self.action_agent.render_chest_observation(),</span><br><span class="line">                max_retries=<span class="number">5</span>,</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> self.reset_placed_if_failed <span class="keyword">and</span> <span class="keyword">not</span> success:</span><br><span class="line">                <span class="comment"># revert all the placing event in the last step</span></span><br><span class="line">                blocks = []</span><br><span class="line">                positions = []</span><br><span class="line">                <span class="keyword">for</span> event_type, event <span class="keyword">in</span> events:</span><br><span class="line">                    <span class="keyword">if</span> event_type == <span class="string">&quot;onSave&quot;</span> <span class="keyword">and</span> event[<span class="string">&quot;onSave&quot;</span>].endswith(<span class="string">&quot;_placed&quot;</span>):</span><br><span class="line">                        block = event[<span class="string">&quot;onSave&quot;</span>].split(<span class="string">&quot;_placed&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">                        position = event[<span class="string">&quot;status&quot;</span>][<span class="string">&quot;position&quot;</span>]</span><br><span class="line">                        blocks.append(block)</span><br><span class="line">                        positions.append(position)</span><br><span class="line"></span><br><span class="line">                <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">#</span></span><br><span class="line">                <span class="comment"># todo x: HTTP 请求本地启动的 mineflayer 服务, 远程执行 js 代码</span></span><br><span class="line">                <span class="comment">#</span></span><br><span class="line">                new_events = self.env.step(</span><br><span class="line">                    <span class="string">f&quot;await givePlacedItemBack(bot, <span class="subst">&#123;U.json_dumps(blocks)&#125;</span>, <span class="subst">&#123;U.json_dumps(positions)&#125;</span>)&quot;</span>,</span><br><span class="line">                    programs=self.skill_manager.programs,  <span class="comment"># todo x： js 代码</span></span><br><span class="line">                )</span><br><span class="line">                events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;inventory&quot;</span>] = new_events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;inventory&quot;</span>]</span><br><span class="line">                events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;voxels&quot;</span>] = new_events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;voxels&quot;</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            <span class="comment"># todo x: 检索向量数据库, 尝试复用已存在技能</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            new_skills = self.skill_manager.retrieve_skills(</span><br><span class="line">                query=self.context</span><br><span class="line">                      + <span class="string">&quot;\n\n&quot;</span></span><br><span class="line">                      + self.action_agent.summarize_chatlog(events)</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">            <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            <span class="comment">#</span></span><br><span class="line">            system_message = self.action_agent.render_system_message(skills=new_skills)  <span class="comment"># todo x: GPT 自己写代码，实现控制逻辑</span></span><br><span class="line">            human_message = self.action_agent.render_human_message(</span><br><span class="line">                events=events,</span><br><span class="line">                code=parsed_result[<span class="string">&quot;program_code&quot;</span>],</span><br><span class="line">                task=self.task,</span><br><span class="line">                context=self.context,</span><br><span class="line">                critique=critique,</span><br><span class="line">            )</span><br><span class="line">            self.last_events = copy.deepcopy(events)</span><br><span class="line">            self.messages = [system_message, human_message]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">assert</span> <span class="built_in">isinstance</span>(parsed_result, <span class="built_in">str</span>)</span><br><span class="line">            self.recorder.record([], self.task)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\033[34m<span class="subst">&#123;parsed_result&#125;</span> Trying again!\033[0m&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># =======================================================================</span></span><br><span class="line">        <span class="keyword">assert</span> <span class="built_in">len</span>(self.messages) == <span class="number">2</span></span><br><span class="line">        self.action_agent_rollout_num_iter += <span class="number">1</span></span><br><span class="line">        done = (</span><br><span class="line">                self.action_agent_rollout_num_iter &gt;= self.action_agent_task_max_retries</span><br><span class="line">                <span class="keyword">or</span> success</span><br><span class="line">        )</span><br><span class="line">        info = &#123;</span><br><span class="line">            <span class="string">&quot;success&quot;</span>: success,</span><br><span class="line">            <span class="string">&quot;conversations&quot;</span>: self.conversations,</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> success:</span><br><span class="line">            <span class="keyword">assert</span> (</span><br><span class="line">                    <span class="string">&quot;program_code&quot;</span> <span class="keyword">in</span> parsed_result <span class="keyword">and</span> <span class="string">&quot;program_name&quot;</span> <span class="keyword">in</span> parsed_result</span><br><span class="line">            ), <span class="string">&quot;program and program_name must be returned when success&quot;</span></span><br><span class="line">            info[<span class="string">&quot;program_code&quot;</span>] = parsed_result[<span class="string">&quot;program_code&quot;</span>]</span><br><span class="line">            info[<span class="string">&quot;program_name&quot;</span>] = parsed_result[<span class="string">&quot;program_name&quot;</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(</span><br><span class="line">                <span class="string">f&quot;\033[32m****Action Agent human message****\n<span class="subst">&#123;self.messages[-<span class="number">1</span>].content&#125;</span>\033[0m&quot;</span></span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">return</span> self.messages, <span class="number">0</span>, done, info</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">render_system_message</span>(<span class="params">self, skills=[]</span>):</span><br><span class="line"><span class="comment">##加载action_template，与默认base_skill、action_response_format拼接，加上输入的技能组，组成系统消息，</span></span><br><span class="line"><span class="comment">##让gpt返回生成的js代码以及代码相关描述信息。</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">render_human_message</span>()</span><br><span class="line"><span class="comment">## 获取当前环境信息，包括玩家基础状态、生物种群，附近的实体、当前任务、context、critique</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">propose_next_task</span>(<span class="params">self, *, events, chest_observation, max_retries=<span class="number">5</span></span>):</span><br><span class="line"><span class="comment"># 预设任务砍木头</span></span><br><span class="line">        <span class="keyword">if</span> self.progress == <span class="number">0</span> <span class="keyword">and</span> self.mode == <span class="string">&quot;auto&quot;</span>:</span><br><span class="line">            task = <span class="string">&quot;Mine 1 wood log&quot;</span></span><br><span class="line">            context = <span class="string">&quot;You can mine one of oak, birch, spruce, jungle, acacia, dark oak, or mangrove logs.&quot;</span></span><br><span class="line">            <span class="keyword">return</span> task, context</span><br><span class="line"></span><br><span class="line">        <span class="comment"># hard code task when inventory is almost full</span></span><br><span class="line">        inventoryUsed = events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;status&quot;</span>][<span class="string">&quot;inventoryUsed&quot;</span>]</span><br><span class="line">				<span class="comment"># 当持有物品大于33个时把多余的存在附近箱子里，没有箱子就创建任务造一个箱子</span></span><br><span class="line">        <span class="keyword">if</span> inventoryUsed &gt;= <span class="number">33</span>:</span><br><span class="line">            <span class="keyword">if</span> chest_observation != <span class="string">&quot;Chests: None\n\n&quot;</span>:</span><br><span class="line">                chests = chest_observation[<span class="number">8</span>:-<span class="number">2</span>].split(<span class="string">&quot;\n&quot;</span>)</span><br><span class="line">                <span class="keyword">for</span> chest <span class="keyword">in</span> chests:</span><br><span class="line">                    content = chest.split(<span class="string">&quot;:&quot;</span>)[<span class="number">1</span>]</span><br><span class="line">                    <span class="keyword">if</span> content == <span class="string">&quot; Unknown items inside&quot;</span> <span class="keyword">or</span> content == <span class="string">&quot; Empty&quot;</span>:</span><br><span class="line">                        position = chest.split(<span class="string">&quot;:&quot;</span>)[<span class="number">0</span>]</span><br><span class="line">                        task = <span class="string">f&quot;Deposit useless items into the chest at <span class="subst">&#123;position&#125;</span>&quot;</span></span><br><span class="line">                        context = (</span><br><span class="line">                            <span class="string">f&quot;Your inventory have <span class="subst">&#123;inventoryUsed&#125;</span> occupied slots before depositing. &quot;</span></span><br><span class="line">                            <span class="string">&quot;After depositing, your inventory should only have 20 occupied slots. &quot;</span></span><br><span class="line">                            <span class="string">&quot;You should deposit useless items such as andesite, dirt, cobblestone, etc. &quot;</span></span><br><span class="line">                            <span class="string">&quot;Also, you can deposit low-level tools, &quot;</span></span><br><span class="line">                            <span class="string">&quot;For example, if you have a stone pickaxe, you can deposit a wooden pickaxe. &quot;</span></span><br><span class="line">                            <span class="string">&quot;Make sure the list of useless items are in your inventory &quot;</span></span><br><span class="line">                            <span class="string">&quot;(do not list items already in the chest), &quot;</span></span><br><span class="line">                            <span class="string">&quot;You can use bot.inventoryUsed() to check how many inventory slots are used.&quot;</span></span><br><span class="line">                        )</span><br><span class="line">                        <span class="keyword">return</span> task, context</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;chest&quot;</span> <span class="keyword">in</span> events[-<span class="number">1</span>][<span class="number">1</span>][<span class="string">&quot;inventory&quot;</span>]:</span><br><span class="line">                task = <span class="string">&quot;Place a chest&quot;</span></span><br><span class="line">                context = (</span><br><span class="line">                    <span class="string">f&quot;You have a chest in inventory, place it around you. &quot;</span></span><br><span class="line">                    <span class="string">f&quot;If chests is not None, or nearby blocks contains chest, this task is success.&quot;</span></span><br><span class="line">                )</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                task = <span class="string">&quot;Craft 1 chest&quot;</span></span><br><span class="line">                context = <span class="string">&quot;Craft 1 chest with 8 planks of any kind of wood.&quot;</span></span><br><span class="line">            <span class="keyword">return</span> task, context</span><br><span class="line">        <span class="comment">#加载提示词</span></span><br><span class="line">        messages = [</span><br><span class="line">				<span class="comment">#加载prompt:创建curriclum，该prompt包括玩家当前环境和个人信息以及规范回答格式内容</span></span><br><span class="line">            self.render_system_message(),</span><br><span class="line">				<span class="comment">#用户消息处理</span></span><br><span class="line">            self.render_human_message(</span><br><span class="line">                events=events, chest_observation=chest_observation</span><br><span class="line">            ),</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.mode == <span class="string">&quot;auto&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> self.propose_next_ai_task(messages=messages, max_retries=max_retries)</span><br><span class="line">        <span class="keyword">elif</span> self.mode == <span class="string">&quot;manual&quot;</span>:</span><br><span class="line">            <span class="keyword">return</span> self.propose_next_manual_task()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">f&quot;Invalid curriculum agent mode: <span class="subst">&#123;self.mode&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#critic</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">human_check_task_success</span>(<span class="params">self</span>):  <span class="comment">#人工确认任务</span></span><br><span class="line">        confirmed = <span class="literal">False</span></span><br><span class="line">        success = <span class="literal">False</span></span><br><span class="line">        critique = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> confirmed:</span><br><span class="line">            success = <span class="built_in">input</span>(<span class="string">&quot;Success? (y/n)&quot;</span>)</span><br><span class="line">            success = success.lower() == <span class="string">&quot;y&quot;</span></span><br><span class="line">            critique = <span class="built_in">input</span>(<span class="string">&quot;Enter your critique:&quot;</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Success: <span class="subst">&#123;success&#125;</span>\nCritique: <span class="subst">&#123;critique&#125;</span>&quot;</span>)</span><br><span class="line">            confirmed = <span class="built_in">input</span>(<span class="string">&quot;Confirm? (y/n)&quot;</span>) <span class="keyword">in</span> [<span class="string">&quot;y&quot;</span>, <span class="string">&quot;&quot;</span>]</span><br><span class="line">        <span class="keyword">return</span> success, critique</span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ai_check_task_success</span>(<span class="params">self, messages, max_retries=<span class="number">5</span></span>):  <span class="comment">#gpt确认任务</span></span><br><span class="line">        <span class="comment">#LLM， call OpenAI, 返回 AI 回答, 解析该回答中的关键词，判断 task 是否成功</span></span><br><span class="line">        critic = self.llm(messages).content</span><br><span class="line"></span><br><span class="line">        <span class="comment"># =======================================================================</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\033[31m****Critic Agent ai message****\n<span class="subst">&#123;critic&#125;</span>\033[0m&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = fix_and_parse_json(critic)</span><br><span class="line">            <span class="keyword">assert</span> response[<span class="string">&quot;success&quot;</span>] <span class="keyword">in</span> [<span class="literal">True</span>, <span class="literal">False</span>]</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;critique&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> response:</span><br><span class="line">                response[<span class="string">&quot;critique&quot;</span>] = <span class="string">&quot;&quot;</span></span><br><span class="line">            <span class="keyword">return</span> response[<span class="string">&quot;success&quot;</span>], response[<span class="string">&quot;critique&quot;</span>]</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\033[31mError parsing critic response: <span class="subst">&#123;e&#125;</span> Trying again!\033[0m&quot;</span>)</span><br><span class="line">            <span class="comment"># todo x: 默认，失败重试 5 次</span></span><br><span class="line">            <span class="keyword">return</span> self.ai_check_task_success(</span><br><span class="line">                messages=messages,</span><br><span class="line">                max_retries=max_retries - <span class="number">1</span>,</span><br><span class="line">            )</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Information"><span class="toc-number">1.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">主要思路</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/ef92bfa4.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/ef92bfa4.html&text=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/ef92bfa4.html&is_video=false&description=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=VOYAGER Minecraft 论文阅读+源码分析&body=Check out this article: http://holmodi.fun/posts/ef92bfa4.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/ef92bfa4.html&title=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/ef92bfa4.html&name=VOYAGER Minecraft 论文阅读+源码分析&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/ef92bfa4.html&t=VOYAGER Minecraft 论文阅读+源码分析"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

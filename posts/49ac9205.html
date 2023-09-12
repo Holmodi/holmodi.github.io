@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Algorithm of Thoughts论文阅读Basic Information: Title: Algorithm of Thoughts: Enhancing Exploration of Ideas in Large Language Models (思维算法：增强大型语言模型中的思路探索) Authors: Bilgehan Sel, Ahmad Al-Tawaha, Vanshaj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Algorithm of Thoughts论文阅读">
+<meta property="og:url" content="http://holmodi.fun/posts/49ac9205.html">
+<meta property="og:site_name" content="Game &amp; Code &amp; Art">
+<meta property="og:description" content="Algorithm of Thoughts论文阅读Basic Information: Title: Algorithm of Thoughts: Enhancing Exploration of Ideas in Large Language Models (思维算法：增强大型语言模型中的思路探索) Authors: Bilgehan Sel, Ahmad Al-Tawaha, Vanshaj">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-12T16:00:03.000Z">
+<meta property="article:modified_time" content="2023-09-12T16:01:09.148Z">
+<meta property="article:author" content="xiaodi xu">
+<meta property="article:tag" content="论文阅读">
+<meta property="article:tag" content="LLM Agent">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="https://image-1318257942.cos.ap-beijing.myqcloud.com/Pic/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Algorithm of Thoughts论文阅读</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Game & Code & Art" type="application/atom+xml">
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/posts/ef92bfa4.html"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/posts/6448113e.html"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/49ac9205.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/49ac9205.html&text=Algorithm of Thoughts论文阅读"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/49ac9205.html&is_video=false&description=Algorithm of Thoughts论文阅读"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Algorithm of Thoughts论文阅读&body=Check out this article: http://holmodi.fun/posts/49ac9205.html"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/49ac9205.html&name=Algorithm of Thoughts论文阅读&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/49ac9205.html&t=Algorithm of Thoughts论文阅读"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Algorithm-of-Thoughts%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">Algorithm of Thoughts论文阅读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Information"><span class="toc-number">2.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E8%A6%81"><span class="toc-number">3.</span> <span class="toc-text">简要 :</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%B2%E6%9C%89%E7%A0%94%E7%A9%B6%E6%88%90%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">已有研究成果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%AE%BA"><span class="toc-number">5.</span> <span class="toc-text">理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E4%BC%98%E5%8A%BF"><span class="toc-number">5.1.</span> <span class="toc-text">算法优势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">7.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E7%BB%93%E6%9E%9C"><span class="toc-number">8.</span> <span class="toc-text">论文复现结果</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Algorithm of Thoughts论文阅读
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">xiaodi xu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-12T16:00:03.000Z" class="dt-published" itemprop="datePublished">2023-09-13</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Code/">Code</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/LLM-Agent/" rel="tag">LLM Agent</a>, <a class="p-category" href="/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" rel="tag">论文阅读</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Algorithm-of-Thoughts论文阅读"><a href="#Algorithm-of-Thoughts论文阅读" class="headerlink" title="Algorithm of Thoughts论文阅读"></a>Algorithm of Thoughts论文阅读</h1><h1 id="Basic-Information"><a href="#Basic-Information" class="headerlink" title="Basic Information:"></a>Basic Information:</h1><ul>
+<li>Title: Algorithm of Thoughts: Enhancing Exploration of Ideas in Large Language Models (思维算法：增强大型语言模型中的思路探索)</li>
+<li>Authors: Bilgehan Sel, Ahmad Al-Tawaha, Vanshaj Khattar, Lu Wang, Ruoxi Jia, Ming Jin</li>
+<li>Keywords: Large Language Models, algorithmic reasoning, idea exploration, in-context learning</li>
+<li>URLs: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2308.10379v1">Paper</a>, [GitHub: None]</li>
+</ul>
+<h1 id="简要"><a href="#简要" class="headerlink" title="简要 :"></a>简要 :</h1><ul>
+<li>本研究提出了一种名为“Algorithm of Thoughts”的新策略，通过算法推理路径提高大模型的推理能力，实现在上下文学习中的思路探索。</li>
+<li>近年来，大型语言模型在一般问题解决、代码生成和指令跟随等方面展现出了强大的效能。然而，现有的方法在推理能力上存在一定的局限性。COT通过链式思维增强了LLM解决问题时思想联系的一致性，但偶尔会出现中间步骤不正确的情况。Fatithful CoT通过引出推理的符号链修正，将LLM的输出定义为伪代码以获取较高的确定性</li>
+</ul>
+<h1 id="已有研究成果"><a href="#已有研究成果" class="headerlink" title="已有研究成果"></a>已有研究成果</h1><p>文章还比较新（8.20），这里总结了引导LLM推理已有的几个方法：</p>
+<p>1、Standard Prompting</p>
+<p>基础的提示词 input-output prompting。</p>
+<p>2、COT</p>
+<p>COT是一种基于链式推理的方法。通过给出问题的连续推理步骤，从中间推理片段c1，…，cn到达答案y，表示为x → c1 → … → cn → y。通过模仿上下文中的例子，LLM自动将解决方案分解为更简单的线性步骤，以提高在多个推理基准上的性能。</p>
+<p>3、Least-to-Most prompting</p>
+<p>L2M是一种基于教育心理学的方法。L2M提示将中心问题分解为较小的子问题。每个子问题按顺序解决，然后将输出结果附加到下一个子问题上（L2M文章指出COT对解决难度高于示例的问题的能力较差）。这种结构化的划分对于更广泛的泛化有益，但它的前提是在一次尝试中找到几乎完美的分解-这对于结构清晰的问题非常理想。然而，当任务与其分解的复杂性交织在一起时（例如24点游戏），这种方法的不灵活性就变得明显。</p>
+<p>4、Tree of Thoughts</p>
+<p>在每个子问题有多个可行选项时，为了让LLM能同时考虑多个选项引入了外部树搜索机制，同时LLM有能力主动评估可能性进行剪枝，TOT的致命弱点是对LLM的查询过度依赖，有时需要上百个查询解决一个问题。</p>
+<h1 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h1><p>大多数改进大型语言模型（LLM）思考方式的方法都涉及停止、调整和恢复生成过程，以提高大型语言模型（LLM）的推理能力。这通常需要更多的计算资源、时间和金钱。为了解决这个问题，“算法的思想”的介绍，开创了一种新的模式，在上下文学习。这是一种新方法，引导LLM以更结构化的方式思考，类似于算法的工作方式。这种方法不需要使用许多查询，而是可以通过一个或几个提示来改进模型的推理。LLM的生成跨度仅受符号限制，似乎准备突破人类工作记忆的障碍。在这一观察的刺激下，我们调查了LLM是否可以反映类似的分层探索的想法，参考先前的中间步骤筛选出不可行的选项，所有这些都在其迭代生成周期内。人类以直觉敏锐而出类拔萃，而科学家则以有组织、有系统的探索而脱颖而出。目前的技术，如CoT，经常回避这种协同潜力，对LLM的现场精度施加了不适当的压力。通过利用LLM的递归功能，我们模拟了一种混合的人类算法方法。这是通过我们使用算法示例来实现的，这些算法示例捕获了从初始候选到验证解决方案的探索的本质。这就是我们的思想算法（Algorithm of Thoughts，AoT）。</p>
+<p>鉴于GPT模型自回归生成文本的特点，本研究探索了将算法的迭代逻辑内化到模型中的可能性。通过使用prompt的算法示例，模型可以在迭代生成过程中参考先前的中间步骤，从而实现对问题空间的层次化探索。不同于传统的[问题，解决方案]或[问题，解决方案的连续步骤]的“监督学习”模型，AoT提出了一种覆盖[问题，搜索过程，解决方案]的新结构。自然地，当使用算法指导LLM时，预期倾向于LLM简单地模仿算法的迭代思维。然而，令人感兴趣的是LLM能够注入自己的“直觉”，以实现甚至超过算法本身的搜索效率。</p>
+<h2 id="算法优势"><a href="#算法优势" class="headerlink" title="算法优势"></a>算法优势</h2><ul>
+<li>CoT涉及经常暂停和调整LLM，但AoT鼓励更连续的思维过程。</li>
+<li>CoT倾向于更线性，专注于单个步骤。AoT允许进行整体探索，在确定解决方案之前考虑各种可能性。</li>
+<li>CoT在每一步都给LLM施加了精确性的压力，而AoT则给模型空间去探索、迭代，并将其直觉与算法推理相结合。</li>
+<li>AoT在计算资源方面具有更高效的潜力，因为与CoT相比，它可能需要更少的对模型的查询。</li>
+<li>CoT主要在每个阶段寻求精确度，而AoT则试图通过LLM自身的能力来增强算法推理，这可能会超越原始算法的性能。</li>
+</ul>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>文章提出了一种类似深度优先搜索的搜索树方案，让LLM能在一轮迭代中尽可能多的为多个分支提出解决方案，而不是为每个子集单独查询。</p>
+<p>1、分解子问题：给定一个问题，将其拆分并构建一颗搜索树。</p>
+<p>2、LLM给出子问题的解法：这里文章提出直接将需要的答案按序列生成的效果好于多次单个的query，比如连续生成五个质数时第一个数是质数的概率大于直接让LLM生成一个质数。</p>
+<p>3、衡量子问题的可信度：文中的实验结果论证LLM有能力优先考虑最有可能的解决方案，因此使用LLM解决24点问题的效率可能高于DFS或BFS搜索（但我使用0315版本GPT4，复现的时候GPT给出的解法经常是错的）</p>
+<p>4、决策点回溯：之前的方法使用了外部手段辅助决策树上的搜索流程，文章使用了DFS方法让LLM辅助修剪，鼓励LLM优先考虑局部特征。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">BEGIN:</span><br><span class="line">        Let SubProblems = Decompose(Problem)</span><br><span class="line"></span><br><span class="line">        FOR each SubProblem <span class="keyword">in</span> SubProblems</span><br><span class="line">            Solution = NONE</span><br><span class="line"></span><br><span class="line">            // Instead of direct output, continuously generate ideas</span><br><span class="line">            WHILE Solution <span class="keyword">is</span> NONE </span><br><span class="line">                GenerateIdeas based on prior intermediate steps</span><br><span class="line">                Filter out infeasible options</span><br><span class="line">                Emulate human-algorithmic approach using algorithmic examples</span><br><span class="line"></span><br><span class="line">                IF Idea meets criteria THEN</span><br><span class="line">                    Solution = Idea</span><br><span class="line"></span><br><span class="line">            RETURN Solution</span><br><span class="line"></span><br><span class="line">        NEXT SubProblem</span><br><span class="line"></span><br><span class="line">        FinalSolution = Combine <span class="built_in">all</span> solutions <span class="keyword">from</span> SubProblems</span><br><span class="line">        RETURN FinalSolution</span><br><span class="line"></span><br><span class="line">    END</span><br></pre></td></tr></table></figure>
+
+<h1 id="结果"><a href="#结果" class="headerlink" title="结果:"></a>结果:</h1><ul>
+<li><p>对于24点游戏，作者使用了4nums.com上按相对难度排名的游戏，并按照之前的研究中的设置进行了实验，采用了5次提示的设置。他们将AoT方法与标准提示、CoT、CoT-SC和ToT方法进行了性能比较，并报告了每种方法的成功率和平均查询次数。</p>
+</li>
+<li><p>对于5x5迷你填字游戏，作者使用了goobix.com上的游戏，并按照之前的研究中的设置进行了实验，将他们的方法与标准提示、CoT和ToT方法进行了测试。他们报告了每种方法的单词成功率和平均查询次数。</p>
+</li>
+<li><p>在24点游戏中，AoT方法在单提示方法中表现优异，并且即使与使用ToT等外部机制的方法进行比较，仍然具有竞争力。AoT方法在仅使用一次查询的情况下达到了71%的成功率，而ToT方法在平均109.1次查询的情况下达到了69%的成功率。</p>
+</li>
+<li><p>在5x5迷你填字游戏中，AoT方法的单词成功率为52%，超过了标准提示和CoT方法。然而，它在单词成功率为60%的ToT方法之后，平均查询次数超过200次。</p>
+</li>
+</ul>
+<h1 id="论文复现结果"><a href="#论文复现结果" class="headerlink" title="论文复现结果"></a>论文复现结果</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#gpt-35T-16k(4 4 4 4)</span></span><br><span class="line"></span><br><span class="line">Trying a promising first operation:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> <span class="number">4</span> + <span class="number">4</span>: (<span class="number">8</span>, <span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">- <span class="number">8</span> + <span class="number">4</span>: (<span class="number">12</span>, <span class="number">4</span>) <span class="number">16</span>, <span class="number">8</span>, <span class="number">48</span>, fractional</span><br><span class="line">- <span class="number">8</span> - <span class="number">4</span>: (<span class="number">4</span>, <span class="number">4</span>) <span class="number">8</span>, <span class="number">0</span>, <span class="number">16</span>, <span class="number">0</span></span><br><span class="line">- <span class="number">8</span> * <span class="number">4</span>: (<span class="number">32</span>, <span class="number">4</span>) <span class="number">36</span>, <span class="number">24</span>, <span class="number">128</span>, fractional</span><br><span class="line">- <span class="number">8</span> / <span class="number">4</span>: (<span class="number">4</span>, <span class="number">2</span>) <span class="number">6</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">2</span></span><br><span class="line">- <span class="number">4</span> + <span class="number">4</span>: (<span class="number">8</span>, <span class="number">4</span>) <span class="number">12</span>, <span class="number">4</span>, <span class="number">32</span>, fractional</span><br><span class="line">- <span class="number">4</span> - <span class="number">4</span>: (<span class="number">0</span>, <span class="number">0</span>) <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, undefined</span><br><span class="line">- <span class="number">4</span> * <span class="number">4</span>: (<span class="number">16</span>, <span class="number">4</span>) <span class="number">20</span>, <span class="number">12</span>, <span class="number">64</span>, fractional</span><br><span class="line">- <span class="number">4</span> / <span class="number">4</span>: (<span class="number">1</span>, <span class="number">1</span>) <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span></span><br><span class="line">  Trying another promising first operation:</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span> <span class="number">4</span> - <span class="number">4</span>: (<span class="number">0</span>, <span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">- <span class="number">0</span> + <span class="number">4</span>: (<span class="number">4</span>, <span class="number">4</span>) <span class="number">8</span>, <span class="number">0</span>, <span class="number">16</span>, <span class="number">0</span></span><br><span class="line">- <span class="number">0</span> - <span class="number">4</span>: (<span class="number">4</span>, <span class="number">0</span>) <span class="number">4</span>, <span class="number">4</span>, <span class="number">0</span>, undefined</span><br><span class="line">- <span class="number">0</span> * <span class="number">4</span>: (<span class="number">0</span>, <span class="number">4</span>) <span class="number">4</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">- <span class="number">0</span> / <span class="number">4</span>: (<span class="number">0</span>, <span class="number">1</span>) <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">  Trying another promising first operation:</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span> <span class="number">4</span> * <span class="number">4</span>: (<span class="number">16</span>, <span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">- <span class="number">16</span> + <span class="number">4</span>: (<span class="number">20</span>, <span class="number">4</span>) <span class="number">24</span> = <span class="number">20</span> + <span class="number">4</span> -&gt; found it!</span><br><span class="line">  Backtracking the solution:</span><br><span class="line">  Step <span class="number">1</span>:</span><br><span class="line">  <span class="number">4</span> + <span class="number">4</span> = <span class="number">8</span></span><br><span class="line">  Step <span class="number">2</span>:</span><br><span class="line">  <span class="number">8</span> + <span class="number">4</span> = <span class="number">12</span></span><br><span class="line">  Step <span class="number">3</span>:</span><br><span class="line">  <span class="number">12</span> + <span class="number">4</span> = <span class="number">16</span></span><br><span class="line">  Considering these steps: <span class="number">24</span> = <span class="number">16</span> + <span class="number">4</span> = (<span class="number">4</span> * <span class="number">4</span>) + <span class="number">4</span> + <span class="number">4</span> = <span class="number">24.</span></span><br><span class="line">  answer: (<span class="number">4</span> * <span class="number">4</span>) + <span class="number">4</span> + <span class="number">4</span> = <span class="number">24.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#gpt-4-32k(4 4 4 4)</span></span><br><span class="line"></span><br><span class="line">Trying a promising first operation:</span><br><span class="line"><span class="number">1.</span> <span class="number">4</span> + <span class="number">4</span>: (<span class="number">8</span>, <span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line">- <span class="number">8</span> + <span class="number">4</span>: (<span class="number">12</span>, <span class="number">4</span>) <span class="number">16</span>, <span class="number">8</span>, <span class="number">48</span>, <span class="number">3</span></span><br><span class="line">- <span class="number">8</span> - <span class="number">4</span>: (<span class="number">4</span>, <span class="number">4</span>) <span class="number">8</span>, <span class="number">0</span>, <span class="number">16</span>, <span class="number">1</span></span><br><span class="line">- <span class="number">8</span> * <span class="number">4</span>: (<span class="number">32</span>, <span class="number">4</span>) <span class="number">36</span>, <span class="number">28</span>, <span class="number">128</span>, <span class="number">8</span></span><br><span class="line">- <span class="number">8</span> / <span class="number">4</span>: (<span class="number">2</span>, <span class="number">4</span>) <span class="number">6</span>, -<span class="number">2</span>, <span class="number">8</span>, <span class="number">0.5</span></span><br><span class="line">- <span class="number">4</span> + <span class="number">4</span>: (<span class="number">8</span>, <span class="number">8</span>) <span class="number">16</span>, <span class="number">0</span>, <span class="number">64</span>, <span class="number">1</span></span><br><span class="line">- <span class="number">4</span> - <span class="number">4</span>: (<span class="number">8</span>, <span class="number">0</span>) <span class="number">8</span>, <span class="number">8</span>, <span class="number">0</span>, undefined</span><br><span class="line">- <span class="number">4</span> * <span class="number">4</span>: (<span class="number">16</span>, <span class="number">8</span>) <span class="number">24</span> = <span class="number">16</span> + <span class="number">8</span> -&gt; found it!</span><br><span class="line">Backtracking the solution:</span><br><span class="line">Step <span class="number">1</span>:</span><br><span class="line"><span class="number">4</span> + <span class="number">4</span> = <span class="number">8</span></span><br><span class="line">Step <span class="number">2</span>:</span><br><span class="line"><span class="number">4</span> * <span class="number">4</span> = <span class="number">16</span></span><br><span class="line">Step <span class="number">3</span>:</span><br><span class="line"><span class="number">16</span> + <span class="number">8</span> = <span class="number">24</span></span><br><span class="line">Considering these steps: <span class="number">24</span> = <span class="number">16</span> + <span class="number">8</span> = (<span class="number">4</span> * <span class="number">4</span>) + (<span class="number">4</span> + <span class="number">4</span>) = <span class="number">24.</span></span><br><span class="line">answer: (<span class="number">4</span> * <span class="number">4</span>) + (<span class="number">4</span> + <span class="number">4</span>) = <span class="number">24.</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#gpt-35T-16k(9 8 2 1)</span></span><br><span class="line">Trying a promising first operation:</span><br><span class="line"><span class="number">1.</span> <span class="number">9</span> - <span class="number">8</span>: (<span class="number">2</span>, <span class="number">1</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">2</span> + <span class="number">1</span>: (<span class="number">3</span>, <span class="number">9</span>) <span class="number">12</span>, <span class="number">8</span>, <span class="number">27</span>, fractional</span><br><span class="line">- <span class="number">2</span> - <span class="number">1</span>: (<span class="number">1</span>, <span class="number">9</span>) <span class="number">10</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span></span><br><span class="line">- <span class="number">2</span> * <span class="number">1</span>: (<span class="number">2</span>, <span class="number">9</span>) <span class="number">11</span>, <span class="number">7</span>, <span class="number">18</span>, fractional</span><br><span class="line">- <span class="number">2</span> / <span class="number">1</span>: (<span class="number">9</span>, <span class="number">2</span>) <span class="number">11</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">2</span></span><br><span class="line">- <span class="number">1</span> + <span class="number">9</span>: (<span class="number">10</span>, <span class="number">2</span>) <span class="number">12</span>, <span class="number">8</span>, <span class="number">90</span>, fractional</span><br><span class="line">- <span class="number">1</span> - <span class="number">9</span>: (<span class="number">2</span>, -<span class="number">7</span>) <span class="number">2</span>, -<span class="number">8</span>, -<span class="number">9</span>, -<span class="number">0.1111111111111111</span></span><br><span class="line">- <span class="number">1</span> * <span class="number">9</span>: (<span class="number">9</span>, <span class="number">2</span>) <span class="number">11</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">9</span></span><br><span class="line">- <span class="number">1</span> / <span class="number">9</span>: (<span class="number">2</span>, <span class="number">0.1111111111111111</span>) <span class="number">3</span>, -<span class="number">7</span>, <span class="number">0.1111111111111111</span>, <span class="number">0.1111111111111111</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">2.</span> <span class="number">9</span> - <span class="number">8</span>: (<span class="number">1</span>, <span class="number">2</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">1</span> + <span class="number">2</span>: (<span class="number">3</span>, <span class="number">9</span>) <span class="number">12</span>, <span class="number">8</span>, <span class="number">27</span>, fractional</span><br><span class="line">- <span class="number">1</span> - <span class="number">2</span>: (<span class="number">2</span>, -<span class="number">1</span>) <span class="number">2</span>, -<span class="number">2</span>, -<span class="number">3</span>, -<span class="number">0.5</span></span><br><span class="line">- <span class="number">1</span> * <span class="number">2</span>: (<span class="number">2</span>, <span class="number">9</span>) <span class="number">11</span>, <span class="number">7</span>, <span class="number">18</span>, fractional</span><br><span class="line">- <span class="number">1</span> / <span class="number">2</span>: (<span class="number">9</span>, <span class="number">0.5</span>) <span class="number">10</span>, -<span class="number">1</span>, <span class="number">0.5</span>, <span class="number">0.5</span></span><br><span class="line">- <span class="number">2</span> + <span class="number">9</span>: (<span class="number">11</span>, <span class="number">0.5</span>) <span class="number">12</span>, <span class="number">8</span>, <span class="number">99</span>, fractional</span><br><span class="line">- <span class="number">2</span> - <span class="number">9</span>: (<span class="number">1</span>, -<span class="number">7</span>) <span class="number">1</span>, -<span class="number">10</span>, -<span class="number">18</span>, -<span class="number">0.2222222222222222</span></span><br><span class="line">- <span class="number">2</span> * <span class="number">9</span>: (<span class="number">18</span>, <span class="number">0.5</span>) <span class="number">19</span>, <span class="number">7</span>, <span class="number">162</span>, fractional</span><br><span class="line">- <span class="number">2</span> / <span class="number">9</span>: (<span class="number">0.5</span>, <span class="number">0.2222222222222222</span>) <span class="number">0.7222222222222222</span>, -<span class="number">7</span>, <span class="number">0.2222222222222222</span>, <span class="number">0.2222222222222222</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">3.</span> <span class="number">8</span> - <span class="number">2</span>: (<span class="number">9</span>, <span class="number">1</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">9</span> + <span class="number">1</span>: (<span class="number">10</span>, <span class="number">9</span>) <span class="number">19</span>, <span class="number">8</span>, <span class="number">90</span>, fractional</span><br><span class="line">- <span class="number">9</span> - <span class="number">1</span>: (<span class="number">8</span>, <span class="number">9</span>) <span class="number">17</span>, <span class="number">7</span>, <span class="number">72</span>, fractional</span><br><span class="line">- <span class="number">9</span> * <span class="number">1</span>: (<span class="number">9</span>, <span class="number">9</span>) <span class="number">18</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">9</span></span><br><span class="line">- <span class="number">9</span> / <span class="number">1</span>: (<span class="number">9</span>, <span class="number">9</span>) <span class="number">18</span>, <span class="number">0</span>, <span class="number">9</span>, <span class="number">9</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">4.</span> <span class="number">2</span> - <span class="number">1</span>: (<span class="number">9</span>, <span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">9</span> + <span class="number">8</span>: (<span class="number">17</span>, <span class="number">9</span>) <span class="number">26</span>, <span class="number">7</span>, <span class="number">144</span>, fractional</span><br><span class="line">- <span class="number">9</span> - <span class="number">8</span>: (<span class="number">1</span>, <span class="number">9</span>) <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">8</span>, -<span class="number">0.1111111111111111</span></span><br><span class="line">- <span class="number">9</span> * <span class="number">8</span>: (<span class="number">72</span>, <span class="number">9</span>) <span class="number">81</span>, <span class="number">63</span>, <span class="number">576</span>, fractional</span><br><span class="line">- <span class="number">9</span> / <span class="number">8</span>: (<span class="number">9</span>, <span class="number">1.125</span>) <span class="number">10.125</span>, -<span class="number">7</span>, <span class="number">1.125</span>, <span class="number">1.125</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">5.</span> <span class="number">9</span> - <span class="number">1</span>: (<span class="number">8</span>, <span class="number">2</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">8</span> + <span class="number">2</span>: (<span class="number">10</span>, <span class="number">9</span>) <span class="number">19</span>, <span class="number">7</span>, <span class="number">90</span>, fractional</span><br><span class="line">- <span class="number">8</span> - <span class="number">2</span>: (<span class="number">6</span>, <span class="number">9</span>) <span class="number">15</span>, <span class="number">5</span>, <span class="number">48</span>, fractional</span><br><span class="line">- <span class="number">8</span> * <span class="number">2</span>: (<span class="number">16</span>, <span class="number">9</span>) <span class="number">25</span>, <span class="number">7</span>, <span class="number">144</span>, fractional</span><br><span class="line">- <span class="number">8</span> / <span class="number">2</span>: (<span class="number">9</span>, <span class="number">4</span>) <span class="number">13</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">6.</span> <span class="number">9</span> - <span class="number">2</span>: (<span class="number">7</span>, <span class="number">1</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">7</span> + <span class="number">1</span>: (<span class="number">8</span>, <span class="number">9</span>) <span class="number">17</span>, <span class="number">6</span>, <span class="number">72</span>, fractional</span><br><span class="line">- <span class="number">7</span> - <span class="number">1</span>: (<span class="number">6</span>, <span class="number">9</span>) <span class="number">15</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span></span><br><span class="line">- <span class="number">7</span> * <span class="number">1</span>: (<span class="number">7</span>, <span class="number">9</span>) <span class="number">16</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">7</span></span><br><span class="line">- <span class="number">7</span> / <span class="number">1</span>: (<span class="number">7</span>, <span class="number">9</span>) <span class="number">16</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">7</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">7.</span> <span class="number">9</span> - <span class="number">1</span>: (<span class="number">8</span>, <span class="number">2</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">8</span> + <span class="number">2</span>: (<span class="number">10</span>, <span class="number">9</span>) <span class="number">19</span>, <span class="number">7</span>, <span class="number">90</span>, fractional</span><br><span class="line">- <span class="number">8</span> - <span class="number">2</span>: (<span class="number">6</span>, <span class="number">9</span>) <span class="number">15</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">6</span></span><br><span class="line">- <span class="number">8</span> * <span class="number">2</span>: (<span class="number">16</span>, <span class="number">9</span>) <span class="number">25</span>, <span class="number">7</span>, <span class="number">144</span>, fractional</span><br><span class="line">- <span class="number">8</span> / <span class="number">2</span>: (<span class="number">9</span>, <span class="number">4</span>) <span class="number">13</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">4</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">8.</span> <span class="number">2</span> - <span class="number">1</span>: (<span class="number">9</span>, <span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">9</span> + <span class="number">8</span>: (<span class="number">17</span>, <span class="number">9</span>) <span class="number">26</span>, <span class="number">7</span>, <span class="number">144</span>, fractional</span><br><span class="line">- <span class="number">9</span> - <span class="number">8</span>: (<span class="number">1</span>, <span class="number">9</span>) <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">8</span>, -<span class="number">0.1111111111111111</span></span><br><span class="line">- <span class="number">9</span> * <span class="number">8</span>: (<span class="number">72</span>, <span class="number">9</span>) <span class="number">81</span>, <span class="number">63</span>, <span class="number">576</span>, fractional</span><br><span class="line">- <span class="number">9</span> / <span class="number">8</span>: (<span class="number">9</span>, <span class="number">1.125</span>) <span class="number">10.125</span>, -<span class="number">7</span>, <span class="number">1.125</span>, <span class="number">1.125</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">9.</span> <span class="number">1</span> - <span class="number">9</span>: (<span class="number">8</span>, -<span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">8</span> + (-<span class="number">8</span>): (-<span class="number">16</span>, <span class="number">9</span>) -<span class="number">7</span>, -<span class="number">16</span>, -<span class="number">144</span>, fractional</span><br><span class="line">- <span class="number">8</span> - (-<span class="number">8</span>): (<span class="number">0</span>, <span class="number">9</span>) <span class="number">0</span>, -<span class="number">16</span>, -<span class="number">72</span>, fractional</span><br><span class="line">- <span class="number">8</span> * (-<span class="number">8</span>): (<span class="number">64</span>, <span class="number">9</span>) <span class="number">73</span>, -<span class="number">56</span>, <span class="number">576</span>, fractional</span><br><span class="line">- <span class="number">8</span> / (-<span class="number">8</span>): (<span class="number">9</span>, -<span class="number">1</span>) <span class="number">10</span>, -<span class="number">16</span>, -<span class="number">1</span>, -<span class="number">1</span></span><br><span class="line">Trying another promising first operation:</span><br><span class="line"><span class="number">10.</span> <span class="number">1</span> - <span class="number">2</span>: (<span class="number">9</span>, <span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line">- <span class="number">9</span> + <span class="number">8</span>: (<span class="number">17</span>, <span class="number">9</span>) <span class="number">26</span>, <span class="number">7</span>, <span class="number">144</span>, fractional</span><br><span class="line">- <span class="number">9</span> - <span class="number">8</span>: (<span class="number">1</span>, <span class="number">9</span>) <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">8</span>, -<span class="number">0.1111111111111111</span></span><br><span class="line">- <span class="number">9</span> * <span class="number">8</span>: (<span class="number">72</span>, <span class="number">9</span>) <span class="number">81</span>, <span class="number">63</span>, <span class="number">576</span>, fractional</span><br><span class="line">- <span class="number">9</span> / </span><br><span class="line"></span><br><span class="line"><span class="comment">#gpt-4-32k(9 8 2 1)</span></span><br><span class="line"></span><br><span class="line">Trying a promising first operation:</span><br><span class="line"><span class="number">1.</span> <span class="number">9</span> - <span class="number">1</span>: (<span class="number">8</span>, <span class="number">2</span>, <span class="number">8</span>)</span><br><span class="line">- <span class="number">8</span> + <span class="number">2</span>: (<span class="number">10</span>, <span class="number">8</span>) <span class="number">18</span>, <span class="number">2</span>, <span class="number">80</span>, fractional</span><br><span class="line">- <span class="number">8</span> - <span class="number">2</span>: (<span class="number">6</span>, <span class="number">8</span>) <span class="number">14</span>, -<span class="number">2</span>, <span class="number">48</span>, fractional</span><br><span class="line">- <span class="number">8</span> * <span class="number">2</span>: (<span class="number">16</span>, <span class="number">8</span>) <span class="number">24</span> = <span class="number">16</span> + <span class="number">8</span> -&gt; found it!</span><br><span class="line">- <span class="number">8</span> / <span class="number">2</span>: (<span class="number">4</span>, <span class="number">8</span>) <span class="number">12</span>, -<span class="number">4</span>, <span class="number">32</span>, fractional</span><br><span class="line">Backtracking the solution:</span><br><span class="line">Step <span class="number">1</span>:</span><br><span class="line"><span class="number">9</span> - <span class="number">1</span> = <span class="number">8</span></span><br><span class="line">Step <span class="number">2</span>:</span><br><span class="line"><span class="number">8</span> * <span class="number">2</span> = <span class="number">16</span></span><br><span class="line">Step <span class="number">3</span>:</span><br><span class="line"><span class="number">16</span> + <span class="number">8</span> = <span class="number">24</span></span><br><span class="line">Considering these steps: <span class="number">24</span> = <span class="number">16</span> + <span class="number">8</span> = (<span class="number">8</span> * <span class="number">2</span>) + <span class="number">8</span> = ((<span class="number">9</span> - <span class="number">1</span>) * <span class="number">2</span>) + <span class="number">8</span> = <span class="number">24.</span></span><br><span class="line">answer: ((<span class="number">9</span> - <span class="number">1</span>) * <span class="number">2</span>) + <span class="number">8</span> = <span class="number">24.</span></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">所有文章</a></li>
+        
+          <li><a href="/projects/">项目</a></li>
+        
+          <li><a href="/gallery/">Gallery</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Algorithm-of-Thoughts%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB"><span class="toc-number">1.</span> <span class="toc-text">Algorithm of Thoughts论文阅读</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Information"><span class="toc-number">2.</span> <span class="toc-text">Basic Information:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AE%80%E8%A6%81"><span class="toc-number">3.</span> <span class="toc-text">简要 :</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%B2%E6%9C%89%E7%A0%94%E7%A9%B6%E6%88%90%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">已有研究成果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%90%86%E8%AE%BA"><span class="toc-number">5.</span> <span class="toc-text">理论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E4%BC%98%E5%8A%BF"><span class="toc-number">5.1.</span> <span class="toc-text">算法优势</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">6.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C"><span class="toc-number">7.</span> <span class="toc-text">结果:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E5%A4%8D%E7%8E%B0%E7%BB%93%E6%9E%9C"><span class="toc-number">8.</span> <span class="toc-text">论文复现结果</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://holmodi.fun/posts/49ac9205.html"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://holmodi.fun/posts/49ac9205.html&text=Algorithm of Thoughts论文阅读"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://holmodi.fun/posts/49ac9205.html&is_video=false&description=Algorithm of Thoughts论文阅读"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Algorithm of Thoughts论文阅读&body=Check out this article: http://holmodi.fun/posts/49ac9205.html"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://holmodi.fun/posts/49ac9205.html&title=Algorithm of Thoughts论文阅读"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://holmodi.fun/posts/49ac9205.html&name=Algorithm of Thoughts论文阅读&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://holmodi.fun/posts/49ac9205.html&t=Algorithm of Thoughts论文阅读"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    xiaodi xu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">所有文章</a></li><!--
+     --><!--
+       --><li><a href="/projects/">项目</a></li><!--
+     --><!--
+       --><li><a href="/gallery/">Gallery</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
